@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="actionbar">#FF0b4f6c</color> 
+	<color name="statusbar">#FF01BAEF</color> <!-- Edit this one-->
+	<color name="textColorPrimary">#ffffffff</color>
+	<color name="navigationBar">#ff006db3</color>
+	<color name="colorAccent">#FF1E4369</color> <!-- checkboxes, switches, etc. #0091ea -->
+</resources>

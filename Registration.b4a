@@ -1,52 +1,399 @@
-﻿Build1=Default,b4a.example
-File1=Layout.bal
+﻿Build1=Default,bwsi.registration.yearend
+File1=arrow2.png
+File10=myfont.ttf
+File11=myfont_bold.ttf
+File12=OpenSans-Italic-VariableFont_wdth,wght.ttf
+File13=OpenSans-VariableFont_wdth,wght.ttf
+File14=Registration.bal
+File15=Relieve.ttf
+File16=Stub-Header.png
+File2=BranchItems.bal
+File3=EmployeeList.bal
+File4=GuestLayout.bal
+File5=ItemLayout.bal
+File6=Login.bal
+File7=Main.png
+File8=MainScreen.bal
+File9=MasterDB.db
 FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
 Group=Default Group
 Library1=core
+Library10=stringutils
+Library11=viewsex
+Library12=fiddlearound
+Library13=mpchartlib
+Library14=serial
+Library15=phone
+Library16=randomaccessfile
+Library17=javaobject
+Library18=xmllayoutbuilder
+Library19=xcustomlistview
 Library2=xui
-ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="31"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
-Module1=Starter
-NumberOfFiles=1
-NumberOfLibraries=2
-NumberOfModules=1
-Version=9.9
+Library20=bctoast
+Library21=reflection
+Library22=ime
+Library3=appcompat
+Library4=materialdialogs
+Library5=ax_customalertviewdialog
+Library6=designsupport
+Library7=runtimepermissions
+Library8=sql
+Library9=stringfunctions
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="31"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~~\n~SetApplicationAttribute(android:theme, "@style/MyAppTheme")~\n~CreateResource(values, colors.xml,~\n~<resources>~\n~    <color name="actionbar">#FF0b4f6c</color> ~\n~	<color name="statusbar">#FF01BAEF</color> <!-- Edit this one-->~\n~	<color name="textColorPrimary">#ffffffff</color>~\n~	<color name="navigationBar">#ff006db3</color>~\n~	<color name="colorAccent">#FF1E4369</color> <!-- checkboxes,, switches,, etc. #0091ea -->~\n~</resources>~\n~)~\n~~\n~CreateResource(values, themes.xml,~\n~<resources>~\n~    <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">~\n~		<item name="android:colorPrimary">#01579b</item> <!-- action bar -->~\n~		<item name="android:colorPrimaryDark">@color/statusbar</item> <!-- status bar -->~\n~		<item name="android:colorAccent">#FF5252</item> <!-- checkboxes,, switches,, etc. #0091ea -->~\n~		<item name="android:textColorPrimary">#ffffff</item> <!-- ? -->~\n~		<item name="android:textColorSecondary">#2196f3</item> <!-- inactive editText line,, scrollbar -->~\n~		<item name="android:textColor">#000000</item> <!-- menu text,, msgbox title -->~\n~		<item name="android:textColorLink">#448aff</item>~\n~		<item name="android:textColorHighlight">#64b5f6</item>~\n~		<item name="android:windowNoTitle">true</item>~\n~		<item name="android:windowActionBar">true</item>~\n~		<item name="android:windowActionModeOverlay">true</item>~\n~		~\n~		<item name="textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>~\n~	    	<item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceLarge</item>~\n~	    	<item name="textAppearanceSmallPopupMenu">@style/myPopupMenuTextAppearanceSmall</item>~\n~    		<item name="android:textAppearanceSmallPopupMenu">@style/myPopupMenuTextAppearanceSmall</item>~\n~    		<item name="popupMenuStyle">@style/myPopupMenuStyle</item>~\n~    		<item name="android:popupMenuStyle">@style/myPopupMenuStyle</item>~\n~	</style>~\n~	~\n~	<style name="myPopupMenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu">~\n~		<item name="android:popupBackground">#1976D2</item>~\n~	</style>~\n~~\n~	<style name="myPopupMenuTextAppearanceSmall" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small">~\n~	    <item name="android:textColor">#FFFFFF</item>~\n~	</style>~\n~~\n~	<style name="myPopupMenuTextAppearanceLarge" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large">~\n~	    <item name="android:textColor">#FFFFFF</item>~\n~	</style>~\n~	~\n~	<style name="MyDialog" parent="Theme.AppCompat.Dialog">~\n~	   <item name="colorPrimary">#3F51B5</item>~\n~	   <item name="colorPrimaryDark">#151C51</item>~\n~	   <item name="colorAccent">#303F9F</item>~\n~	   ~\n~	   <item name="android:windowNoTitle">true</item>~\n~	   <item name="android:windowFullscreen">false</item>~\n~	   <item name="android:windowContentOverlay">@null</item>~\n~	   <item name="android:windowBackground">@android:color/transparent</item>~\n~	   <item name="android:backgroundDimEnabled">true</item>~\n~	   <item name="android:backgroundDimAmount">0.5</item>~\n~	   <item name="android:windowIsFloating">false</item>~\n~	   <item name="android:gravity">center</item>~\n~	   ~\n~	   <item name="android:textColorHint">#C8C8C8</item>~\n~	   <item name="colorControlNormal">#C8C8C8</item>~\n~	   <item name="colorControlHighlight">#C8C8C8</item>~\n~	   <item name="colorControlActivated">#303F9F</item>~\n~	</style>~\n~	~\n~	<style name="MyDialogDisableStatus" parent="MyDialog">~\n~		<item name="android:windowDrawsSystemBarBackgrounds">true</item>~\n~		<item name="android:statusBarColor">@android:color/transparent</item>~\n~		<item name="android:windowTranslucentStatus">false</item>~\n~		<item name="android:windowTranslucentNavigation">false</item>~\n~	</style>~\n~~\n~</resources>~\n~)~\n~~\n~CreateResource(values, fle.xml,~\n~<resources>~\n~    <style name="floating_hint" parent="@style/Theme.AppCompat.Light">~\n~	    <item name="android:textColor">#01579b</item>~\n~		<item name="android:textSize">16dp</item>~\n~    </style>~\n~</resources>~\n~)~\n~AddPermission(android.permission.ACCESS_SUPERUSER)~\n~AddPermission(android.permission.CHANGE_WIFI_STATE)~\n~AddPermission(android.permission.ACCESS_WIFI_STATE)~\n~AddPermission(android.permission.READ_EXTERNAL_STORAGE)~\n~AddPermission(android.permission.WRITE_EXTERNAL_STORAGE)~\n~AddPermission(android.permission.BLUETOOTH) ~\n~AddPermission(android.permission.BLUETOOTH_ADMIN)~\n~AddPermission(android.permission.BLUETOOTH_PRIVILEGED)~\n~AddPermission(android.permission.BIND_PRINT_SERVICE)~\n~AddPermission(android.permission.CAMERA)~\n~AddPermission(android.permission.VIBRATE)~\n~
+Module1=actRegistration
+Module10=SearchView
+Module11=SLInpTypeConst
+Module12=Starter
+Module2=AddGuest
+Module3=CLVExpandable
+Module4=CustomListView
+Module5=DBFunctions
+Module6=DBUtils
+Module7=GlobalVar
+Module8=MainScreen
+Module9=Scale
+NumberOfFiles=16
+NumberOfLibraries=22
+NumberOfModules=12
+Version=10
 @EndOfDesignText@
 #Region  Project Attributes 
-	#ApplicationLabel: B4A Example
+	#ApplicationLabel: BWSI Year-End Party Registration
 	#VersionCode: 1
-	#VersionName: 
+	#VersionName: 1.00
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
-	#SupportedOrientations: unspecified
+	#SupportedOrientations: portrait
 	#CanInstallToExternalStorage: False
 #End Region
+	#Extends: android.support.v4.widget.DrawerLayout
+	#Extends: android.support.v7.app.AppCompatActivity
+	#AdditionalJar:WoosimLib251
+	#AdditionalRes: ..\resAX_CustomAlertViewDialog
+'	#AdditionalRes: ..\md-app\res
 
 #Region  Activity Attributes 
 	#FullScreen: False
-	#IncludeTitle: True
+	#IncludeTitle: False
 #End Region
 
 Sub Process_Globals
 	'These global variables will be declared once when the application starts.
 	'These variables can be accessed from all modules.
 	Private xui As XUI
+	Private vibration As B4Avibrate
+	Private vibratePattern() As Long
+
 End Sub
 
 Sub Globals
 	'These global variables will be redeclared each time the activity is created.
+	Private btnArea As Panel
+	Private lblAreaIcon As Label
+	Private pnlAreas As Panel
+	
+	Private strPassword As String
+	Private MatDialogBuilder As MaterialDialogBuilder
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
-	Activity.LoadLayout("Layout")
+	Activity.LoadLayout("Login")
+	If FirstTime Then
+		GlobalVar.AreaID = DBFunctions.GetAreaID
+	End If
 End Sub
 
 Sub Activity_Resume
-
+	GlobalVar.AreaID = DBFunctions.GetAreaID
 End Sub
 
 Sub Activity_Pause (UserClosed As Boolean)
 
 End Sub
 
-Sub Button1_Click
-	xui.MsgboxAsync("Hello world!", "B4X")
+Sub Activity_Click
+	StartActivity(MainScreen)
+End Sub
+
+Sub Activity_KeyPress (KeyCode As Int) As Boolean 'Return True to consume the event
+	If KeyCode = 4 Then
+		Return True
+	Else
+		Return False
+	End If
+End Sub
+Sub pnlAreas_Click
+'	If pnlSearch.Visible = True Then Return
+'	pnlSearch.Visible = True
+'	CDSearch.Initialize2(Colors.Transparent, 0, 0, Colors.Transparent)
+'	txtSearch.Background = CDSearch
+	LoadAreas
+End Sub
+
+Sub lblAreaIcon_Click
+	pnlAreas_Click
+End Sub
+
+Sub btnArea_Click
+	pnlAreas_Click
+End Sub
+
+Private Sub LoadAreas
+	Dim Alert As AX_CustomAlertDialog
+	Dim ListItems As List
+	Dim rsAreas As Cursor
+	
+	ListItems.Initialize
+	
+	Try
+		Starter.strCriteria = "SELECT * FROM tblAreas WHERE AreaID <> 14" 
+		LogColor(Starter.strCriteria, Colors.Cyan)
+		rsAreas = Starter.DBCon.ExecQuery(Starter.strCriteria)
+		
+		If rsAreas.RowCount > 0 Then
+			For jj = 0 To rsAreas.RowCount - 1
+				rsAreas.Position = jj
+				ListItems.Add(rsAreas.GetString("AreaName"))
+			Next
+		Else
+			Log(LastException)
+		End If
+	Catch
+		Log(LastException)
+	End Try
+
+	
+	Alert.Initialize.Create _
+			.SetDialogStyleName("MyDialog") _	'Manifest style name
+			.SetStyle(Alert.STYLE_SELECTOR) _
+			.SetOthers(ListItems) _
+			.SetActionsheetTypeface(GlobalVar.Font) _
+			.SetCancelable(True) _
+			.SetOnItemClickListener("AreaSelected") 	'listeners
+		
+	Alert.SetDialogBackground(GlobalVar.myCD)
+	Alert.Build.Show
+End Sub
+
+Private Sub AreaSelected_OnItemClick (View As View, Selection As String, Position As Int, Id As Long)
+	ToastMessageShow(Selection&" Selected! (Position : "& Position &")",False)
+	Dim Alert As AX_CustomAlertDialog
+	Alert.Initialize.Dismiss2
+	GlobalVar.AreaID = GetAreaIDByAreaName(Selection)
+	ShowAdminPassword	
+End Sub
+
+Private Sub GetAreaIDByAreaName (sAreaName As String) As Int
+	Dim iRetVal As Int
+
+	Try
+		Starter.strCriteria = "SELECT AreaID FROM tblAreas WHERE AreaName = '" & sAreaName & "'"
+		LogColor(Starter.strCriteria, Colors.Blue)
+		
+		iRetVal = Starter.DBCon.ExecQuerySingleResult(Starter.strCriteria)
+	Catch
+		ToastMessageShow($"Unable to fetch Branch System Mode due to "$ & LastException.Message, False)
+		Log(LastException)
+		iRetVal = 0
+	End Try
+	Return iRetVal
+End Sub
+
+Private Sub UpdateAreaID (iAreaID As Int) As Boolean
+	Dim bRetVal As Boolean
+	
+	bRetVal = False
+	Starter.DBCon.BeginTransaction
+	Try
+		Starter.strCriteria = "UPDATE tblSysParam " & _
+						  "SET AreaID = ? "
+							  
+		Starter.DBCon.ExecNonQuery2(Starter.strCriteria, Array As String(iAreaID))
+
+		Starter.DBCon.TransactionSuccessful
+		bRetVal = True
+		ProgressDialogShow2($"Setting Up Area"$,False)
+	Catch
+		bRetVal = False
+		ProgressDialogHide
+		Log(LastException)
+	End Try
+	Starter.DBCon.EndTransaction
+	Return bRetVal
+End Sub
+
+Private Sub ShowAdminPassword()
+	Dim csContent As CSBuilder
+
+	csContent.Initialize.Size(12).Color(Colors.Gray).Append($"Enter Administrative Password to Continue."$).PopAll
+	
+	MatDialogBuilder.Initialize("AdminPassword")
+	MatDialogBuilder.Theme(MatDialogBuilder.THEME_LIGHT)
+	MatDialogBuilder.Title($"ADMINISTRATIVE PASSWORD"$).TitleColor(Colors.Red).TitleGravity(MatDialogBuilder.GRAVITY_START)
+	MatDialogBuilder.IconRes(GlobalVar.WarningIcon).LimitIconToDefaultSize
+	MatDialogBuilder.InputType(MatDialogBuilder.TYPE_TEXT_VARIATION_PASSWORD)
+	MatDialogBuilder.Input2($"Enter Admin Password here..."$, $""$, False)
+	MatDialogBuilder.AlwaysCallInputCallback
+	MatDialogBuilder.Content(csContent)
+	MatDialogBuilder.ContentColor(Colors.Black)
+	MatDialogBuilder.PositiveText($"OK"$).PositiveColor(GlobalVar.PosColor)
+	MatDialogBuilder.NegativeText($"CANCEL"$).NegativeColor(Colors.Red)
+	MatDialogBuilder.CanceledOnTouchOutside(False)
+	MatDialogBuilder.Show
+End Sub
+
+Private Sub AdminPassword_InputChanged (mDialog As MaterialDialog, sPassword As String)
+	If sPassword.Length = 0 Then
+		mDialog.EnableActionButton(mDialog.ACTION_POSITIVE, False)
+	Else
+		mDialog.EnableActionButton(mDialog.ACTION_POSITIVE, True)
+	End If
+	strPassword = sPassword
+End Sub
+
+Sub AdminPassword_ButtonPressed (Dialog As MaterialDialog, Action As String)
+	Select Case Action
+		Case Dialog.ACTION_POSITIVE
+			If strPassword <> GlobalVar.AdminPassword Then
+				vibration.vibrateOnce(2000)
+				PasswordError
+				Return
+			End If
+			
+			If Not(UpdateAreaID(GlobalVar.AreaID)) Then
+				ProgressDialogHide
+				Return
+			Else
+				ProgressDialogHide
+				ShowSuccessMsg($"SUCCESSFULLY SAVED"$, $"Selected Area has been successfully set!"$)
+			End If
+			
+		Case Dialog.ACTION_NEGATIVE
+'			snack.Initialize("RetryButton", Activity, "Setting Server's IP Address Cancelled!", snack.DURATION_LONG)
+'			SetSnackBarBackground(snack,Colors.Red)
+'			SetSnackBarTextColor(snack,Colors.White)
+'			snack.Show
+	End Select
+End Sub
+
+Private Sub RetryButton_Click()
+	ShowAdminPassword
+End Sub
+
+Private Sub PasswordError
+	Dim Alert As AX_CustomAlertDialog
+
+	Alert.Initialize.Create _
+			.SetDialogStyleName("MyDialogDisableStatus") _	'Manifest style name
+			.SetStyle(Alert.STYLE_DIALOGUE) _
+			.SetCancelable(False) _
+			.SetTitle($"ERROR PASSWORD"$) _
+			.SetMessage($"Password is incorrect!"$ & CRLF & $"Do you want To Try Again?"$) _
+			.SetPositiveText("YES") _
+			.SetPositiveColor(GlobalVar.PosColor) _
+			.SetPositiveTypeface(GlobalVar.FontBold) _
+			.SetNegativeText("NO") _
+			.SetNegativeColor(GlobalVar.NegColor) _
+			.SetNegativeTypeface(GlobalVar.Font) _
+			.SetTitleTypeface(GlobalVar.Font) _
+			.SetMessageTypeface(GlobalVar.Font) _
+			.SetOnPositiveClicked("RetryPassword") _	'listeners
+			.SetOnNegativeClicked("RetryPassword") _
+			.SetOnViewBinder("PasswordBinder") 'listeners
+			
+	Alert.SetDialogBackground(GlobalVar.myCD)
+	Alert.Build.Show
+
+End Sub
+'Listeners
+Private Sub RetryPassword_OnNegativeClicked (View As View, Dialog As Object)
+	Dim Alert As AX_CustomAlertDialog
+	Alert.Initialize.Dismiss(Dialog)
+	ToastMessageShow($"Canceled!"$, True)
+End Sub
+
+Private Sub RetryPassword_OnPositiveClicked (View As View, Dialog As Object)
+	Dim Alert As AX_CustomAlertDialog
+	Alert.Initialize.Dismiss(Dialog)
+	ShowAdminPassword
+End Sub
+
+Private Sub PasswordBinder_OnBindView (View As View, ViewType As Int)
+	Dim alert As AX_CustomAlertDialog
+	alert.Initialize
+	If ViewType = alert.VIEW_TITLE Then ' Title
+		Dim lbl As Label = View
+		Dim CS As CSBuilder
+		CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Typeface(Typeface.FONTAWESOME).Size(20).Color(Colors.Red).Append(Chr(0xF059) & "  ")
+		CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.Text).Pop
+
+		lbl.Text = CS.PopAll
+	End If
+	
+	If ViewType = alert.VIEW_MESSAGE Then
+		Dim lbl As Label = View
+		lbl.TextSize = 16
+		lbl.TextColor = Colors.Gray
+	End If
+End Sub
+
+Private Sub ShowSuccessMsg(sTitle As String, sMsg As String)
+	Dim Alert As AX_CustomAlertDialog
+
+	Alert.Initialize.Create _
+			.SetDialogStyleName("MyDialogDisableStatus") _	'Manifest style name
+			.SetStyle(Alert.STYLE_DIALOGUE) _
+			.SetCancelable(False) _
+			.SetTitle(sTitle) _
+			.SetMessage(sMsg) _
+			.SetPositiveText("OK") _
+			.SetPositiveColor(GlobalVar.PosColor) _
+			.SetPositiveTypeface(GlobalVar.FontBold) _
+			.SetTitleTypeface(GlobalVar.Font) _
+			.SetMessageTypeface(GlobalVar.Font) _
+			.SetOnPositiveClicked("SuccessMsg") _	'listeners
+			.SetOnViewBinder("SuccessBinder") 'listeners
+			
+	Alert.SetDialogBackground(GlobalVar.myCD)
+	Alert.Build.Show
+
+End Sub
+'Listeners
+Private Sub SuccessMsg_OnPositiveClicked (View As View, Dialog As Object)
+	Dim Alert As AX_CustomAlertDialog
+	Alert.Initialize.Dismiss(Dialog)
+	
+End Sub
+
+Private Sub SuccessBinder_OnBindView (View As View, ViewType As Int)
+	Dim alert As AX_CustomAlertDialog
+	alert.Initialize
+	If ViewType = alert.VIEW_TITLE Then ' Title
+		Dim lbl As Label = View
+		Dim CS As CSBuilder
+		CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Typeface(Typeface.FONTAWESOME).Size(20).Color(GlobalVar.PosColor).Append(Chr(0xF164) & "  ")
+		CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.Text).Pop
+
+		lbl.Text = CS.PopAll
+	End If
+	
+	If ViewType = alert.VIEW_MESSAGE Then
+		Dim lbl As Label = View
+		lbl.TextSize = 16
+		lbl.TextColor = Colors.Gray
+	End If
 End Sub
