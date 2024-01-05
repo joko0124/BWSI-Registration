@@ -163,6 +163,7 @@ Sub Activity_Resume
 	
 	CD.Initialize2(0xFF1E4369, 25, 0,0xFF268FC2)
 	btnStart.Background = CD
+	
 End Sub
 
 Sub Activity_Pause (UserClosed As Boolean)
@@ -223,7 +224,7 @@ End Sub
 #End Region
 
 Sub btnStart_Click
-	StartActivity(actRegistration)
+	StartActivity(Registration)
 End Sub
 
 Private Sub GenerateBranchList(iAreaID As Int)

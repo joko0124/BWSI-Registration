@@ -22,6 +22,7 @@ Sub Process_Globals
 	Public TotReg As Int
 	Public TotUnreg As Int
 	Public TotEmployees As Int
+	Public AssignedEmp as String
 	
 	Public PosColor = 0xFF007BFF As Double
 	Public NegColor = 0xFFDC3545 As Double

@@ -69,7 +69,7 @@ Sub Globals
 	Private clvEmployees As CustomListView
 
 	Private txtSearch As EditText
-	Type EmpData (RegistrationID As Int, Avatar As String, EmpName As String, EmpDivision As String, RegStatus As Int, WillAttend As Int, WasAwardee As Int, sAwards as String)
+	Type EmpData (RegistrationID As Int, Avatar As String, EmpName As String, EmpDivision As String, RegStatus As Int, WillAttend As Int, WasAwardee As Int, sAwards As String)
 	Type BranchData (BranchID As Int, BranchName As String)
 	
 	Private RegID As Int
@@ -183,10 +183,6 @@ Sub clvEmployees_ItemClick (Index As Int, Value As Object)
 	
 End Sub
 
-Sub clvEmployees_VisibleRangeChanged (FirstIndex As Int, LastIndex As Int)
-	
-End Sub
-
 Sub btnSwap_Click
 	Dim index As Int = clvEmployees.GetValue(clvEmployees.GetItemFromView(Sender))
 
@@ -278,7 +274,7 @@ Private Sub AddBranches(iAreaID As Int)
 								  "INNER JOIN tblBranches AS Branches ON Registration.BranchID = Branches.BranchID " & _
 								  "WHERE Registration.BranchID = " & iBranchID & " " & _
 								  "AND Registration.WillAttend <> 0 " & _
-								  "ORDER BY Registration.Division, Registration.FullName ASC"
+								  "ORDER BY Registration.Division, Registration.FullName ASC	"
 				
 				LogColor(Starter.strCriteria, Colors.Cyan)
 				rsEmployees = Starter.DBCon.ExecQuery(Starter.strCriteria)
@@ -329,7 +325,7 @@ Sub AddBranch (Title As String)
 	clvEmployees.Add(p, BD)
 End Sub
 
-Sub AddEmployees(iWidth As Int, strEmpName As String, strBranchName As String, iRegStatus As Int, intWillAttend As Int, sAvatar As String, intWasAwardee as Int, strAwards as String) As Panel
+Sub AddEmployees(iWidth As Int, strEmpName As String, strBranchName As String, iRegStatus As Int, intWillAttend As Int, sAvatar As String, intWasAwardee As Int, strAwards As String) As Panel
 	
 	Dim p As B4XView = xui.CreatePanel("")
 	Dim iHeight As Int = 125dip

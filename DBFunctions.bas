@@ -204,11 +204,13 @@ Sub SaveSeqNo() As Boolean
 	Try
 		Starter.strCriteria = "SELECT * FROM android_metadata"
 		rsTemp = Starter.dbcon.ExecQuery(Starter.strCriteria)
-		If rsTemp.RowCount=0 Then
+		
+		If rsTemp.RowCount =  0 Then
 			Starter.dbcon.ExecNonQuery2("INSERT INTO android_metadata VALUES (?, ?, ?, ?, ?)", Array As Object($"english"$, $"1"$, "", 1, 1))
 		Else
 			rsTemp.Position = 0
 			lngRec = rsTemp.GetLong("LastSeqNo") + 1
+			
 			Starter.strCriteria="UPDATE android_metadata SET LastSeqNo = ? "
 			Starter.dbcon.ExecNonQuery2(Starter.strCriteria, Array As String(lngRec))
 		End If
@@ -251,4 +253,62 @@ Public Sub GetBranchIDByEmpID(iEmpID As Int) As Int
 		Log(LastException)
 	End Try
 	Return iRetVal
+End Sub
+
+Public Sub GetIDByCode (sRetField As String, sTableName As String, sFieldToCompare As String, sCodeComparison As String) As Int
+	Dim iRetval As Int
+	iRetval = 0
+	Try
+		Starter.strCriteria = "SELECT " & sRetField & " FROM " & sTableName & " WHERE " & sFieldToCompare & " = '" & sCodeComparison & "'"
+		LogColor(Starter.strCriteria, Colors.Blue)
+		
+		iRetval = Starter.DBCon.ExecQuerySingleResult(Starter.strCriteria)
+	Catch
+		ToastMessageShow($"Unable to fetch ID due to "$ & LastException.Message, False)
+		Log(LastException)
+		iRetval = 0
+	End Try
+	LogColor($"Return ID: "$ & iRetval, Colors.Yellow)
+	Return iRetval
+End Sub
+
+Public Sub IsThereAssignedEmp As Boolean
+	Dim bRetVal As Boolean
+	
+	Try
+		Starter.strCriteria = "SELECT * FROM android_metadata"
+		rsTemp = Starter.dbcon.ExecQuery(Starter.strCriteria)
+
+		If rsTemp.RowCount > 0 Then
+			rsTemp.Position = 0
+			If rsTemp.GetString("AssignedTo") = Null Or GlobalVar.SF.Len(GlobalVar.SF.Trim(rsTemp.GetString("AssignedTo"))) <= 0  Then
+				bRetVal = False
+			Else
+				bRetVal = True
+			End If
+		Else
+			bRetVal = False
+		End If
+
+	Catch
+		Log(LastException)
+		bRetVal = False
+	End Try
+	Return bRetVal
+End Sub
+
+Public Sub GetAssignedEmp As String
+	Dim sRetVal As String
+
+	Try
+		Starter.strCriteria = "SELECT AssignedTo FROM android_metadata "
+		LogColor(Starter.strCriteria, Colors.Blue)
+		
+		sRetVal = Starter.DBCon.ExecQuerySingleResult(Starter.strCriteria)
+	Catch
+		ToastMessageShow($"Unable to fetch Employee Name due to "$ & LastException.Message, False)
+		Log(LastException)
+		sRetVal = ""
+	End Try
+	Return sRetVal
 End Sub
