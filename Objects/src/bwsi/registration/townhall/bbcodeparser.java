@@ -35,13 +35,13 @@ public anywheresoftware.b4a.keywords.StringBuilderWrapper _errorstring = null;
 public bwsi.registration.townhall.main _main = null;
 public bwsi.registration.townhall.actregistration _actregistration = null;
 public bwsi.registration.townhall.registration _registration = null;
-public bwsi.registration.townhall.mainscreen _mainscreen = null;
-public bwsi.registration.townhall.scale _scale = null;
-public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.addemployee _addemployee = null;
 public bwsi.registration.townhall.globalvar _globalvar = null;
 public bwsi.registration.townhall.dbfunctions _dbfunctions = null;
+public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.dbutils _dbutils = null;
+public bwsi.registration.townhall.mainscreen _mainscreen = null;
+public bwsi.registration.townhall.scale _scale = null;
 public bwsi.registration.townhall.starter _starter = null;
 public bwsi.registration.townhall.httputils2service _httputils2service = null;
 public bwsi.registration.townhall.b4xcollections _b4xcollections = null;
@@ -196,7 +196,7 @@ String _s = "";
  //BA.debugLineNum = 154;BA.debugLine="Dim s As String = $\"Error (position - ${Start}):";
 _s = ("Error (position - "+__c.SmartStringFormatter("",(Object)(_start))+"): "+__c.SmartStringFormatter("",(Object)(_msg))+"");
  //BA.debugLineNum = 156;BA.debugLine="LogColor(s, Colors.Red)";
-__c.LogImpl("932833539",_s,__c.Colors.Red);
+__c.LogImpl("933292291",_s,__c.Colors.Red);
  //BA.debugLineNum = 160;BA.debugLine="ErrorString.Append(s).Append(CRLF)";
 _errorstring.Append(_s).Append(__c.CRLF);
  //BA.debugLineNum = 161;BA.debugLine="End Sub";
@@ -942,7 +942,7 @@ _name = BA.ObjectToString(_tag.Extra /*anywheresoftware.b4a.objects.collections.
  //BA.debugLineNum = 249;BA.debugLine="If mTextEngine.CustomFonts.ContainsKey(name) =";
 if (_mtextengine._customfonts /*anywheresoftware.b4a.objects.collections.Map*/ .ContainsKey((Object)(_name))==__c.False) { 
  //BA.debugLineNum = 250;BA.debugLine="Log(\"Font missing from TextEngine.CustomFonts";
-__c.LogImpl("933095740","Font missing from TextEngine.CustomFonts: "+_name,0);
+__c.LogImpl("933554492","Font missing from TextEngine.CustomFonts: "+_name,0);
  }else {
  //BA.debugLineNum = 252;BA.debugLine="Dim NewFont As B4XFont =  mTextEngine.CustomF";
 _newfont = (anywheresoftware.b4a.objects.B4XViewWrapper.B4XFont)(_mtextengine._customfonts /*anywheresoftware.b4a.objects.collections.Map*/ .Get((Object)(_name)));

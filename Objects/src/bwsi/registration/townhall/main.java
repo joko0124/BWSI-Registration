@@ -353,13 +353,13 @@ public anywheresoftware.b4a.objects.EditTextWrapper _txtempname = null;
 public de.amberhome.objects.appcompat.ACButtonWrapper _btncancel = null;
 public bwsi.registration.townhall.actregistration _actregistration = null;
 public bwsi.registration.townhall.registration _registration = null;
-public bwsi.registration.townhall.mainscreen _mainscreen = null;
-public bwsi.registration.townhall.scale _scale = null;
-public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.addemployee _addemployee = null;
 public bwsi.registration.townhall.globalvar _globalvar = null;
 public bwsi.registration.townhall.dbfunctions _dbfunctions = null;
+public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.dbutils _dbutils = null;
+public bwsi.registration.townhall.mainscreen _mainscreen = null;
+public bwsi.registration.townhall.scale _scale = null;
 public bwsi.registration.townhall.starter _starter = null;
 public bwsi.registration.townhall.httputils2service _httputils2service = null;
 public bwsi.registration.townhall.b4xcollections _b4xcollections = null;
@@ -369,15 +369,15 @@ public static boolean isAnyActivityVisible() {
 vis = vis | (main.mostCurrent != null);
 vis = vis | (actregistration.mostCurrent != null);
 vis = vis | (registration.mostCurrent != null);
-vis = vis | (mainscreen.mostCurrent != null);
-vis = vis | (addguest.mostCurrent != null);
 vis = vis | (addemployee.mostCurrent != null);
+vis = vis | (addguest.mostCurrent != null);
+vis = vis | (mainscreen.mostCurrent != null);
 return vis;}
 public static String  _activity_click() throws Exception{
- //BA.debugLineNum = 72;BA.debugLine="Sub Activity_Click";
- //BA.debugLineNum = 73;BA.debugLine="StartActivity(MainScreen)";
+ //BA.debugLineNum = 73;BA.debugLine="Sub Activity_Click";
+ //BA.debugLineNum = 74;BA.debugLine="StartActivity(MainScreen)";
 anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(mostCurrent._mainscreen.getObject()));
- //BA.debugLineNum = 74;BA.debugLine="End Sub";
+ //BA.debugLineNum = 75;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_create(boolean _firsttime) throws Exception{
@@ -405,32 +405,32 @@ mostCurrent._btncancel.setBackground((android.graphics.drawable.Drawable)(mostCu
 return "";
 }
 public static boolean  _activity_keypress(int _keycode) throws Exception{
- //BA.debugLineNum = 76;BA.debugLine="Sub Activity_KeyPress (KeyCode As Int) As Boolean";
- //BA.debugLineNum = 77;BA.debugLine="If KeyCode = 4 Then";
+ //BA.debugLineNum = 77;BA.debugLine="Sub Activity_KeyPress (KeyCode As Int) As Boolean";
+ //BA.debugLineNum = 78;BA.debugLine="If KeyCode = 4 Then";
 if (_keycode==4) { 
- //BA.debugLineNum = 78;BA.debugLine="If pnlSettings.Visible = True Then";
+ //BA.debugLineNum = 79;BA.debugLine="If pnlSettings.Visible = True Then";
 if (mostCurrent._pnlsettings.getVisible()==anywheresoftware.b4a.keywords.Common.True) { 
- //BA.debugLineNum = 79;BA.debugLine="If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtEmpNam";
+ //BA.debugLineNum = 80;BA.debugLine="If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtEmpNam";
 if (mostCurrent._globalvar._sf /*adr.stringfunctions.stringfunctions*/ ._vvv7(mostCurrent._globalvar._sf /*adr.stringfunctions.stringfunctions*/ ._vvvvvvv4(mostCurrent._txtempname.getText()))>0) { 
- //BA.debugLineNum = 80;BA.debugLine="txtEmpName.Text = \"\"";
+ //BA.debugLineNum = 81;BA.debugLine="txtEmpName.Text = \"\"";
 mostCurrent._txtempname.setText(BA.ObjectToCharSequence(""));
  }else {
- //BA.debugLineNum = 82;BA.debugLine="btnCancel_Click";
+ //BA.debugLineNum = 83;BA.debugLine="btnCancel_Click";
 _btncancel_click();
  };
  };
- //BA.debugLineNum = 85;BA.debugLine="Return True";
+ //BA.debugLineNum = 86;BA.debugLine="Return True";
 if (true) return anywheresoftware.b4a.keywords.Common.True;
  }else {
- //BA.debugLineNum = 87;BA.debugLine="Return False";
+ //BA.debugLineNum = 88;BA.debugLine="Return False";
 if (true) return anywheresoftware.b4a.keywords.Common.False;
  };
- //BA.debugLineNum = 89;BA.debugLine="End Sub";
+ //BA.debugLineNum = 90;BA.debugLine="End Sub";
 return false;
 }
 public static String  _activity_pause(boolean _userclosed) throws Exception{
- //BA.debugLineNum = 68;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
- //BA.debugLineNum = 70;BA.debugLine="End Sub";
+ //BA.debugLineNum = 69;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
+ //BA.debugLineNum = 71;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_resume() throws Exception{
@@ -442,36 +442,38 @@ if (anywheresoftware.b4a.keywords.Common.Not(mostCurrent._dbfunctions._isthereas
  //BA.debugLineNum = 62;BA.debugLine="pnlSettings.Visible = True";
 mostCurrent._pnlsettings.setVisible(anywheresoftware.b4a.keywords.Common.True);
  }else {
- //BA.debugLineNum = 64;BA.debugLine="pnlSettings.Visible = False";
+ //BA.debugLineNum = 64;BA.debugLine="GlobalVar.AssignedEmp = DBFunctions.GetAssignedE";
+mostCurrent._globalvar._assignedemp /*String*/  = mostCurrent._dbfunctions._getassignedemp /*String*/ (mostCurrent.activityBA);
+ //BA.debugLineNum = 65;BA.debugLine="pnlSettings.Visible = False";
 mostCurrent._pnlsettings.setVisible(anywheresoftware.b4a.keywords.Common.False);
  };
- //BA.debugLineNum = 66;BA.debugLine="End Sub";
+ //BA.debugLineNum = 67;BA.debugLine="End Sub";
 return "";
 }
 public static String  _adminpassword_buttonpressed(de.amberhome.materialdialogs.MaterialDialogWrapper _dialog,String _action) throws Exception{
- //BA.debugLineNum = 220;BA.debugLine="Sub AdminPassword_ButtonPressed (Dialog As Materia";
- //BA.debugLineNum = 221;BA.debugLine="Select Case Action";
+ //BA.debugLineNum = 221;BA.debugLine="Sub AdminPassword_ButtonPressed (Dialog As Materia";
+ //BA.debugLineNum = 222;BA.debugLine="Select Case Action";
 switch (BA.switchObjectToInt(_action,_dialog.ACTION_POSITIVE,_dialog.ACTION_NEGATIVE)) {
 case 0: {
- //BA.debugLineNum = 223;BA.debugLine="If strPassword <> GlobalVar.AdminPassword Then";
+ //BA.debugLineNum = 224;BA.debugLine="If strPassword <> GlobalVar.AdminPassword Then";
 if ((mostCurrent._strpassword).equals(mostCurrent._globalvar._adminpassword /*String*/ ) == false) { 
- //BA.debugLineNum = 224;BA.debugLine="vibration.vibrateOnce(2000)";
+ //BA.debugLineNum = 225;BA.debugLine="vibration.vibrateOnce(2000)";
 _vibration.vibrateOnce(processBA,(long) (2000));
- //BA.debugLineNum = 225;BA.debugLine="PasswordError";
+ //BA.debugLineNum = 226;BA.debugLine="PasswordError";
 _passworderror();
- //BA.debugLineNum = 226;BA.debugLine="Return";
+ //BA.debugLineNum = 227;BA.debugLine="Return";
 if (true) return "";
  };
- //BA.debugLineNum = 229;BA.debugLine="If Not(UpdateAreaID(GlobalVar.AreaID)) Then";
+ //BA.debugLineNum = 230;BA.debugLine="If Not(UpdateAreaID(GlobalVar.AreaID)) Then";
 if (anywheresoftware.b4a.keywords.Common.Not(_updateareaid(mostCurrent._globalvar._areaid /*int*/ ))) { 
- //BA.debugLineNum = 230;BA.debugLine="ProgressDialogHide";
+ //BA.debugLineNum = 231;BA.debugLine="ProgressDialogHide";
 anywheresoftware.b4a.keywords.Common.ProgressDialogHide();
- //BA.debugLineNum = 231;BA.debugLine="Return";
+ //BA.debugLineNum = 232;BA.debugLine="Return";
 if (true) return "";
  }else {
- //BA.debugLineNum = 233;BA.debugLine="ProgressDialogHide";
+ //BA.debugLineNum = 234;BA.debugLine="ProgressDialogHide";
 anywheresoftware.b4a.keywords.Common.ProgressDialogHide();
- //BA.debugLineNum = 234;BA.debugLine="ShowSuccessMsg($\"SUCCESSFULLY SAVED\"$, $\"Selec";
+ //BA.debugLineNum = 235;BA.debugLine="ShowSuccessMsg($\"SUCCESSFULLY SAVED\"$, $\"Selec";
 _showsuccessmsg(("SUCCESSFULLY SAVED"),("Selected Area has been successfully set!"));
  };
  break; }
@@ -479,166 +481,166 @@ case 1: {
  break; }
 }
 ;
- //BA.debugLineNum = 243;BA.debugLine="End Sub";
+ //BA.debugLineNum = 244;BA.debugLine="End Sub";
 return "";
 }
 public static String  _adminpassword_inputchanged(de.amberhome.materialdialogs.MaterialDialogWrapper _mdialog,String _spassword) throws Exception{
- //BA.debugLineNum = 211;BA.debugLine="Private Sub AdminPassword_InputChanged (mDialog As";
- //BA.debugLineNum = 212;BA.debugLine="If sPassword.Length = 0 Then";
+ //BA.debugLineNum = 212;BA.debugLine="Private Sub AdminPassword_InputChanged (mDialog As";
+ //BA.debugLineNum = 213;BA.debugLine="If sPassword.Length = 0 Then";
 if (_spassword.length()==0) { 
- //BA.debugLineNum = 213;BA.debugLine="mDialog.EnableActionButton(mDialog.ACTION_POSITI";
+ //BA.debugLineNum = 214;BA.debugLine="mDialog.EnableActionButton(mDialog.ACTION_POSITI";
 _mdialog.EnableActionButton(_mdialog.ACTION_POSITIVE,anywheresoftware.b4a.keywords.Common.False);
  }else {
- //BA.debugLineNum = 215;BA.debugLine="mDialog.EnableActionButton(mDialog.ACTION_POSITI";
+ //BA.debugLineNum = 216;BA.debugLine="mDialog.EnableActionButton(mDialog.ACTION_POSITI";
 _mdialog.EnableActionButton(_mdialog.ACTION_POSITIVE,anywheresoftware.b4a.keywords.Common.True);
  };
- //BA.debugLineNum = 217;BA.debugLine="strPassword = sPassword";
+ //BA.debugLineNum = 218;BA.debugLine="strPassword = sPassword";
 mostCurrent._strpassword = _spassword;
- //BA.debugLineNum = 218;BA.debugLine="End Sub";
+ //BA.debugLineNum = 219;BA.debugLine="End Sub";
 return "";
 }
 public static String  _areaselected_onitemclick(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,String _selection,int _position,long _id) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 144;BA.debugLine="Private Sub AreaSelected_OnItemClick (View As View";
- //BA.debugLineNum = 145;BA.debugLine="ToastMessageShow(Selection&\" Selected! (Position";
+ //BA.debugLineNum = 145;BA.debugLine="Private Sub AreaSelected_OnItemClick (View As View";
+ //BA.debugLineNum = 146;BA.debugLine="ToastMessageShow(Selection&\" Selected! (Position";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(_selection+" Selected! (Position : "+BA.NumberToString(_position)+")"),anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 146;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 147;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 147;BA.debugLine="Alert.Initialize.Dismiss2";
+ //BA.debugLineNum = 148;BA.debugLine="Alert.Initialize.Dismiss2";
 _alert.Initialize().Dismiss2();
- //BA.debugLineNum = 148;BA.debugLine="GlobalVar.AreaID = GetAreaIDByAreaName(Selection)";
+ //BA.debugLineNum = 149;BA.debugLine="GlobalVar.AreaID = GetAreaIDByAreaName(Selection)";
 mostCurrent._globalvar._areaid /*int*/  = _getareaidbyareaname(_selection);
- //BA.debugLineNum = 149;BA.debugLine="ShowAdminPassword";
+ //BA.debugLineNum = 150;BA.debugLine="ShowAdminPassword";
 _showadminpassword();
- //BA.debugLineNum = 150;BA.debugLine="End Sub";
+ //BA.debugLineNum = 151;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnarea_click() throws Exception{
- //BA.debugLineNum = 103;BA.debugLine="Sub btnArea_Click";
- //BA.debugLineNum = 104;BA.debugLine="pnlAreas_Click";
+ //BA.debugLineNum = 104;BA.debugLine="Sub btnArea_Click";
+ //BA.debugLineNum = 105;BA.debugLine="pnlAreas_Click";
 _pnlareas_click();
- //BA.debugLineNum = 105;BA.debugLine="End Sub";
+ //BA.debugLineNum = 106;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btncancel_click() throws Exception{
- //BA.debugLineNum = 559;BA.debugLine="Sub btnCancel_Click";
- //BA.debugLineNum = 560;BA.debugLine="ShowConfirmClose";
+ //BA.debugLineNum = 560;BA.debugLine="Sub btnCancel_Click";
+ //BA.debugLineNum = 561;BA.debugLine="ShowConfirmClose";
 _showconfirmclose();
- //BA.debugLineNum = 561;BA.debugLine="End Sub";
+ //BA.debugLineNum = 562;BA.debugLine="End Sub";
 return "";
 }
 public static String  _btnsave_click() throws Exception{
- //BA.debugLineNum = 355;BA.debugLine="Sub btnSave_Click";
- //BA.debugLineNum = 356;BA.debugLine="If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtEmpName.";
+ //BA.debugLineNum = 356;BA.debugLine="Sub btnSave_Click";
+ //BA.debugLineNum = 357;BA.debugLine="If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtEmpName.";
 if (mostCurrent._globalvar._sf /*adr.stringfunctions.stringfunctions*/ ._vvv7(mostCurrent._globalvar._sf /*adr.stringfunctions.stringfunctions*/ ._vvvvvvv4(mostCurrent._txtempname.getText()))<=0) { 
- //BA.debugLineNum = 357;BA.debugLine="ShowUserError($\"E R R O R!\"$, $\"Employee Name ca";
+ //BA.debugLineNum = 358;BA.debugLine="ShowUserError($\"E R R O R!\"$, $\"Employee Name ca";
 _showusererror(("E R R O R!"),("Employee Name cannot be Blank!"));
- //BA.debugLineNum = 358;BA.debugLine="Return";
+ //BA.debugLineNum = 359;BA.debugLine="Return";
 if (true) return "";
  };
- //BA.debugLineNum = 360;BA.debugLine="ConfirmSave(txtEmpName.Text)";
+ //BA.debugLineNum = 361;BA.debugLine="ConfirmSave(txtEmpName.Text)";
 _confirmsave(mostCurrent._txtempname.getText());
- //BA.debugLineNum = 361;BA.debugLine="End Sub";
+ //BA.debugLineNum = 362;BA.debugLine="End Sub";
 return "";
 }
 public static String  _closeapp_onnegativeclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 500;BA.debugLine="Private Sub CloseApp_OnNegativeClicked (View As Vi";
- //BA.debugLineNum = 501;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 501;BA.debugLine="Private Sub CloseApp_OnNegativeClicked (View As Vi";
+ //BA.debugLineNum = 502;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 502;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 503;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 503;BA.debugLine="ToastMessageShow($\"Canceled!\"$, True)";
+ //BA.debugLineNum = 504;BA.debugLine="ToastMessageShow($\"Canceled!\"$, True)";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Canceled!")),anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 504;BA.debugLine="End Sub";
+ //BA.debugLineNum = 505;BA.debugLine="End Sub";
 return "";
 }
 public static String  _closeapp_onpositiveclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 506;BA.debugLine="Private Sub CloseApp_OnPositiveClicked (View As Vi";
- //BA.debugLineNum = 507;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 507;BA.debugLine="Private Sub CloseApp_OnPositiveClicked (View As Vi";
+ //BA.debugLineNum = 508;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 508;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 509;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 509;BA.debugLine="ExitApplication";
+ //BA.debugLineNum = 510;BA.debugLine="ExitApplication";
 anywheresoftware.b4a.keywords.Common.ExitApplication();
- //BA.debugLineNum = 511;BA.debugLine="End Sub";
+ //BA.debugLineNum = 512;BA.debugLine="End Sub";
 return "";
 }
 public static String  _closeappfontsizebinder_onbindview(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,int _viewtype) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
 anywheresoftware.b4a.objects.LabelWrapper _lbl = null;
 anywheresoftware.b4a.objects.CSBuilder _cs = null;
- //BA.debugLineNum = 513;BA.debugLine="Private Sub CloseAppFontSizeBinder_OnBindView (Vie";
- //BA.debugLineNum = 514;BA.debugLine="Dim alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 514;BA.debugLine="Private Sub CloseAppFontSizeBinder_OnBindView (Vie";
+ //BA.debugLineNum = 515;BA.debugLine="Dim alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 515;BA.debugLine="alert.Initialize";
+ //BA.debugLineNum = 516;BA.debugLine="alert.Initialize";
 _alert.Initialize();
- //BA.debugLineNum = 516;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
+ //BA.debugLineNum = 517;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
 if (_viewtype==_alert.VIEW_TITLE) { 
- //BA.debugLineNum = 517;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 518;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 518;BA.debugLine="Dim CS As CSBuilder";
+ //BA.debugLineNum = 519;BA.debugLine="Dim CS As CSBuilder";
 _cs = new anywheresoftware.b4a.objects.CSBuilder();
- //BA.debugLineNum = 519;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
+ //BA.debugLineNum = 520;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
 _cs.Initialize().Typeface(anywheresoftware.b4a.keywords.Common.Typeface.DEFAULT_BOLD).Typeface(anywheresoftware.b4a.keywords.Common.Typeface.getFONTAWESOME()).Size((int) (20)).Color(anywheresoftware.b4a.keywords.Common.Colors.Red).Append(BA.ObjectToCharSequence(BA.ObjectToString(anywheresoftware.b4a.keywords.Common.Chr((int) (0xf059)))+"  "));
- //BA.debugLineNum = 520;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
+ //BA.debugLineNum = 521;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
 _cs.Typeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).Size((int) (18)).Append(BA.ObjectToCharSequence(_lbl.getText())).Pop();
- //BA.debugLineNum = 522;BA.debugLine="lbl.Text = CS.PopAll";
+ //BA.debugLineNum = 523;BA.debugLine="lbl.Text = CS.PopAll";
 _lbl.setText(BA.ObjectToCharSequence(_cs.PopAll().getObject()));
  };
- //BA.debugLineNum = 525;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
+ //BA.debugLineNum = 526;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
 if (_viewtype==_alert.VIEW_MESSAGE) { 
- //BA.debugLineNum = 526;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 527;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 527;BA.debugLine="lbl.TextSize = 16";
+ //BA.debugLineNum = 528;BA.debugLine="lbl.TextSize = 16";
 _lbl.setTextSize((float) (16));
- //BA.debugLineNum = 528;BA.debugLine="lbl.TextColor = Colors.Gray";
+ //BA.debugLineNum = 529;BA.debugLine="lbl.TextColor = Colors.Gray";
 _lbl.setTextColor(anywheresoftware.b4a.keywords.Common.Colors.Gray);
  };
- //BA.debugLineNum = 530;BA.debugLine="End Sub";
+ //BA.debugLineNum = 531;BA.debugLine="End Sub";
 return "";
 }
 public static String  _confirmsave(String _sempname) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 368;BA.debugLine="Private Sub ConfirmSave (sEmpName As String)";
- //BA.debugLineNum = 369;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 369;BA.debugLine="Private Sub ConfirmSave (sEmpName As String)";
+ //BA.debugLineNum = 370;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 371;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
+ //BA.debugLineNum = 372;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
 _alert.Initialize().Create(mostCurrent.activityBA).SetDialogStyleName("MyDialogDisableStatus").SetStyle(_alert.getSTYLE_DIALOGUE()).SetCancelable(anywheresoftware.b4a.keywords.Common.False).SetTitle(("CONFIRM ADD USER")).SetMessage(("Do you want to Save ")+_sempname+anywheresoftware.b4a.keywords.Common.CRLF+(" as the User of this device?")).SetPositiveText("YES").SetPositiveColor((int) (mostCurrent._globalvar._poscolor /*double*/ )).SetPositiveTypeface((android.graphics.Typeface)(mostCurrent._globalvar._fontbold /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetNegativeText("NO").SetNegativeColor((int) (mostCurrent._globalvar._negcolor /*double*/ )).SetNegativeTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetTitleTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetMessageTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetOnPositiveClicked(mostCurrent.activityBA,"SaveUser").SetOnNegativeClicked(mostCurrent.activityBA,"SaveUser").SetOnViewBinder(mostCurrent.activityBA,"SaveUserFontSizeBinder");
- //BA.debugLineNum = 389;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
+ //BA.debugLineNum = 390;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
 _alert.SetDialogBackground((android.graphics.drawable.Drawable)(mostCurrent._globalvar._mycd /*anywheresoftware.b4a.objects.drawable.ColorDrawable*/ (mostCurrent.activityBA).getObject()));
- //BA.debugLineNum = 390;BA.debugLine="Alert.Build.Show";
+ //BA.debugLineNum = 391;BA.debugLine="Alert.Build.Show";
 _alert.Build().Show();
- //BA.debugLineNum = 392;BA.debugLine="End Sub";
+ //BA.debugLineNum = 393;BA.debugLine="End Sub";
 return "";
 }
 public static int  _getareaidbyareaname(String _sareaname) throws Exception{
 int _iretval = 0;
- //BA.debugLineNum = 152;BA.debugLine="Private Sub GetAreaIDByAreaName (sAreaName As Stri";
- //BA.debugLineNum = 153;BA.debugLine="Dim iRetVal As Int";
+ //BA.debugLineNum = 153;BA.debugLine="Private Sub GetAreaIDByAreaName (sAreaName As Stri";
+ //BA.debugLineNum = 154;BA.debugLine="Dim iRetVal As Int";
 _iretval = 0;
- //BA.debugLineNum = 155;BA.debugLine="Try";
-try { //BA.debugLineNum = 156;BA.debugLine="Starter.strCriteria = \"SELECT AreaID FROM tblAre";
+ //BA.debugLineNum = 156;BA.debugLine="Try";
+try { //BA.debugLineNum = 157;BA.debugLine="Starter.strCriteria = \"SELECT AreaID FROM tblAre";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT AreaID FROM tblAreas WHERE AreaName = '"+_sareaname+"'";
- //BA.debugLineNum = 157;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("8786437",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
- //BA.debugLineNum = 159;BA.debugLine="iRetVal = Starter.DBCon.ExecQuerySingleResult(St";
+ //BA.debugLineNum = 158;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
+anywheresoftware.b4a.keywords.Common.LogImpl("4786437",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+ //BA.debugLineNum = 160;BA.debugLine="iRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ )));
  } 
        catch (Exception e7) {
-			processBA.setLastException(e7); //BA.debugLineNum = 161;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
+			processBA.setLastException(e7); //BA.debugLineNum = 162;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA).getMessage()),anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 162;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("8786442",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
- //BA.debugLineNum = 163;BA.debugLine="iRetVal = 0";
+ //BA.debugLineNum = 163;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("4786442",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+ //BA.debugLineNum = 164;BA.debugLine="iRetVal = 0";
 _iretval = (int) (0);
  };
- //BA.debugLineNum = 165;BA.debugLine="Return iRetVal";
+ //BA.debugLineNum = 166;BA.debugLine="Return iRetVal";
 if (true) return _iretval;
- //BA.debugLineNum = 166;BA.debugLine="End Sub";
+ //BA.debugLineNum = 167;BA.debugLine="End Sub";
 return 0;
 }
 public static String  _globals() throws Exception{
@@ -670,10 +672,10 @@ mostCurrent._btncancel = new de.amberhome.objects.appcompat.ACButtonWrapper();
 return "";
 }
 public static String  _lblareaicon_click() throws Exception{
- //BA.debugLineNum = 99;BA.debugLine="Sub lblAreaIcon_Click";
- //BA.debugLineNum = 100;BA.debugLine="pnlAreas_Click";
+ //BA.debugLineNum = 100;BA.debugLine="Sub lblAreaIcon_Click";
+ //BA.debugLineNum = 101;BA.debugLine="pnlAreas_Click";
 _pnlareas_click();
- //BA.debugLineNum = 101;BA.debugLine="End Sub";
+ //BA.debugLineNum = 102;BA.debugLine="End Sub";
 return "";
 }
 public static String  _loadareas() throws Exception{
@@ -681,114 +683,114 @@ com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
 anywheresoftware.b4a.objects.collections.List _listitems = null;
 anywheresoftware.b4a.sql.SQL.CursorWrapper _rsareas = null;
 int _jj = 0;
- //BA.debugLineNum = 107;BA.debugLine="Private Sub LoadAreas";
- //BA.debugLineNum = 108;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 108;BA.debugLine="Private Sub LoadAreas";
+ //BA.debugLineNum = 109;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 109;BA.debugLine="Dim ListItems As List";
+ //BA.debugLineNum = 110;BA.debugLine="Dim ListItems As List";
 _listitems = new anywheresoftware.b4a.objects.collections.List();
- //BA.debugLineNum = 110;BA.debugLine="Dim rsAreas As Cursor";
+ //BA.debugLineNum = 111;BA.debugLine="Dim rsAreas As Cursor";
 _rsareas = new anywheresoftware.b4a.sql.SQL.CursorWrapper();
- //BA.debugLineNum = 112;BA.debugLine="ListItems.Initialize";
+ //BA.debugLineNum = 113;BA.debugLine="ListItems.Initialize";
 _listitems.Initialize();
- //BA.debugLineNum = 114;BA.debugLine="Try";
-try { //BA.debugLineNum = 115;BA.debugLine="Starter.strCriteria = \"SELECT * FROM tblAreas WH";
+ //BA.debugLineNum = 115;BA.debugLine="Try";
+try { //BA.debugLineNum = 116;BA.debugLine="Starter.strCriteria = \"SELECT * FROM tblAreas WH";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM tblAreas WHERE AreaID <> 14";
- //BA.debugLineNum = 116;BA.debugLine="LogColor(Starter.strCriteria, Colors.Cyan)";
-anywheresoftware.b4a.keywords.Common.LogImpl("8655369",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
- //BA.debugLineNum = 117;BA.debugLine="rsAreas = Starter.DBCon.ExecQuery(Starter.strCri";
+ //BA.debugLineNum = 117;BA.debugLine="LogColor(Starter.strCriteria, Colors.Cyan)";
+anywheresoftware.b4a.keywords.Common.LogImpl("4655369",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
+ //BA.debugLineNum = 118;BA.debugLine="rsAreas = Starter.DBCon.ExecQuery(Starter.strCri";
 _rsareas = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
- //BA.debugLineNum = 119;BA.debugLine="If rsAreas.RowCount > 0 Then";
+ //BA.debugLineNum = 120;BA.debugLine="If rsAreas.RowCount > 0 Then";
 if (_rsareas.getRowCount()>0) { 
- //BA.debugLineNum = 120;BA.debugLine="For jj = 0 To rsAreas.RowCount - 1";
+ //BA.debugLineNum = 121;BA.debugLine="For jj = 0 To rsAreas.RowCount - 1";
 {
 final int step10 = 1;
 final int limit10 = (int) (_rsareas.getRowCount()-1);
 _jj = (int) (0) ;
 for (;_jj <= limit10 ;_jj = _jj + step10 ) {
- //BA.debugLineNum = 121;BA.debugLine="rsAreas.Position = jj";
+ //BA.debugLineNum = 122;BA.debugLine="rsAreas.Position = jj";
 _rsareas.setPosition(_jj);
- //BA.debugLineNum = 122;BA.debugLine="ListItems.Add(rsAreas.GetString(\"AreaName\"))";
+ //BA.debugLineNum = 123;BA.debugLine="ListItems.Add(rsAreas.GetString(\"AreaName\"))";
 _listitems.Add((Object)(_rsareas.GetString("AreaName")));
  }
 };
  }else {
- //BA.debugLineNum = 125;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("8655378",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+ //BA.debugLineNum = 126;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("4655378",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  } 
        catch (Exception e18) {
-			processBA.setLastException(e18); //BA.debugLineNum = 128;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("8655381",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+			processBA.setLastException(e18); //BA.debugLineNum = 129;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("4655381",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
- //BA.debugLineNum = 132;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
+ //BA.debugLineNum = 133;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
 _alert.Initialize().Create(mostCurrent.activityBA).SetDialogStyleName("MyDialog").SetStyle(_alert.getSTYLE_SELECTOR()).SetOthers((java.util.ArrayList)(_listitems.getObject())).SetActionsheetTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetCancelable(anywheresoftware.b4a.keywords.Common.True).SetOnItemClickListener(mostCurrent.activityBA,"AreaSelected");
- //BA.debugLineNum = 140;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
+ //BA.debugLineNum = 141;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
 _alert.SetDialogBackground((android.graphics.drawable.Drawable)(mostCurrent._globalvar._mycd /*anywheresoftware.b4a.objects.drawable.ColorDrawable*/ (mostCurrent.activityBA).getObject()));
- //BA.debugLineNum = 141;BA.debugLine="Alert.Build.Show";
+ //BA.debugLineNum = 142;BA.debugLine="Alert.Build.Show";
 _alert.Build().Show();
- //BA.debugLineNum = 142;BA.debugLine="End Sub";
+ //BA.debugLineNum = 143;BA.debugLine="End Sub";
 return "";
 }
 public static String  _passwordbinder_onbindview(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,int _viewtype) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
 anywheresoftware.b4a.objects.LabelWrapper _lbl = null;
 anywheresoftware.b4a.objects.CSBuilder _cs = null;
- //BA.debugLineNum = 287;BA.debugLine="Private Sub PasswordBinder_OnBindView (View As Vie";
- //BA.debugLineNum = 288;BA.debugLine="Dim alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 288;BA.debugLine="Private Sub PasswordBinder_OnBindView (View As Vie";
+ //BA.debugLineNum = 289;BA.debugLine="Dim alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 289;BA.debugLine="alert.Initialize";
+ //BA.debugLineNum = 290;BA.debugLine="alert.Initialize";
 _alert.Initialize();
- //BA.debugLineNum = 290;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
+ //BA.debugLineNum = 291;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
 if (_viewtype==_alert.VIEW_TITLE) { 
- //BA.debugLineNum = 291;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 292;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 292;BA.debugLine="Dim CS As CSBuilder";
+ //BA.debugLineNum = 293;BA.debugLine="Dim CS As CSBuilder";
 _cs = new anywheresoftware.b4a.objects.CSBuilder();
- //BA.debugLineNum = 293;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
+ //BA.debugLineNum = 294;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
 _cs.Initialize().Typeface(anywheresoftware.b4a.keywords.Common.Typeface.DEFAULT_BOLD).Typeface(anywheresoftware.b4a.keywords.Common.Typeface.getFONTAWESOME()).Size((int) (20)).Color(anywheresoftware.b4a.keywords.Common.Colors.Red).Append(BA.ObjectToCharSequence(BA.ObjectToString(anywheresoftware.b4a.keywords.Common.Chr((int) (0xf059)))+"  "));
- //BA.debugLineNum = 294;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
+ //BA.debugLineNum = 295;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
 _cs.Typeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).Size((int) (18)).Append(BA.ObjectToCharSequence(_lbl.getText())).Pop();
- //BA.debugLineNum = 296;BA.debugLine="lbl.Text = CS.PopAll";
+ //BA.debugLineNum = 297;BA.debugLine="lbl.Text = CS.PopAll";
 _lbl.setText(BA.ObjectToCharSequence(_cs.PopAll().getObject()));
  };
- //BA.debugLineNum = 299;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
+ //BA.debugLineNum = 300;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
 if (_viewtype==_alert.VIEW_MESSAGE) { 
- //BA.debugLineNum = 300;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 301;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 301;BA.debugLine="lbl.TextSize = 16";
+ //BA.debugLineNum = 302;BA.debugLine="lbl.TextSize = 16";
 _lbl.setTextSize((float) (16));
- //BA.debugLineNum = 302;BA.debugLine="lbl.TextColor = Colors.Gray";
+ //BA.debugLineNum = 303;BA.debugLine="lbl.TextColor = Colors.Gray";
 _lbl.setTextColor(anywheresoftware.b4a.keywords.Common.Colors.Gray);
  };
- //BA.debugLineNum = 304;BA.debugLine="End Sub";
+ //BA.debugLineNum = 305;BA.debugLine="End Sub";
 return "";
 }
 public static String  _passworderror() throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 249;BA.debugLine="Private Sub PasswordError";
- //BA.debugLineNum = 250;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 250;BA.debugLine="Private Sub PasswordError";
+ //BA.debugLineNum = 251;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 252;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
+ //BA.debugLineNum = 253;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
 _alert.Initialize().Create(mostCurrent.activityBA).SetDialogStyleName("MyDialogDisableStatus").SetStyle(_alert.getSTYLE_DIALOGUE()).SetCancelable(anywheresoftware.b4a.keywords.Common.False).SetTitle(("ERROR PASSWORD")).SetMessage(("Password is incorrect!")+anywheresoftware.b4a.keywords.Common.CRLF+("Do you want To Try Again?")).SetPositiveText("YES").SetPositiveColor((int) (mostCurrent._globalvar._poscolor /*double*/ )).SetPositiveTypeface((android.graphics.Typeface)(mostCurrent._globalvar._fontbold /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetNegativeText("NO").SetNegativeColor((int) (mostCurrent._globalvar._negcolor /*double*/ )).SetNegativeTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetTitleTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetMessageTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetOnPositiveClicked(mostCurrent.activityBA,"RetryPassword").SetOnNegativeClicked(mostCurrent.activityBA,"RetryPassword").SetOnViewBinder(mostCurrent.activityBA,"PasswordBinder");
- //BA.debugLineNum = 270;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
+ //BA.debugLineNum = 271;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
 _alert.SetDialogBackground((android.graphics.drawable.Drawable)(mostCurrent._globalvar._mycd /*anywheresoftware.b4a.objects.drawable.ColorDrawable*/ (mostCurrent.activityBA).getObject()));
- //BA.debugLineNum = 271;BA.debugLine="Alert.Build.Show";
+ //BA.debugLineNum = 272;BA.debugLine="Alert.Build.Show";
 _alert.Build().Show();
- //BA.debugLineNum = 273;BA.debugLine="End Sub";
+ //BA.debugLineNum = 274;BA.debugLine="End Sub";
 return "";
 }
 public static String  _pnlareas_click() throws Exception{
- //BA.debugLineNum = 91;BA.debugLine="Sub pnlAreas_Click";
- //BA.debugLineNum = 96;BA.debugLine="LoadAreas";
+ //BA.debugLineNum = 92;BA.debugLine="Sub pnlAreas_Click";
+ //BA.debugLineNum = 97;BA.debugLine="LoadAreas";
 _loadareas();
- //BA.debugLineNum = 97;BA.debugLine="End Sub";
+ //BA.debugLineNum = 98;BA.debugLine="End Sub";
 return "";
 }
 public static String  _pnlsettings_touch(int _action,float _x,float _y) throws Exception{
- //BA.debugLineNum = 363;BA.debugLine="Sub pnlSettings_Touch (Action As Int, X As Float,";
- //BA.debugLineNum = 365;BA.debugLine="End Sub";
+ //BA.debugLineNum = 364;BA.debugLine="Sub pnlSettings_Touch (Action As Int, X As Float,";
+ //BA.debugLineNum = 366;BA.debugLine="End Sub";
 return "";
 }
 
@@ -800,13 +802,13 @@ public static void initializeProcessGlobals() {
 		        main._process_globals();
 actregistration._process_globals();
 registration._process_globals();
-mainscreen._process_globals();
-scale._process_globals();
-addguest._process_globals();
 addemployee._process_globals();
 globalvar._process_globals();
 dbfunctions._process_globals();
+addguest._process_globals();
 dbutils._process_globals();
+mainscreen._process_globals();
+scale._process_globals();
 starter._process_globals();
 httputils2service._process_globals();
 b4xcollections._process_globals();
@@ -828,341 +830,343 @@ _vibratepattern = new long[(int) (0)];
 return "";
 }
 public static String  _retrybutton_click() throws Exception{
- //BA.debugLineNum = 245;BA.debugLine="Private Sub RetryButton_Click()";
- //BA.debugLineNum = 246;BA.debugLine="ShowAdminPassword";
+ //BA.debugLineNum = 246;BA.debugLine="Private Sub RetryButton_Click()";
+ //BA.debugLineNum = 247;BA.debugLine="ShowAdminPassword";
 _showadminpassword();
- //BA.debugLineNum = 247;BA.debugLine="End Sub";
+ //BA.debugLineNum = 248;BA.debugLine="End Sub";
 return "";
 }
 public static String  _retrypassword_onnegativeclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 275;BA.debugLine="Private Sub RetryPassword_OnNegativeClicked (View";
- //BA.debugLineNum = 276;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 276;BA.debugLine="Private Sub RetryPassword_OnNegativeClicked (View";
+ //BA.debugLineNum = 277;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 277;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 278;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 278;BA.debugLine="ToastMessageShow($\"Canceled!\"$, True)";
+ //BA.debugLineNum = 279;BA.debugLine="ToastMessageShow($\"Canceled!\"$, True)";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Canceled!")),anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 279;BA.debugLine="End Sub";
+ //BA.debugLineNum = 280;BA.debugLine="End Sub";
 return "";
 }
 public static String  _retrypassword_onpositiveclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 281;BA.debugLine="Private Sub RetryPassword_OnPositiveClicked (View";
- //BA.debugLineNum = 282;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 282;BA.debugLine="Private Sub RetryPassword_OnPositiveClicked (View";
+ //BA.debugLineNum = 283;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 283;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 284;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 284;BA.debugLine="ShowAdminPassword";
+ //BA.debugLineNum = 285;BA.debugLine="ShowAdminPassword";
 _showadminpassword();
- //BA.debugLineNum = 285;BA.debugLine="End Sub";
+ //BA.debugLineNum = 286;BA.debugLine="End Sub";
 return "";
 }
 public static boolean  _saveuser(String _sempname) throws Exception{
 boolean _bretval = false;
- //BA.debugLineNum = 534;BA.debugLine="Private Sub SaveUser(sEmpName As String) As Boolea";
- //BA.debugLineNum = 535;BA.debugLine="Dim bRetVal As Boolean";
+ //BA.debugLineNum = 535;BA.debugLine="Private Sub SaveUser(sEmpName As String) As Boolea";
+ //BA.debugLineNum = 536;BA.debugLine="Dim bRetVal As Boolean";
 _bretval = false;
- //BA.debugLineNum = 537;BA.debugLine="bRetVal = False";
+ //BA.debugLineNum = 538;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
- //BA.debugLineNum = 539;BA.debugLine="Starter.DBCon.BeginTransaction";
+ //BA.debugLineNum = 540;BA.debugLine="Starter.DBCon.BeginTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .BeginTransaction();
- //BA.debugLineNum = 540;BA.debugLine="Try";
-try { //BA.debugLineNum = 542;BA.debugLine="Starter.strCriteria = \"UPDATE android_metadata \"";
-mostCurrent._starter._strcriteria /*String*/  = "UPDATE android_metadata "+"SET AssignedTo = ? ";
- //BA.debugLineNum = 544;BA.debugLine="Starter.DBCon.ExecNonQuery2(Starter.strCriteria,";
+ //BA.debugLineNum = 541;BA.debugLine="Try";
+try { //BA.debugLineNum = 543;BA.debugLine="Starter.strCriteria = \"UPDATE tblSysParam \" & _";
+mostCurrent._starter._strcriteria /*String*/  = "UPDATE tblSysParam "+"SET AssignedTo = ? ";
+ //BA.debugLineNum = 545;BA.debugLine="Starter.DBCon.ExecNonQuery2(Starter.strCriteria,";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2(mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.ArrayToList(new String[]{_sempname}));
- //BA.debugLineNum = 546;BA.debugLine="Starter.DBCon.TransactionSuccessful";
+ //BA.debugLineNum = 547;BA.debugLine="Starter.DBCon.TransactionSuccessful";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .TransactionSuccessful();
- //BA.debugLineNum = 547;BA.debugLine="ShowSuccessMsg($\"SUCCESS\"$, $\"Assigned employee";
+ //BA.debugLineNum = 548;BA.debugLine="ShowSuccessMsg($\"SUCCESS\"$, $\"Assigned employee";
 _showsuccessmsg(("SUCCESS"),("Assigned employee for this device has been successfully updated!"));
- //BA.debugLineNum = 549;BA.debugLine="bRetVal = True";
+ //BA.debugLineNum = 549;BA.debugLine="GlobalVar.AssignedEmp = sEmpName";
+mostCurrent._globalvar._assignedemp /*String*/  = _sempname;
+ //BA.debugLineNum = 550;BA.debugLine="bRetVal = True";
 _bretval = anywheresoftware.b4a.keywords.Common.True;
  } 
-       catch (Exception e11) {
-			processBA.setLastException(e11); //BA.debugLineNum = 551;BA.debugLine="bRetVal = False";
+       catch (Exception e12) {
+			processBA.setLastException(e12); //BA.debugLineNum = 552;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
- //BA.debugLineNum = 552;BA.debugLine="ShowUserError($\"ERROR\"$, $\"Unable to update due";
+ //BA.debugLineNum = 553;BA.debugLine="ShowUserError($\"ERROR\"$, $\"Unable to update due";
 _showusererror(("ERROR"),("Unable to update due to")+anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA).getMessage());
- //BA.debugLineNum = 553;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("82228243",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+ //BA.debugLineNum = 554;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("42490387",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
- //BA.debugLineNum = 555;BA.debugLine="Starter.DBCon.EndTransaction";
+ //BA.debugLineNum = 556;BA.debugLine="Starter.DBCon.EndTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .EndTransaction();
- //BA.debugLineNum = 556;BA.debugLine="Return bRetVal";
+ //BA.debugLineNum = 557;BA.debugLine="Return bRetVal";
 if (true) return _bretval;
- //BA.debugLineNum = 557;BA.debugLine="End Sub";
+ //BA.debugLineNum = 558;BA.debugLine="End Sub";
 return false;
 }
 public static String  _saveuser_onnegativeclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 394;BA.debugLine="Private Sub SaveUser_OnNegativeClicked (View As Vi";
- //BA.debugLineNum = 395;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 395;BA.debugLine="Private Sub SaveUser_OnNegativeClicked (View As Vi";
+ //BA.debugLineNum = 396;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 396;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 397;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 397;BA.debugLine="ToastMessageShow($\"Canceled!\"$, True)";
+ //BA.debugLineNum = 398;BA.debugLine="ToastMessageShow($\"Canceled!\"$, True)";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Canceled!")),anywheresoftware.b4a.keywords.Common.True);
- //BA.debugLineNum = 398;BA.debugLine="End Sub";
+ //BA.debugLineNum = 399;BA.debugLine="End Sub";
 return "";
 }
 public static String  _saveuser_onpositiveclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 400;BA.debugLine="Private Sub SaveUser_OnPositiveClicked (View As Vi";
- //BA.debugLineNum = 401;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 401;BA.debugLine="Private Sub SaveUser_OnPositiveClicked (View As Vi";
+ //BA.debugLineNum = 402;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 402;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 403;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 404;BA.debugLine="If SaveUser(txtEmpName.Text) = True Then";
+ //BA.debugLineNum = 405;BA.debugLine="If SaveUser(txtEmpName.Text) = True Then";
 if (_saveuser(mostCurrent._txtempname.getText())==anywheresoftware.b4a.keywords.Common.True) { 
- //BA.debugLineNum = 405;BA.debugLine="pnlSettings.Visible = False";
+ //BA.debugLineNum = 406;BA.debugLine="pnlSettings.Visible = False";
 mostCurrent._pnlsettings.setVisible(anywheresoftware.b4a.keywords.Common.False);
  };
- //BA.debugLineNum = 407;BA.debugLine="End Sub";
+ //BA.debugLineNum = 408;BA.debugLine="End Sub";
 return "";
 }
 public static String  _saveuserfontsizebinder_onbindview(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,int _viewtype) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
 anywheresoftware.b4a.objects.LabelWrapper _lbl = null;
 anywheresoftware.b4a.objects.CSBuilder _cs = null;
- //BA.debugLineNum = 409;BA.debugLine="Private Sub SaveUserFontSizeBinder_OnBindView (Vie";
- //BA.debugLineNum = 410;BA.debugLine="Dim alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 410;BA.debugLine="Private Sub SaveUserFontSizeBinder_OnBindView (Vie";
+ //BA.debugLineNum = 411;BA.debugLine="Dim alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 411;BA.debugLine="alert.Initialize";
+ //BA.debugLineNum = 412;BA.debugLine="alert.Initialize";
 _alert.Initialize();
- //BA.debugLineNum = 412;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
+ //BA.debugLineNum = 413;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
 if (_viewtype==_alert.VIEW_TITLE) { 
- //BA.debugLineNum = 413;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 414;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 414;BA.debugLine="Dim CS As CSBuilder";
+ //BA.debugLineNum = 415;BA.debugLine="Dim CS As CSBuilder";
 _cs = new anywheresoftware.b4a.objects.CSBuilder();
- //BA.debugLineNum = 415;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
+ //BA.debugLineNum = 416;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
 _cs.Initialize().Typeface(anywheresoftware.b4a.keywords.Common.Typeface.DEFAULT_BOLD).Typeface(anywheresoftware.b4a.keywords.Common.Typeface.getFONTAWESOME()).Size((int) (20)).Color(anywheresoftware.b4a.keywords.Common.Colors.Red).Append(BA.ObjectToCharSequence(BA.ObjectToString(anywheresoftware.b4a.keywords.Common.Chr((int) (0xf059)))+"  "));
- //BA.debugLineNum = 416;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
+ //BA.debugLineNum = 417;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
 _cs.Typeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).Size((int) (18)).Append(BA.ObjectToCharSequence(_lbl.getText())).Pop();
- //BA.debugLineNum = 418;BA.debugLine="lbl.Text = CS.PopAll";
+ //BA.debugLineNum = 419;BA.debugLine="lbl.Text = CS.PopAll";
 _lbl.setText(BA.ObjectToCharSequence(_cs.PopAll().getObject()));
  };
- //BA.debugLineNum = 421;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
+ //BA.debugLineNum = 422;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
 if (_viewtype==_alert.VIEW_MESSAGE) { 
- //BA.debugLineNum = 422;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 423;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 423;BA.debugLine="lbl.TextSize = 16";
+ //BA.debugLineNum = 424;BA.debugLine="lbl.TextSize = 16";
 _lbl.setTextSize((float) (16));
- //BA.debugLineNum = 424;BA.debugLine="lbl.TextColor = Colors.Gray";
+ //BA.debugLineNum = 425;BA.debugLine="lbl.TextColor = Colors.Gray";
 _lbl.setTextColor(anywheresoftware.b4a.keywords.Common.Colors.Gray);
  };
- //BA.debugLineNum = 426;BA.debugLine="End Sub";
+ //BA.debugLineNum = 427;BA.debugLine="End Sub";
 return "";
 }
 public static String  _showadminpassword() throws Exception{
 anywheresoftware.b4a.objects.CSBuilder _cscontent = null;
- //BA.debugLineNum = 191;BA.debugLine="Private Sub ShowAdminPassword()";
- //BA.debugLineNum = 192;BA.debugLine="Dim csContent As CSBuilder";
+ //BA.debugLineNum = 192;BA.debugLine="Private Sub ShowAdminPassword()";
+ //BA.debugLineNum = 193;BA.debugLine="Dim csContent As CSBuilder";
 _cscontent = new anywheresoftware.b4a.objects.CSBuilder();
- //BA.debugLineNum = 194;BA.debugLine="csContent.Initialize.Size(12).Color(Colors.Gray).";
+ //BA.debugLineNum = 195;BA.debugLine="csContent.Initialize.Size(12).Color(Colors.Gray).";
 _cscontent.Initialize().Size((int) (12)).Color(anywheresoftware.b4a.keywords.Common.Colors.Gray).Append(BA.ObjectToCharSequence(("Enter Administrative Password to Continue."))).PopAll();
- //BA.debugLineNum = 196;BA.debugLine="MatDialogBuilder.Initialize(\"AdminPassword\")";
+ //BA.debugLineNum = 197;BA.debugLine="MatDialogBuilder.Initialize(\"AdminPassword\")";
 mostCurrent._matdialogbuilder.Initialize(mostCurrent.activityBA,"AdminPassword");
- //BA.debugLineNum = 197;BA.debugLine="MatDialogBuilder.Theme(MatDialogBuilder.THEME_LIG";
+ //BA.debugLineNum = 198;BA.debugLine="MatDialogBuilder.Theme(MatDialogBuilder.THEME_LIG";
 mostCurrent._matdialogbuilder.Theme(mostCurrent._matdialogbuilder.THEME_LIGHT);
- //BA.debugLineNum = 198;BA.debugLine="MatDialogBuilder.Title($\"ADMINISTRATIVE PASSWORD\"";
+ //BA.debugLineNum = 199;BA.debugLine="MatDialogBuilder.Title($\"ADMINISTRATIVE PASSWORD\"";
 mostCurrent._matdialogbuilder.Title(BA.ObjectToCharSequence(("ADMINISTRATIVE PASSWORD"))).TitleColor(anywheresoftware.b4a.keywords.Common.Colors.Red).TitleGravity(mostCurrent._matdialogbuilder.GRAVITY_START);
- //BA.debugLineNum = 199;BA.debugLine="MatDialogBuilder.IconRes(GlobalVar.WarningIcon).L";
+ //BA.debugLineNum = 200;BA.debugLine="MatDialogBuilder.IconRes(GlobalVar.WarningIcon).L";
 mostCurrent._matdialogbuilder.IconRes(mostCurrent._globalvar._warningicon /*String*/ ).LimitIconToDefaultSize();
- //BA.debugLineNum = 200;BA.debugLine="MatDialogBuilder.InputType(MatDialogBuilder.TYPE_";
+ //BA.debugLineNum = 201;BA.debugLine="MatDialogBuilder.InputType(MatDialogBuilder.TYPE_";
 mostCurrent._matdialogbuilder.InputType(mostCurrent._matdialogbuilder.TYPE_TEXT_VARIATION_PASSWORD);
- //BA.debugLineNum = 201;BA.debugLine="MatDialogBuilder.Input2($\"Enter Admin Password he";
+ //BA.debugLineNum = 202;BA.debugLine="MatDialogBuilder.Input2($\"Enter Admin Password he";
 mostCurrent._matdialogbuilder.Input2(BA.ObjectToCharSequence(("Enter Admin Password here...")),BA.ObjectToCharSequence(("")),anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 202;BA.debugLine="MatDialogBuilder.AlwaysCallInputCallback";
+ //BA.debugLineNum = 203;BA.debugLine="MatDialogBuilder.AlwaysCallInputCallback";
 mostCurrent._matdialogbuilder.AlwaysCallInputCallback();
- //BA.debugLineNum = 203;BA.debugLine="MatDialogBuilder.Content(csContent)";
+ //BA.debugLineNum = 204;BA.debugLine="MatDialogBuilder.Content(csContent)";
 mostCurrent._matdialogbuilder.Content(BA.ObjectToCharSequence(_cscontent.getObject()));
- //BA.debugLineNum = 204;BA.debugLine="MatDialogBuilder.ContentColor(Colors.Black)";
+ //BA.debugLineNum = 205;BA.debugLine="MatDialogBuilder.ContentColor(Colors.Black)";
 mostCurrent._matdialogbuilder.ContentColor(anywheresoftware.b4a.keywords.Common.Colors.Black);
- //BA.debugLineNum = 205;BA.debugLine="MatDialogBuilder.PositiveText($\"OK\"$).PositiveCol";
+ //BA.debugLineNum = 206;BA.debugLine="MatDialogBuilder.PositiveText($\"OK\"$).PositiveCol";
 mostCurrent._matdialogbuilder.PositiveText(BA.ObjectToCharSequence(("OK"))).PositiveColor((int) (mostCurrent._globalvar._poscolor /*double*/ ));
- //BA.debugLineNum = 206;BA.debugLine="MatDialogBuilder.NegativeText($\"CANCEL\"$).Negativ";
+ //BA.debugLineNum = 207;BA.debugLine="MatDialogBuilder.NegativeText($\"CANCEL\"$).Negativ";
 mostCurrent._matdialogbuilder.NegativeText(BA.ObjectToCharSequence(("CANCEL"))).NegativeColor(anywheresoftware.b4a.keywords.Common.Colors.Red);
- //BA.debugLineNum = 207;BA.debugLine="MatDialogBuilder.CanceledOnTouchOutside(False)";
+ //BA.debugLineNum = 208;BA.debugLine="MatDialogBuilder.CanceledOnTouchOutside(False)";
 mostCurrent._matdialogbuilder.CanceledOnTouchOutside(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 208;BA.debugLine="MatDialogBuilder.Show";
+ //BA.debugLineNum = 209;BA.debugLine="MatDialogBuilder.Show";
 mostCurrent._matdialogbuilder.Show();
- //BA.debugLineNum = 209;BA.debugLine="End Sub";
+ //BA.debugLineNum = 210;BA.debugLine="End Sub";
 return "";
 }
 public static String  _showconfirmclose() throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 474;BA.debugLine="Private Sub ShowConfirmClose";
- //BA.debugLineNum = 475;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 475;BA.debugLine="Private Sub ShowConfirmClose";
+ //BA.debugLineNum = 476;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 477;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
+ //BA.debugLineNum = 478;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
 _alert.Initialize().Create(mostCurrent.activityBA).SetDialogStyleName("MyDialogDisableStatus").SetStyle(_alert.getSTYLE_DIALOGUE()).SetCancelable(anywheresoftware.b4a.keywords.Common.False).SetTitle(("CONFIRM CLOSE APPLICATION")).SetMessage(("Do you want to Close Registration App?")).SetPositiveText("YES").SetPositiveColor((int) (mostCurrent._globalvar._poscolor /*double*/ )).SetPositiveTypeface((android.graphics.Typeface)(mostCurrent._globalvar._fontbold /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetNegativeText("NO").SetNegativeColor((int) (mostCurrent._globalvar._negcolor /*double*/ )).SetNegativeTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetTitleTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetMessageTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetOnPositiveClicked(mostCurrent.activityBA,"CloseApp").SetOnNegativeClicked(mostCurrent.activityBA,"CloseApp").SetOnViewBinder(mostCurrent.activityBA,"CloseAppFontSizeBinder");
- //BA.debugLineNum = 495;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
+ //BA.debugLineNum = 496;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
 _alert.SetDialogBackground((android.graphics.drawable.Drawable)(mostCurrent._globalvar._mycd /*anywheresoftware.b4a.objects.drawable.ColorDrawable*/ (mostCurrent.activityBA).getObject()));
- //BA.debugLineNum = 496;BA.debugLine="Alert.Build.Show";
+ //BA.debugLineNum = 497;BA.debugLine="Alert.Build.Show";
 _alert.Build().Show();
- //BA.debugLineNum = 498;BA.debugLine="End Sub";
+ //BA.debugLineNum = 499;BA.debugLine="End Sub";
 return "";
 }
 public static String  _showsuccessmsg(String _stitle,String _smsg) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 306;BA.debugLine="Private Sub ShowSuccessMsg(sTitle As String, sMsg";
- //BA.debugLineNum = 307;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 307;BA.debugLine="Private Sub ShowSuccessMsg(sTitle As String, sMsg";
+ //BA.debugLineNum = 308;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 309;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
+ //BA.debugLineNum = 310;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
 _alert.Initialize().Create(mostCurrent.activityBA).SetDialogStyleName("MyDialogDisableStatus").SetStyle(_alert.getSTYLE_DIALOGUE()).SetCancelable(anywheresoftware.b4a.keywords.Common.False).SetTitle(_stitle).SetMessage(_smsg).SetPositiveText("OK").SetPositiveColor((int) (mostCurrent._globalvar._poscolor /*double*/ )).SetPositiveTypeface((android.graphics.Typeface)(mostCurrent._globalvar._fontbold /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetTitleTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetMessageTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetOnPositiveClicked(mostCurrent.activityBA,"SuccessMsg").SetOnViewBinder(mostCurrent.activityBA,"SuccessBinder");
- //BA.debugLineNum = 323;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
+ //BA.debugLineNum = 324;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
 _alert.SetDialogBackground((android.graphics.drawable.Drawable)(mostCurrent._globalvar._mycd /*anywheresoftware.b4a.objects.drawable.ColorDrawable*/ (mostCurrent.activityBA).getObject()));
- //BA.debugLineNum = 324;BA.debugLine="Alert.Build.Show";
+ //BA.debugLineNum = 325;BA.debugLine="Alert.Build.Show";
 _alert.Build().Show();
- //BA.debugLineNum = 326;BA.debugLine="End Sub";
+ //BA.debugLineNum = 327;BA.debugLine="End Sub";
 return "";
 }
 public static String  _showusererror(String _stitle,String _smsg) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 428;BA.debugLine="Private Sub ShowUserError(sTitle As String, sMsg A";
- //BA.debugLineNum = 429;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 429;BA.debugLine="Private Sub ShowUserError(sTitle As String, sMsg A";
+ //BA.debugLineNum = 430;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 431;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
+ //BA.debugLineNum = 432;BA.debugLine="Alert.Initialize.Create _ 			.SetDialogStyleName(";
 _alert.Initialize().Create(mostCurrent.activityBA).SetDialogStyleName("MyDialogDisableStatus").SetStyle(_alert.getSTYLE_DIALOGUE()).SetCancelable(anywheresoftware.b4a.keywords.Common.False).SetTitle(_stitle).SetMessage(_smsg).SetPositiveText("OK").SetPositiveColor((int) (mostCurrent._globalvar._poscolor /*double*/ )).SetPositiveTypeface((android.graphics.Typeface)(mostCurrent._globalvar._fontbold /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetTitleTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetMessageTypeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).SetOnPositiveClicked(mostCurrent.activityBA,"UserError").SetOnViewBinder(mostCurrent.activityBA,"UserErrorBinder");
- //BA.debugLineNum = 445;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
+ //BA.debugLineNum = 446;BA.debugLine="Alert.SetDialogBackground(GlobalVar.myCD)";
 _alert.SetDialogBackground((android.graphics.drawable.Drawable)(mostCurrent._globalvar._mycd /*anywheresoftware.b4a.objects.drawable.ColorDrawable*/ (mostCurrent.activityBA).getObject()));
- //BA.debugLineNum = 446;BA.debugLine="Alert.Build.Show";
+ //BA.debugLineNum = 447;BA.debugLine="Alert.Build.Show";
 _alert.Build().Show();
- //BA.debugLineNum = 448;BA.debugLine="End Sub";
+ //BA.debugLineNum = 449;BA.debugLine="End Sub";
 return "";
 }
 public static String  _successbinder_onbindview(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,int _viewtype) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
 anywheresoftware.b4a.objects.LabelWrapper _lbl = null;
 anywheresoftware.b4a.objects.CSBuilder _cs = null;
- //BA.debugLineNum = 335;BA.debugLine="Private Sub SuccessBinder_OnBindView (View As View";
- //BA.debugLineNum = 336;BA.debugLine="Dim alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 336;BA.debugLine="Private Sub SuccessBinder_OnBindView (View As View";
+ //BA.debugLineNum = 337;BA.debugLine="Dim alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 337;BA.debugLine="alert.Initialize";
+ //BA.debugLineNum = 338;BA.debugLine="alert.Initialize";
 _alert.Initialize();
- //BA.debugLineNum = 338;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
+ //BA.debugLineNum = 339;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
 if (_viewtype==_alert.VIEW_TITLE) { 
- //BA.debugLineNum = 339;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 340;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 340;BA.debugLine="Dim CS As CSBuilder";
+ //BA.debugLineNum = 341;BA.debugLine="Dim CS As CSBuilder";
 _cs = new anywheresoftware.b4a.objects.CSBuilder();
- //BA.debugLineNum = 341;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
+ //BA.debugLineNum = 342;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
 _cs.Initialize().Typeface(anywheresoftware.b4a.keywords.Common.Typeface.DEFAULT_BOLD).Typeface(anywheresoftware.b4a.keywords.Common.Typeface.getFONTAWESOME()).Size((int) (20)).Color((int) (mostCurrent._globalvar._poscolor /*double*/ )).Append(BA.ObjectToCharSequence(BA.ObjectToString(anywheresoftware.b4a.keywords.Common.Chr((int) (0xf164)))+"  "));
- //BA.debugLineNum = 342;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
+ //BA.debugLineNum = 343;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
 _cs.Typeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).Size((int) (18)).Append(BA.ObjectToCharSequence(_lbl.getText())).Pop();
- //BA.debugLineNum = 344;BA.debugLine="lbl.Text = CS.PopAll";
+ //BA.debugLineNum = 345;BA.debugLine="lbl.Text = CS.PopAll";
 _lbl.setText(BA.ObjectToCharSequence(_cs.PopAll().getObject()));
  };
- //BA.debugLineNum = 347;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
+ //BA.debugLineNum = 348;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
 if (_viewtype==_alert.VIEW_MESSAGE) { 
- //BA.debugLineNum = 348;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 349;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 349;BA.debugLine="lbl.TextSize = 16";
+ //BA.debugLineNum = 350;BA.debugLine="lbl.TextSize = 16";
 _lbl.setTextSize((float) (16));
- //BA.debugLineNum = 350;BA.debugLine="lbl.TextColor = Colors.Gray";
+ //BA.debugLineNum = 351;BA.debugLine="lbl.TextColor = Colors.Gray";
 _lbl.setTextColor(anywheresoftware.b4a.keywords.Common.Colors.Gray);
  };
- //BA.debugLineNum = 352;BA.debugLine="End Sub";
+ //BA.debugLineNum = 353;BA.debugLine="End Sub";
 return "";
 }
 public static String  _successmsg_onpositiveclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 328;BA.debugLine="Private Sub SuccessMsg_OnPositiveClicked (View As";
- //BA.debugLineNum = 329;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 329;BA.debugLine="Private Sub SuccessMsg_OnPositiveClicked (View As";
+ //BA.debugLineNum = 330;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 330;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 331;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 331;BA.debugLine="pnlSettings.Visible = False";
+ //BA.debugLineNum = 332;BA.debugLine="pnlSettings.Visible = False";
 mostCurrent._pnlsettings.setVisible(anywheresoftware.b4a.keywords.Common.False);
- //BA.debugLineNum = 333;BA.debugLine="End Sub";
+ //BA.debugLineNum = 334;BA.debugLine="End Sub";
 return "";
 }
 public static boolean  _updateareaid(int _iareaid) throws Exception{
 boolean _bretval = false;
- //BA.debugLineNum = 168;BA.debugLine="Private Sub UpdateAreaID (iAreaID As Int) As Boole";
- //BA.debugLineNum = 169;BA.debugLine="Dim bRetVal As Boolean";
+ //BA.debugLineNum = 169;BA.debugLine="Private Sub UpdateAreaID (iAreaID As Int) As Boole";
+ //BA.debugLineNum = 170;BA.debugLine="Dim bRetVal As Boolean";
 _bretval = false;
- //BA.debugLineNum = 171;BA.debugLine="bRetVal = False";
+ //BA.debugLineNum = 172;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
- //BA.debugLineNum = 172;BA.debugLine="Starter.DBCon.BeginTransaction";
+ //BA.debugLineNum = 173;BA.debugLine="Starter.DBCon.BeginTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .BeginTransaction();
- //BA.debugLineNum = 173;BA.debugLine="Try";
-try { //BA.debugLineNum = 174;BA.debugLine="Starter.strCriteria = \"UPDATE tblSysParam \" & _";
+ //BA.debugLineNum = 174;BA.debugLine="Try";
+try { //BA.debugLineNum = 175;BA.debugLine="Starter.strCriteria = \"UPDATE tblSysParam \" & _";
 mostCurrent._starter._strcriteria /*String*/  = "UPDATE tblSysParam "+"SET AreaID = ? ";
- //BA.debugLineNum = 177;BA.debugLine="Starter.DBCon.ExecNonQuery2(Starter.strCriteria,";
+ //BA.debugLineNum = 178;BA.debugLine="Starter.DBCon.ExecNonQuery2(Starter.strCriteria,";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2(mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.ArrayToList(new String[]{BA.NumberToString(_iareaid)}));
- //BA.debugLineNum = 179;BA.debugLine="Starter.DBCon.TransactionSuccessful";
+ //BA.debugLineNum = 180;BA.debugLine="Starter.DBCon.TransactionSuccessful";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .TransactionSuccessful();
- //BA.debugLineNum = 180;BA.debugLine="bRetVal = True";
+ //BA.debugLineNum = 181;BA.debugLine="bRetVal = True";
 _bretval = anywheresoftware.b4a.keywords.Common.True;
- //BA.debugLineNum = 181;BA.debugLine="ProgressDialogShow2($\"Setting Up Area\"$,False)";
+ //BA.debugLineNum = 182;BA.debugLine="ProgressDialogShow2($\"Setting Up Area\"$,False)";
 anywheresoftware.b4a.keywords.Common.ProgressDialogShow2(mostCurrent.activityBA,BA.ObjectToCharSequence(("Setting Up Area")),anywheresoftware.b4a.keywords.Common.False);
  } 
        catch (Exception e11) {
-			processBA.setLastException(e11); //BA.debugLineNum = 183;BA.debugLine="bRetVal = False";
+			processBA.setLastException(e11); //BA.debugLineNum = 184;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
- //BA.debugLineNum = 184;BA.debugLine="ProgressDialogHide";
+ //BA.debugLineNum = 185;BA.debugLine="ProgressDialogHide";
 anywheresoftware.b4a.keywords.Common.ProgressDialogHide();
- //BA.debugLineNum = 185;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("8851985",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+ //BA.debugLineNum = 186;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("4851985",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
- //BA.debugLineNum = 187;BA.debugLine="Starter.DBCon.EndTransaction";
+ //BA.debugLineNum = 188;BA.debugLine="Starter.DBCon.EndTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .EndTransaction();
- //BA.debugLineNum = 188;BA.debugLine="Return bRetVal";
+ //BA.debugLineNum = 189;BA.debugLine="Return bRetVal";
 if (true) return _bretval;
- //BA.debugLineNum = 189;BA.debugLine="End Sub";
+ //BA.debugLineNum = 190;BA.debugLine="End Sub";
 return false;
 }
 public static String  _usererror_onpositiveclicked(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,Object _dialog) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
- //BA.debugLineNum = 450;BA.debugLine="Private Sub UserError_OnPositiveClicked (View As V";
- //BA.debugLineNum = 451;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 451;BA.debugLine="Private Sub UserError_OnPositiveClicked (View As V";
+ //BA.debugLineNum = 452;BA.debugLine="Dim Alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 452;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
+ //BA.debugLineNum = 453;BA.debugLine="Alert.Initialize.Dismiss(Dialog)";
 _alert.Initialize().Dismiss((android.app.Dialog)(_dialog));
- //BA.debugLineNum = 453;BA.debugLine="End Sub";
+ //BA.debugLineNum = 454;BA.debugLine="End Sub";
 return "";
 }
 public static String  _usererrorbinder_onbindview(anywheresoftware.b4a.objects.ConcreteViewWrapper _view,int _viewtype) throws Exception{
 com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder _alert = null;
 anywheresoftware.b4a.objects.LabelWrapper _lbl = null;
 anywheresoftware.b4a.objects.CSBuilder _cs = null;
- //BA.debugLineNum = 455;BA.debugLine="Private Sub UserErrorBinder_OnBindView (View As Vi";
- //BA.debugLineNum = 456;BA.debugLine="Dim alert As AX_CustomAlertDialog";
+ //BA.debugLineNum = 456;BA.debugLine="Private Sub UserErrorBinder_OnBindView (View As Vi";
+ //BA.debugLineNum = 457;BA.debugLine="Dim alert As AX_CustomAlertDialog";
 _alert = new com.aghajari.ax_customalertviewdialog.AX_CustomAlertDialogBuilder();
- //BA.debugLineNum = 457;BA.debugLine="alert.Initialize";
+ //BA.debugLineNum = 458;BA.debugLine="alert.Initialize";
 _alert.Initialize();
- //BA.debugLineNum = 458;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
+ //BA.debugLineNum = 459;BA.debugLine="If ViewType = alert.VIEW_TITLE Then ' Title";
 if (_viewtype==_alert.VIEW_TITLE) { 
- //BA.debugLineNum = 459;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 460;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 460;BA.debugLine="Dim CS As CSBuilder";
+ //BA.debugLineNum = 461;BA.debugLine="Dim CS As CSBuilder";
 _cs = new anywheresoftware.b4a.objects.CSBuilder();
- //BA.debugLineNum = 461;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
+ //BA.debugLineNum = 462;BA.debugLine="CS.Initialize.Typeface(Typeface.DEFAULT_BOLD).Ty";
 _cs.Initialize().Typeface(anywheresoftware.b4a.keywords.Common.Typeface.DEFAULT_BOLD).Typeface(anywheresoftware.b4a.keywords.Common.Typeface.getFONTAWESOME()).Size((int) (20)).Color(anywheresoftware.b4a.keywords.Common.Colors.Red).Append(BA.ObjectToCharSequence(BA.ObjectToString(anywheresoftware.b4a.keywords.Common.Chr((int) (0xf071)))+"  "));
- //BA.debugLineNum = 462;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
+ //BA.debugLineNum = 463;BA.debugLine="CS.Typeface(GlobalVar.Font).Size(18).Append(lbl.";
 _cs.Typeface((android.graphics.Typeface)(mostCurrent._globalvar._font /*anywheresoftware.b4a.keywords.constants.TypefaceWrapper*/ .getObject())).Size((int) (18)).Append(BA.ObjectToCharSequence(_lbl.getText())).Pop();
- //BA.debugLineNum = 464;BA.debugLine="lbl.Text = CS.PopAll";
+ //BA.debugLineNum = 465;BA.debugLine="lbl.Text = CS.PopAll";
 _lbl.setText(BA.ObjectToCharSequence(_cs.PopAll().getObject()));
  };
- //BA.debugLineNum = 467;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
+ //BA.debugLineNum = 468;BA.debugLine="If ViewType = alert.VIEW_MESSAGE Then";
 if (_viewtype==_alert.VIEW_MESSAGE) { 
- //BA.debugLineNum = 468;BA.debugLine="Dim lbl As Label = View";
+ //BA.debugLineNum = 469;BA.debugLine="Dim lbl As Label = View";
 _lbl = new anywheresoftware.b4a.objects.LabelWrapper();
 _lbl = (anywheresoftware.b4a.objects.LabelWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.objects.LabelWrapper(), (android.widget.TextView)(_view.getObject()));
- //BA.debugLineNum = 469;BA.debugLine="lbl.TextSize = 16";
+ //BA.debugLineNum = 470;BA.debugLine="lbl.TextSize = 16";
 _lbl.setTextSize((float) (16));
- //BA.debugLineNum = 470;BA.debugLine="lbl.TextColor = Colors.Gray";
+ //BA.debugLineNum = 471;BA.debugLine="lbl.TextColor = Colors.Gray";
 _lbl.setTextColor(anywheresoftware.b4a.keywords.Common.Colors.Gray);
  };
- //BA.debugLineNum = 472;BA.debugLine="End Sub";
+ //BA.debugLineNum = 473;BA.debugLine="End Sub";
 return "";
 }
 }

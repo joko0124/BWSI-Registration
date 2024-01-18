@@ -40,7 +40,7 @@ views.get("btncancel").vw.setHeight((int)((views.get("pnlassignment").vw.getHeig
 views.get("btncancel").vw.setLeft((int)((30d / 100 * width)));
 views.get("btncancel").vw.setWidth((int)((views.get("pnlassignment").vw.getWidth())-(36d / 100 * width) - ((30d / 100 * width))));
 views.get("pnlareasettings").vw.setLeft((int)((80d / 100 * width)));
-views.get("pnlareasettings").vw.setTop((int)((0d * scale)));
+views.get("pnlareasettings").vw.setTop((int)(0d));
 views.get("pnlareas").vw.setWidth((int)((40d * scale)));
 views.get("pnlareas").vw.setHeight((int)((40d * scale)));
 views.get("pnlareas").vw.setLeft((int)((views.get("pnlareasettings").vw.getWidth())/2d - (views.get("pnlareas").vw.getWidth() / 2)));

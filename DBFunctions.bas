@@ -151,7 +151,7 @@ Public Sub GetSeqNo() As Int
 	Do While Not (blnSaved = True)
 		blnSaved = SaveSeqNo
 		If blnSaved Then
-			dblNo = Starter.DBCon.ExecQuerySingleResult("SELECT LastSeqNo FROM android_metadata")
+			dblNo = Starter.DBCon.ExecQuerySingleResult("SELECT LastSeqNo FROM tblSysParam")
 			Exit
 		Else
 			' Display a message that the procedure failed but
@@ -176,7 +176,7 @@ Sub GetNewStubNo() As String
 	Do While Not (blnSaved = True)
 		blnSaved = SaveNewStubNo
 		If blnSaved Then
-			dblNo = Starter.DBCon.ExecQuerySingleResult("SELECT LastRegNo FROM android_metadata")
+			dblNo = Starter.DBCon.ExecQuerySingleResult("SELECT LastRegNo FROM tblSysParam")
 			Exit
 		Else
 			' Display a message that the procedure failed but
@@ -202,16 +202,16 @@ Sub SaveSeqNo() As Boolean
 	Dim blnRetVal As Boolean
 	Dim lngRec As Long
 	Try
-		Starter.strCriteria = "SELECT * FROM android_metadata"
+		Starter.strCriteria = "SELECT * FROM tblSysParam"
 		rsTemp = Starter.dbcon.ExecQuery(Starter.strCriteria)
 		
 		If rsTemp.RowCount =  0 Then
-			Starter.dbcon.ExecNonQuery2("INSERT INTO android_metadata VALUES (?, ?, ?, ?, ?)", Array As Object($"english"$, $"1"$, "", 1, 1))
+			Starter.dbcon.ExecNonQuery2("INSERT INTO tblSysParam VALUES (?, ?, ?, ?, ?)", Array As Object($"english"$, $"1"$, "", 1, 1))
 		Else
 			rsTemp.Position = 0
 			lngRec = rsTemp.GetLong("LastSeqNo") + 1
 			
-			Starter.strCriteria="UPDATE android_metadata SET LastSeqNo = ? "
+			Starter.strCriteria="UPDATE tblSysParam SET LastSeqNo = ? "
 			Starter.dbcon.ExecNonQuery2(Starter.strCriteria, Array As String(lngRec))
 		End If
 		blnRetVal=True
@@ -226,14 +226,14 @@ Sub SaveNewStubNo() As Boolean
 	Dim blnRetVal As Boolean
 	Dim lngRec As Long
 	Try
-		Starter.strCriteria = "SELECT * FROM android_metadata"
+		Starter.strCriteria = "SELECT * FROM tblSysParam"
 		rsTemp = Starter.dbcon.ExecQuery(Starter.strCriteria)
 		If rsTemp.RowCount=0 Then
-			Starter.dbcon.ExecNonQuery2("INSERT INTO android_metadata VALUES (?, ?, ?, ?, ?)", Array As Object($"english"$, $"1"$, "", 1, 1))
+			Starter.dbcon.ExecNonQuery2("INSERT INTO tblSysParam VALUES (?, ?, ?, ?, ?)", Array As Object($"english"$, $"1"$, "", 1, 1))
 		Else
 			rsTemp.Position = 0
 			lngRec = rsTemp.GetLong("LastRegNo") + 1
-			Starter.strCriteria="UPDATE android_metadata SET LastRegNo = ? "
+			Starter.strCriteria="UPDATE tblSysParam SET LastRegNo = ? "
 			Starter.dbcon.ExecNonQuery2(Starter.strCriteria, Array As String(lngRec))
 		End If
 		blnRetVal=True
@@ -276,7 +276,7 @@ Public Sub IsThereAssignedEmp As Boolean
 	Dim bRetVal As Boolean
 	
 	Try
-		Starter.strCriteria = "SELECT * FROM android_metadata"
+		Starter.strCriteria = "SELECT * FROM tblSysParam"
 		rsTemp = Starter.dbcon.ExecQuery(Starter.strCriteria)
 
 		If rsTemp.RowCount > 0 Then
@@ -301,7 +301,7 @@ Public Sub GetAssignedEmp As String
 	Dim sRetVal As String
 
 	Try
-		Starter.strCriteria = "SELECT AssignedTo FROM android_metadata "
+		Starter.strCriteria = "SELECT AssignedTo FROM tblSysParam "
 		LogColor(Starter.strCriteria, Colors.Blue)
 		
 		sRetVal = Starter.DBCon.ExecQuerySingleResult(Starter.strCriteria)

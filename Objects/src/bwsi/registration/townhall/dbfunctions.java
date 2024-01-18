@@ -15,12 +15,12 @@ public static anywheresoftware.b4a.sql.SQL.CursorWrapper _rstemp = null;
 public bwsi.registration.townhall.main _main = null;
 public bwsi.registration.townhall.actregistration _actregistration = null;
 public bwsi.registration.townhall.registration _registration = null;
-public bwsi.registration.townhall.mainscreen _mainscreen = null;
-public bwsi.registration.townhall.scale _scale = null;
-public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.addemployee _addemployee = null;
 public bwsi.registration.townhall.globalvar _globalvar = null;
+public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.dbutils _dbutils = null;
+public bwsi.registration.townhall.mainscreen _mainscreen = null;
+public bwsi.registration.townhall.scale _scale = null;
 public bwsi.registration.townhall.starter _starter = null;
 public bwsi.registration.townhall.httputils2service _httputils2service = null;
 public bwsi.registration.townhall.b4xcollections _b4xcollections = null;
@@ -33,7 +33,7 @@ _sretval = "";
 try { //BA.debugLineNum = 61;BA.debugLine="Starter.strCriteria = \"SELECT AreaCode FROM tblA";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT AreaCode FROM tblAreas "+"WHERE AreaID = "+BA.NumberToString(_iareaid);
  //BA.debugLineNum = 63;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820971526",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412713990",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 65;BA.debugLine="sRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ );
  } 
@@ -41,7 +41,7 @@ _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQue
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 67;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 68;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820971531",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412713995",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 69;BA.debugLine="sRetVal = \"\"";
 _sretval = "";
  };
@@ -59,7 +59,7 @@ _sretval = "";
 try { //BA.debugLineNum = 44;BA.debugLine="Starter.strCriteria = \"SELECT AreaDesc FROM tblA";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT AreaDesc FROM tblAreas "+"WHERE AreaID = "+BA.NumberToString(_iareaid);
  //BA.debugLineNum = 46;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820905990",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412648454",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 48;BA.debugLine="sRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ );
  } 
@@ -67,7 +67,7 @@ _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQue
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 50;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 51;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820905995",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412648459",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 52;BA.debugLine="sRetVal = \"\"";
 _sretval = "";
  };
@@ -85,7 +85,7 @@ _iretval = 0;
 try { //BA.debugLineNum = 11;BA.debugLine="Starter.strCriteria = \"SELECT AreaID FROM tblSys";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT AreaID FROM tblSysParam";
  //BA.debugLineNum = 12;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820774917",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412517381",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 14;BA.debugLine="iRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ )));
  } 
@@ -93,7 +93,7 @@ _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftwa
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 16;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 17;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820774922",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412517386",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 18;BA.debugLine="iRetVal = 0";
 _iretval = (int) (0);
  };
@@ -111,7 +111,7 @@ _sretval = "";
 try { //BA.debugLineNum = 27;BA.debugLine="Starter.strCriteria = \"SELECT AreaName FROM tblA";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT AreaName FROM tblAreas "+"WHERE AreaID = "+BA.NumberToString(_iareaid);
  //BA.debugLineNum = 29;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820840454",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412582918",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 31;BA.debugLine="sRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ );
  } 
@@ -119,13 +119,39 @@ _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQue
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 33;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 34;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("820840459",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412582923",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 35;BA.debugLine="sRetVal = \"\"";
 _sretval = "";
  };
  //BA.debugLineNum = 37;BA.debugLine="Return sRetVal";
 if (true) return _sretval;
  //BA.debugLineNum = 38;BA.debugLine="End Sub";
+return "";
+}
+public static String  _getassignedemp(anywheresoftware.b4a.BA _ba) throws Exception{
+String _sretval = "";
+ //BA.debugLineNum = 294;BA.debugLine="Public Sub GetAssignedEmp As String";
+ //BA.debugLineNum = 295;BA.debugLine="Dim sRetVal As String";
+_sretval = "";
+ //BA.debugLineNum = 297;BA.debugLine="Try";
+try { //BA.debugLineNum = 298;BA.debugLine="Starter.strCriteria = \"SELECT AssignedTo FROM tb";
+mostCurrent._starter._strcriteria /*String*/  = "SELECT AssignedTo FROM tblSysParam ";
+ //BA.debugLineNum = 299;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
+anywheresoftware.b4a.keywords.Common.LogImpl("413434885",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+ //BA.debugLineNum = 301;BA.debugLine="sRetVal = Starter.DBCon.ExecQuerySingleResult(St";
+_sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ );
+ } 
+       catch (Exception e7) {
+			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 303;BA.debugLine="ToastMessageShow($\"Unable to fetch Employee Name";
+anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Employee Name due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
+ //BA.debugLineNum = 304;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("413434890",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+ //BA.debugLineNum = 305;BA.debugLine="sRetVal = \"\"";
+_sretval = "";
+ };
+ //BA.debugLineNum = 307;BA.debugLine="Return sRetVal";
+if (true) return _sretval;
+ //BA.debugLineNum = 308;BA.debugLine="End Sub";
 return "";
 }
 public static int  _getbranchidbyempid(anywheresoftware.b4a.BA _ba,int _iempid) throws Exception{
@@ -141,7 +167,7 @@ _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftwa
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e5); //BA.debugLineNum = 246;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch ID due";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch ID due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 247;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821495814",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("413238278",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  };
  //BA.debugLineNum = 249;BA.debugLine="Return iRetVal";
 if (true) return _iretval;
@@ -159,7 +185,7 @@ _iretval = (int) (0);
 try { //BA.debugLineNum = 256;BA.debugLine="Starter.strCriteria = \"SELECT \" & sRetField & \"";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT "+_sretfield+" FROM "+_stablename+" WHERE "+_sfieldtocompare+" = '"+_scodecomparison+"'";
  //BA.debugLineNum = 257;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821561349",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("413303813",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 259;BA.debugLine="iRetval = Starter.DBCon.ExecQuerySingleResult(St";
 _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ )));
  } 
@@ -167,12 +193,12 @@ _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftwa
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e8); //BA.debugLineNum = 261;BA.debugLine="ToastMessageShow($\"Unable to fetch ID due to \"$";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch ID due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 262;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821561354",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("413303818",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 263;BA.debugLine="iRetval = 0";
 _iretval = (int) (0);
  };
  //BA.debugLineNum = 265;BA.debugLine="LogColor($\"Return ID: \"$ & iRetval, Colors.Yellow";
-anywheresoftware.b4a.keywords.Common.LogImpl("821561357",("Return ID: ")+BA.NumberToString(_iretval),anywheresoftware.b4a.keywords.Common.Colors.Yellow);
+anywheresoftware.b4a.keywords.Common.LogImpl("413303821",("Return ID: ")+BA.NumberToString(_iretval),anywheresoftware.b4a.keywords.Common.Colors.Yellow);
  //BA.debugLineNum = 266;BA.debugLine="Return iRetval";
 if (true) return _iretval;
  //BA.debugLineNum = 267;BA.debugLine="End Sub";
@@ -198,7 +224,7 @@ _blnsaved = _savenewstubno(_ba);
  //BA.debugLineNum = 172;BA.debugLine="If blnSaved Then";
 if (_blnsaved) { 
  //BA.debugLineNum = 173;BA.debugLine="dblNo = Starter.DBCon.ExecQuerySingleResult(\"SE";
-_dblno = (double)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult("SELECT LastRegNo FROM android_metadata")));
+_dblno = (double)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult("SELECT LastRegNo FROM tblSysParam")));
  //BA.debugLineNum = 174;BA.debugLine="Exit";
 if (true) break;
  }else {
@@ -244,7 +270,7 @@ _blnsaved = _saveseqno(_ba);
  //BA.debugLineNum = 147;BA.debugLine="If blnSaved Then";
 if (_blnsaved) { 
  //BA.debugLineNum = 148;BA.debugLine="dblNo = Starter.DBCon.ExecQuerySingleResult(\"SE";
-_dblno = (double)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult("SELECT LastSeqNo FROM android_metadata")));
+_dblno = (double)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult("SELECT LastSeqNo FROM tblSysParam")));
  //BA.debugLineNum = 149;BA.debugLine="Exit";
 if (true) break;
  }else {
@@ -267,7 +293,7 @@ _lretval = 0L;
 try { //BA.debugLineNum = 78;BA.debugLine="Starter.strCriteria = \"SELECT Count(Employees.Re";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT Count(Employees.RegID) "+"FROM tblRegistration AS Employees "+"INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID "+"WHERE Employees.WillAttend <> 0 "+"AND Branches.AreaID = "+BA.NumberToString(_iareaid);
  //BA.debugLineNum = 83;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821037065",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412779529",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 85;BA.debugLine="lRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _lretval = (long)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ )));
  } 
@@ -275,7 +301,7 @@ _lretval = (long)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftw
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 87;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 88;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821037070",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412779534",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 89;BA.debugLine="lRetVal = 0";
 _lretval = (long) (0);
  };
@@ -293,7 +319,7 @@ _lretval = 0L;
 try { //BA.debugLineNum = 98;BA.debugLine="Starter.strCriteria = \"SELECT Count(Employees.Re";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT Count(Employees.RegID) "+"FROM tblRegistration AS Employees "+"INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID "+"WHERE Employees.WillAttend <> 0 "+"AND Branches.AreaID = "+BA.NumberToString(_iareaid)+" "+"AND WasRegistered = 1";
  //BA.debugLineNum = 104;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821102602",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412845066",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 106;BA.debugLine="lRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _lretval = (long)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ )));
  } 
@@ -301,7 +327,7 @@ _lretval = (long)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftw
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 108;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 109;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821102607",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412845071",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 110;BA.debugLine="lRetVal = 0";
 _lretval = (long) (0);
  };
@@ -319,7 +345,7 @@ _lretval = 0L;
 try { //BA.debugLineNum = 119;BA.debugLine="Starter.strCriteria = \"SELECT Count(Employees.Re";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT Count(Employees.RegID) "+"FROM tblRegistration AS Employees "+"INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID "+"WHERE Employees.WillAttend <> 0 "+"AND Branches.AreaID = "+BA.NumberToString(_iareaid)+" "+"AND WasRegistered = 0";
  //BA.debugLineNum = 125;BA.debugLine="LogColor(Starter.strCriteria, Colors.Blue)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821168138",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
+anywheresoftware.b4a.keywords.Common.LogImpl("412910602",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Blue);
  //BA.debugLineNum = 127;BA.debugLine="lRetVal = Starter.DBCon.ExecQuerySingleResult(St";
 _lretval = (long)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuerySingleResult(mostCurrent._starter._strcriteria /*String*/ )));
  } 
@@ -327,7 +353,7 @@ _lretval = (long)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftw
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e7); //BA.debugLineNum = 129;BA.debugLine="ToastMessageShow($\"Unable to fetch Branch System";
 anywheresoftware.b4a.keywords.Common.ToastMessageShow(BA.ObjectToCharSequence(("Unable to fetch Branch System Mode due to ")+anywheresoftware.b4a.keywords.Common.LastException(_ba).getMessage()),anywheresoftware.b4a.keywords.Common.False);
  //BA.debugLineNum = 130;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821168143",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("412910607",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 131;BA.debugLine="lRetVal = 0";
 _lretval = (long) (0);
  };
@@ -342,8 +368,8 @@ boolean _bretval = false;
  //BA.debugLineNum = 270;BA.debugLine="Dim bRetVal As Boolean";
 _bretval = false;
  //BA.debugLineNum = 272;BA.debugLine="Try";
-try { //BA.debugLineNum = 273;BA.debugLine="Starter.strCriteria = \"SELECT * FROM android_met";
-mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM android_metadata";
+try { //BA.debugLineNum = 273;BA.debugLine="Starter.strCriteria = \"SELECT * FROM tblSysParam";
+mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM tblSysParam";
  //BA.debugLineNum = 274;BA.debugLine="rsTemp = Starter.dbcon.ExecQuery(Starter.strCrit";
 _rstemp = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 276;BA.debugLine="If rsTemp.RowCount > 0 Then";
@@ -365,7 +391,7 @@ _bretval = anywheresoftware.b4a.keywords.Common.False;
  } 
        catch (Exception e16) {
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e16); //BA.debugLineNum = 288;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821626899",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("413369363",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  //BA.debugLineNum = 289;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
  };
@@ -390,21 +416,21 @@ _blnretval = false;
  //BA.debugLineNum = 221;BA.debugLine="Dim lngRec As Long";
 _lngrec = 0L;
  //BA.debugLineNum = 222;BA.debugLine="Try";
-try { //BA.debugLineNum = 223;BA.debugLine="Starter.strCriteria = \"SELECT * FROM android_met";
-mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM android_metadata";
+try { //BA.debugLineNum = 223;BA.debugLine="Starter.strCriteria = \"SELECT * FROM tblSysParam";
+mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM tblSysParam";
  //BA.debugLineNum = 224;BA.debugLine="rsTemp = Starter.dbcon.ExecQuery(Starter.strCrit";
 _rstemp = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 225;BA.debugLine="If rsTemp.RowCount=0 Then";
 if (_rstemp.getRowCount()==0) { 
- //BA.debugLineNum = 226;BA.debugLine="Starter.dbcon.ExecNonQuery2(\"INSERT INTO androi";
-mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2("INSERT INTO android_metadata VALUES (?, ?, ?, ?, ?)",anywheresoftware.b4a.keywords.Common.ArrayToList(new Object[]{(Object)(("english")),(Object)(("1")),(Object)(""),(Object)(1),(Object)(1)}));
+ //BA.debugLineNum = 226;BA.debugLine="Starter.dbcon.ExecNonQuery2(\"INSERT INTO tblSys";
+mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2("INSERT INTO tblSysParam VALUES (?, ?, ?, ?, ?)",anywheresoftware.b4a.keywords.Common.ArrayToList(new Object[]{(Object)(("english")),(Object)(("1")),(Object)(""),(Object)(1),(Object)(1)}));
  }else {
  //BA.debugLineNum = 228;BA.debugLine="rsTemp.Position = 0";
 _rstemp.setPosition((int) (0));
  //BA.debugLineNum = 229;BA.debugLine="lngRec = rsTemp.GetLong(\"LastRegNo\") + 1";
 _lngrec = (long) (_rstemp.GetLong("LastRegNo")+1);
- //BA.debugLineNum = 230;BA.debugLine="Starter.strCriteria=\"UPDATE android_metadata SE";
-mostCurrent._starter._strcriteria /*String*/  = "UPDATE android_metadata SET LastRegNo = ? ";
+ //BA.debugLineNum = 230;BA.debugLine="Starter.strCriteria=\"UPDATE tblSysParam SET Las";
+mostCurrent._starter._strcriteria /*String*/  = "UPDATE tblSysParam SET LastRegNo = ? ";
  //BA.debugLineNum = 231;BA.debugLine="Starter.dbcon.ExecNonQuery2(Starter.strCriteria";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2(mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.ArrayToList(new String[]{BA.NumberToString(_lngrec)}));
  };
@@ -415,7 +441,7 @@ _blnretval = anywheresoftware.b4a.keywords.Common.True;
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e16); //BA.debugLineNum = 235;BA.debugLine="blnRetVal = False";
 _blnretval = anywheresoftware.b4a.keywords.Common.False;
  //BA.debugLineNum = 236;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821430289",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("413172753",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  };
  //BA.debugLineNum = 238;BA.debugLine="Return blnRetVal";
 if (true) return _blnretval;
@@ -431,21 +457,21 @@ _blnretval = false;
  //BA.debugLineNum = 197;BA.debugLine="Dim lngRec As Long";
 _lngrec = 0L;
  //BA.debugLineNum = 198;BA.debugLine="Try";
-try { //BA.debugLineNum = 199;BA.debugLine="Starter.strCriteria = \"SELECT * FROM android_met";
-mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM android_metadata";
+try { //BA.debugLineNum = 199;BA.debugLine="Starter.strCriteria = \"SELECT * FROM tblSysParam";
+mostCurrent._starter._strcriteria /*String*/  = "SELECT * FROM tblSysParam";
  //BA.debugLineNum = 200;BA.debugLine="rsTemp = Starter.dbcon.ExecQuery(Starter.strCrit";
 _rstemp = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 202;BA.debugLine="If rsTemp.RowCount =  0 Then";
 if (_rstemp.getRowCount()==0) { 
- //BA.debugLineNum = 203;BA.debugLine="Starter.dbcon.ExecNonQuery2(\"INSERT INTO androi";
-mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2("INSERT INTO android_metadata VALUES (?, ?, ?, ?, ?)",anywheresoftware.b4a.keywords.Common.ArrayToList(new Object[]{(Object)(("english")),(Object)(("1")),(Object)(""),(Object)(1),(Object)(1)}));
+ //BA.debugLineNum = 203;BA.debugLine="Starter.dbcon.ExecNonQuery2(\"INSERT INTO tblSys";
+mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2("INSERT INTO tblSysParam VALUES (?, ?, ?, ?, ?)",anywheresoftware.b4a.keywords.Common.ArrayToList(new Object[]{(Object)(("english")),(Object)(("1")),(Object)(""),(Object)(1),(Object)(1)}));
  }else {
  //BA.debugLineNum = 205;BA.debugLine="rsTemp.Position = 0";
 _rstemp.setPosition((int) (0));
  //BA.debugLineNum = 206;BA.debugLine="lngRec = rsTemp.GetLong(\"LastSeqNo\") + 1";
 _lngrec = (long) (_rstemp.GetLong("LastSeqNo")+1);
- //BA.debugLineNum = 208;BA.debugLine="Starter.strCriteria=\"UPDATE android_metadata SE";
-mostCurrent._starter._strcriteria /*String*/  = "UPDATE android_metadata SET LastSeqNo = ? ";
+ //BA.debugLineNum = 208;BA.debugLine="Starter.strCriteria=\"UPDATE tblSysParam SET Las";
+mostCurrent._starter._strcriteria /*String*/  = "UPDATE tblSysParam SET LastSeqNo = ? ";
  //BA.debugLineNum = 209;BA.debugLine="Starter.dbcon.ExecNonQuery2(Starter.strCriteria";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecNonQuery2(mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.ArrayToList(new String[]{BA.NumberToString(_lngrec)}));
  };
@@ -456,7 +482,7 @@ _blnretval = anywheresoftware.b4a.keywords.Common.True;
 			(_ba.processBA == null ? _ba : _ba.processBA).setLastException(e16); //BA.debugLineNum = 213;BA.debugLine="blnRetVal = False";
 _blnretval = anywheresoftware.b4a.keywords.Common.False;
  //BA.debugLineNum = 214;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("821364755",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("413107219",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(_ba)),0);
  };
  //BA.debugLineNum = 216;BA.debugLine="Return blnRetVal";
 if (true) return _blnretval;

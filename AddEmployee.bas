@@ -79,12 +79,57 @@ Sub Globals
 	Private txtLastName As EditText
 	Private txtSuffixed As EditText
 	Private cboBranches As Spinner
-	Private txtDivision As EditText
+	Private cboDivisions As Spinner
+	Private txtTableNo As EditText
 	Private txtRemarks As EditText
-	Private txtAddedBy As EditText
 	
 	Private IMEKeyboard As IME
 	Private EmpFullName As String
+	'Printing
+	Dim ESC As String = Chr(27)
+	Dim FS As String = Chr(28)
+	Dim GS As String = Chr(29)
+	
+	'Bold and underline don't work well in reversed text
+	Dim UNREVERSE As String  = GS & "B" & Chr(0)
+	Dim REVERSE As String = GS & "B" & Chr(1)
+	
+	' Character orientation. Print upside down from right margin
+	Dim UNINVERT As String = ESC & "{0"
+	Dim INVERT As String = ESC & "{1"
+	
+	' Character rotation clockwise. Not much use without also reversing the printed character sequence
+	Dim UNROTATE As String = ESC & "V0"
+	Dim ROTATE As String = ESC & "V1"
+	
+	' Horizontal tab
+	Dim HT As String = Chr(9)
+	
+	' Character underline
+	Dim ULINE0 As String = ESC & "-0"
+	Dim ULINE1 As String = ESC & "-1"
+	Dim ULINE2 As String = ESC & "-2"
+	
+	' Character emphasis
+	Dim BOLD As String = ESC & "E1"
+	Dim NOBOLD As String = ESC & "E0"
+	
+	' Character height and width
+	Dim SINGLE As String = GS & "!" & Chr(0x00)
+	Dim HIGH As String = GS & "!" & Chr(0x01)
+	Dim WIDE As String = GS & "!" & Chr(0x10)
+	Dim HIGHWIDE As String = GS & "!" & Chr(0x11)
+	
+	' Default settings
+	Private LEFTJUSTIFY As String = ESC & "a0"
+	Private LINEDEFAULT As String = ESC & "2"
+	Private LINSET0 As String = ESC & "$" & Chr(0x0) & Chr(0x0)
+	Private LMARGIN0 As String = GS & "L" & Chr(0x0) & Chr(0x0)
+	Private WIDTH0 As String = GS & "W" & Chr(0xff) & Chr(0xff)
+	Private CHARSPACING0 As String = ESC & " " & Chr(0)
+	Private CHARFONT0 As String = ESC & "M" & Chr(0)
+	Dim DEFAULTS As String =  CHARSPACING0 & CHARFONT0 & LMARGIN0 & WIDTH0 & LINSET0 & LINEDEFAULT & LEFTJUSTIFY _
+		& UNINVERT & UNROTATE & UNREVERSE & NOBOLD & ULINE0
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
@@ -106,13 +151,14 @@ Sub Activity_Create(FirstTime As Boolean)
 	jo.RunMethod("setContentInsetStartWithNavigation", Array(1dip))
 	jo.RunMethod("setTitleMarginStart", Array(0dip))
 	
-	InpTyp.SetInputType(txtFirstName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
+	InpTyp.Initialize
+	
+	InpTyp.SetInputType(txtFirstName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
 	InpTyp.SetInputType(txtMI,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
-	InpTyp.SetInputType(txtLastName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
-	InpTyp.SetInputType(txtSuffixed,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
-	InpTyp.SetInputType(txtDivision,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
+	InpTyp.SetInputType(txtLastName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
+	InpTyp.SetInputType(txtSuffixed,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
 	InpTyp.SetInputType(txtRemarks,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
-	InpTyp.SetInputType(txtAddedBy,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
+	InpTyp.SetInputType(txtTableNo,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_CLASS_NUMBER))
 
 	ActionBarButton.Initialize
 	ActionBarButton.ShowUpIndicator = True
@@ -125,11 +171,11 @@ Sub Activity_Create(FirstTime As Boolean)
 	txtLastName.Background = cdTxtBox
 	txtSuffixed.Background = cdTxtBox
 	cboBranches.Background = cdTxtBox
-	txtDivision.Background = cdTxtBox
+	cboDivisions.Background = cdTxtBox
 	txtRemarks.Background = cdTxtBox
-	txtAddedBy.Background = cdTxtBox
+	txtTableNo.Background = cdTxtBox
 	
-	IMEKeyboard.Initialize("")
+	IMEKeyboard.Initialize("IME")
 	txtFirstName.RequestFocus
 	IMEKeyboard.ShowKeyboard(txtFirstName)
 	
@@ -139,6 +185,7 @@ Sub Activity_Create(FirstTime As Boolean)
 	btnCancel.Background = cdCancel
 
 	FillBranches(GlobalVar.AreaID)
+	FillDivisions
 End Sub
 
 Sub Activity_KeyPress (KeyCode As Int) As Boolean 'Return True to consume the event
@@ -205,9 +252,9 @@ Private Sub RegisterEmp_OnPositiveClicked (View As View, Dialog As Object)
 	Alert.Initialize.Dismiss(Dialog)
 	
 	If Not(SaveEmployeeRegistration) Then
-		ShowEntryError($"ERROR"$, $"Unable to Save Guest data due to "$ & LastException)
+		ShowEntryError($"ERROR"$, $"Unable to Add New Employee data due to "$ & LastException)
 	End If
-	
+	GlobalVar.NewRegID = DBFunctions.GetIDByCode("RegID", "tblRegistration", "RegNo", GlobalVar.NewRegNo)
 	PrintStub(RegistrationNum)
 
 End Sub
@@ -384,7 +431,7 @@ Sub btnSave_Click
 		End If
 	Else
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtSuffixed.Text)) <= 0 Then
-			EmpFullName = txtFirstName.Text & " " & txtMI.Tag & " " & txtLastName.Text
+			EmpFullName = txtFirstName.Text & " " & txtMI.Text & " " & txtLastName.Text
 		Else
 			EmpFullName = txtFirstName.Text & " " & txtMI.Text & " " & txtLastName.Text & " " & txtSuffixed.Text
 		End If
@@ -419,9 +466,9 @@ Private Sub ValidEntries() As Boolean
 			Return False
 		End If
 
-		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtDivision.Text)) <= 0 Then
+		If GlobalVar.SF.Len(GlobalVar.SF.Trim(cboDivisions.SelectedItem)) <= 0 Then
 			ShowEntryError($"ERROR"$,$"Employee Division cannot be blank!"$)
-			txtDivision.RequestFocus
+			cboDivisions.RequestFocus
 			Return False
 		End If
 
@@ -430,9 +477,9 @@ Private Sub ValidEntries() As Boolean
 			txtRemarks.RequestFocus
 			Return False
 		End If
-		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtAddedBy.Text)) <= 0 Then
+		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtTableNo.Text)) <= 0 Then
 			ShowEntryError($"ERROR"$, $"Added By cannot be blank!"$)
-			txtAddedBy.RequestFocus
+			txtTableNo.RequestFocus
 			Return False
 		End If
 		Return True
@@ -493,14 +540,13 @@ Private Sub SaveEmployeeRegistration() As Boolean
 	Dim lngDateTime As Long
 	Dim RegSeq, NoPrint As Int
 	
-	Dim NewRegNo As String
 				
 	Dim sLastName, sFirstName, sMI, sSuffixed, EmpName As String
-	Dim Remarks, Division, AddedBy As String
+	Dim Remarks, DivisionID, TableNo, AddedBy As String
 	Dim TimeReg As String
 	Dim iBranchID As Int
 
-	ProgressDialogShow2($"Saving Guest Data..."$, False)
+	ProgressDialogShow2($"Saving Employee Data..."$, False)
 	iBranchID = DBFunctions.GetIDByCode("BranchID", "tblBranches","BranchName",cboBranches.SelectedItem)
 	
 	sFirstName = txtFirstName.Text
@@ -509,8 +555,10 @@ Private Sub SaveEmployeeRegistration() As Boolean
 	sSuffixed = txtSuffixed.Text
 	EmpName = EmpFullName
 	Remarks = txtRemarks.Text
-	Division = txtDivision.Text
-	AddedBy = txtAddedBy.Text
+	TableNo = txtTableNo.Text
+	DivisionID = DBFunctions.GetIDByCode("DivisionID","tblDivisions", "DivisionName", cboDivisions.SelectedItem)
+	
+	AddedBy = GlobalVar.AssignedEmp
 
 	lngDateTime = DateTime.Now
 	DateTime.TimeFormat = "HH:mm:ss"
@@ -520,14 +568,14 @@ Private Sub SaveEmployeeRegistration() As Boolean
 	
 	NoPrint = 1
 	
-	NewRegNo = DBFunctions.GetNewStubNo
+	GlobalVar.NewRegNo = DBFunctions.GetNewStubNo
 
 	Starter.DBCon.BeginTransaction
 	Try
-		Starter.strCriteria="INSERT INTO tblRegistration VALUES (" & Null & ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-		Starter.DBCon.ExecNonQuery2(Starter.strCriteria , Array As Object(NewRegNo, iBranchID, Division, sLastName, sFirstName, sMI, sSuffixed, EmpName, $"1"$, $"0"$, Null, $"1"$, Remarks, $"1"$, TimeReg, RegSeq, $"1"$, $""$, AddedBy))
+		Starter.strCriteria="INSERT INTO tblRegistration VALUES (" & Null & ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+		Starter.DBCon.ExecNonQuery2(Starter.strCriteria , Array As Object(GlobalVar.NewRegNo, iBranchID, DivisionID, TableNo, sLastName, sFirstName, sMI, sSuffixed, EmpName, $"1"$, $"0"$, Null, $"1"$, Remarks, $"1"$, TimeReg, RegSeq, $"1"$, NoPrint, TimeReg, AddedBy))
 		Starter.DBCon.TransactionSuccessful
-		RegistrationNum = NewRegNo
+		RegistrationNum = GlobalVar.NewRegNo
 		bRetVal = True
 	Catch
 		bRetVal = False
@@ -538,65 +586,85 @@ Private Sub SaveEmployeeRegistration() As Boolean
 	Return bRetVal
 End Sub
 
-Private Sub GetGuestID(sRegNo As String) As Int
-	Dim iRetVal As Int
-	Try
-		iRetVal = Starter.DBCon.ExecQuerySingleResult("SELECT GuestID FROM tblGuests WHERE StubNo = " & sRegNo)
-	Catch
-		ToastMessageShow($"Unable to fetch Guest ID due to "$ & LastException.Message, False)
-		Log(LastException)
-	End Try
-	Return iRetVal
-
-End Sub
-
 #Region Printing
-Private Sub PrintStub(sRegNo As String)
+Private Sub PrintStub(iRegID As Int)
 	Dim rsData As Cursor
 	Dim StubNo As String
-	Dim RegGuestName As String
-	Dim RegRemarks As String
+	Dim RegFullName As String
+	Dim RegBranchName As String
+	Dim RegDivision As String
+	Dim RegTableNo As Int
+	Dim AttendStatus As Int
 	
 	ProgressDialogShow2($"Stub Printing.  Please Wait..."$, False)
 	
 	Try
-		Starter.strCriteria = "SELECT tblGuests.GuestID,tblGuests.StubNo, " & _
-						  "tblGuests.EmpName, tblGuests.Remarks_Occupation, " & _
-						  "tblGuests.Division, tblGuests.ApprovedBy, tblGuests.TimeReg, " & _
-						  "tblGuests.WasStubPrinted, tblGuests.NoOfPrint " & _
-						  "FROM tblGuests " & _
-						  "WHERE tblGuests.StubNo = '" & sRegNo & "'"
-						  
+		Starter.strCriteria = "SELECT Employees.RegNo, Employees.FullName, " & _
+						  "Branches.BranchName, Divisions.DivisionName, Employees.TableNo, " & _
+						  "Employees.WillAttend AS AttendStatus " & _
+						  "FROM tblRegistration AS Employees " & _
+						  "INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID " & _
+						  "INNER JOIN tblDivisions AS Divisions ON Employees.DivisionID = Divisions.DivisionID " & _
+						  "WHERE Employees.RegID = " & iRegID & " " & _
+						  "AND Employees.WasRegistered = 1"
+		
 		rsData = Starter.DBCon.ExecQuery(Starter.strCriteria)
 		LogColor(Starter.strCriteria, Colors.Magenta)
 		
 		If rsData.RowCount > 0 Then
 			rsData.Position = 0
-			StubNo = rsData.GetString("StubNo")
-			RegGuestName = rsData.GetString("EmpName")
-			RegRemarks = rsData.GetString("Remarks_Occupation")
+			StubNo = rsData.GetString("RegNo")
+			RegFullName = rsData.GetString("FullName")
+			RegBranchName = rsData.GetString("BranchName")
+			RegDivision = rsData.GetString("DivisionName")
+			RegTableNo = rsData.GetInt("TableNo")
+			AttendStatus = rsData.GetInt("AttendStatus")
 		Else
 			Return
 		End If
-		
-		PrintBuffer = Chr(27) & "@" _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(8) & $"LAUSGROUP EVENT CENTRE"$ & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & $"December 19, 2023"$ & CRLF & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"STUB NO.: "$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegGuestName & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegRemarks & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(0) & $"Have a Blessed Holiday Season!"$ & CRLF & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"DINNER STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegGuestName & Chr(10) & Chr(10) _
-						& Chr(10) & Chr(27) & Chr(97) & Chr(10)
+
+		PrintBuffer =  ESC & "@" _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"STUB NO.: "$ & BOLD & StubNo & CRLF & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& ESC & "!" & Chr(16) & $"Sit back, Listen & Learn!"$ & Chr(10)  & Chr(10) _
+					& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"DINNER STUB"$ & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"LUNCH STUB"$ & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"RAFFLE STUB"$ & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& Chr(10) & ESC & Chr(73)
 		StartPrinter
 	Catch
 		ProgressDialogHide
@@ -607,8 +675,7 @@ End Sub
 Sub StartPrinter
 	
 	PairedDevices.Initialize
-'	If Serial1.IsInitialized = False Then Serial1.Initialize("")
-'	If TMPrinter.IsInitialized = False Then TMPrinter.Initialize2(Serial1.OutputStream, "windows-1252")
+	
 	Try
 		PairedDevices = Serial1.GetPairedDevices
 	Catch
@@ -672,7 +739,7 @@ Sub Printer_Connected (Success As Boolean)
 		ProgressDialogHide
 		TMPrinter.Initialize2(Serial1.OutputStream, "windows-1252")
 		oStream.Initialize(Serial1.InputStream, Serial1.OutputStream, "LogoPrint")
-		Logo.Initialize(File.DirAssets, "Stub-Header.png")
+		Logo.Initialize(File.DirAssets, "Stub-Header-Townhall.png")
 		LogoBMP = CreateScaledBitmap(Logo, Logo.Width, Logo.Height)
 		Log(DeviceName)
 
@@ -680,7 +747,7 @@ Sub Printer_Connected (Success As Boolean)
 		WoosimImage.InitializeStatic("com.woosim.printer.WoosimImage")
 		
 		initPrinter = WoosimCMD.RunMethod("initPrinter",Null)
-		PrintLogo = WoosimImage.RunMethod("printBitmap", Array (0, 0, 420, 205, LogoBMP))
+		PrintLogo = WoosimImage.RunMethod("printBitmap", Array (0, 0, 420, 220, LogoBMP))
 		
 		oStream.Write(initPrinter)
 		oStream.Write(WoosimCMD.RunMethod("setPageMode",Null))
@@ -694,7 +761,6 @@ Sub Printer_Connected (Success As Boolean)
 		TMPrinter.Flush
 		Sleep(600)
 		ShowSuccessMsg($"SUCCESS"$, $"Stub was successfully printed."$ & CRLF & $"Tap OK to Continue..."$)
-'		DispInfoMsg($"Stub was successfully printed."$ & $"Tap OK to Continue..."$, Application.LabelName)
 		TMPrinter.Close
 		Serial1.Disconnect
 	End If
@@ -738,13 +804,37 @@ Private Sub FillBranches (iAreaID As Int)
 	End Try
 End Sub
 
-Private Sub GetBranchID(sBranchName) As Int
-	Dim iRetVal As Int
+
+Private Sub FillDivisions ()
+	Dim SenderFilter As Object
+
+	cboDivisions.Clear
+
+	Starter.strCriteria = "SELECT * FROM tblDivisions"
+	Starter.DBCon.ExecQuery (Starter.strCriteria)
+	
+	LogColor(Starter.strCriteria, Colors.Yellow)
 	Try
-		iRetVal = Starter.DBCon.ExecQuerySingleResult("SELECT BranchID FROM tblBranches WHERE BranchName = '" & sBranchName & "'")
+		SenderFilter = Starter.DBCon.ExecQueryAsync("SQL", Starter.strCriteria, Null)
+		Wait For (SenderFilter) SQL_QueryComplete (Success As Boolean, RS As ResultSet)
+		If Success Then
+			Dim StartTime As Long = DateTime.Now
+			cboDivisions.Clear
+			Do While RS.NextRow
+				cboDivisions.Add(RS.GetString("DivisionName"))
+			Loop
+		Else
+			Log(LastException)
+		End If
+
+		Log($"List of Division Records = ${NumberFormat2((DateTime.Now - StartTime) / 1000, 0, 2, 2, False)} seconds to populate ${cboDivisions.Size} Divisions Records"$)
+		
 	Catch
-		ToastMessageShow($"Unable to fetch Branch ID due to "$ & LastException.Message, False)
 		Log(LastException)
 	End Try
-	Return iRetVal
+End Sub
+
+
+Sub txtFirstName_EnterPressed
+	txtMI.RequestFocus
 End Sub

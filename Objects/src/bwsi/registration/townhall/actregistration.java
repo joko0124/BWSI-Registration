@@ -386,13 +386,13 @@ public bwsi.registration.townhall.searchview _sv = null;
 public anywheresoftware.b4a.objects.LabelWrapper _lblwasawardee = null;
 public bwsi.registration.townhall.main _main = null;
 public bwsi.registration.townhall.registration _registration = null;
-public bwsi.registration.townhall.mainscreen _mainscreen = null;
-public bwsi.registration.townhall.scale _scale = null;
-public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.addemployee _addemployee = null;
 public bwsi.registration.townhall.globalvar _globalvar = null;
 public bwsi.registration.townhall.dbfunctions _dbfunctions = null;
+public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.dbutils _dbutils = null;
+public bwsi.registration.townhall.mainscreen _mainscreen = null;
+public bwsi.registration.townhall.scale _scale = null;
 public bwsi.registration.townhall.starter _starter = null;
 public bwsi.registration.townhall.httputils2service _httputils2service = null;
 public bwsi.registration.townhall.b4xcollections _b4xcollections = null;
@@ -572,7 +572,7 @@ _p.LoadLayout("BranchItems",mostCurrent.activityBA);
  //BA.debugLineNum = 314;BA.debugLine="lblBranches.Text = Title";
 mostCurrent._lblbranches.setText(BA.ObjectToCharSequence(_title));
  //BA.debugLineNum = 315;BA.debugLine="LogColor(Title, Colors.Red)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83276805",_title,anywheresoftware.b4a.keywords.Common.Colors.Red);
+anywheresoftware.b4a.keywords.Common.LogImpl("43604485",_title,anywheresoftware.b4a.keywords.Common.Colors.Red);
  //BA.debugLineNum = 316;BA.debugLine="Dim BD As BranchData";
 _bd = new bwsi.registration.townhall.actregistration._branchdata();
  //BA.debugLineNum = 317;BA.debugLine="BD.BranchName = Title";
@@ -624,7 +624,7 @@ _addbranch(_sbranchname);
  //BA.debugLineNum = 265;BA.debugLine="Starter.strCriteria = \"SELECT Registration.Reg";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT Registration.RegID, Registration.FirstName, Registration.LastName, Registration.FullName, Branches.BranchName, "+"Registration.Division, Registration.WillAttend, Registration.WasRegistered, Registration.WasAwardee, Registration.Awards "+"FROM tblRegistration AS Registration "+"INNER JOIN tblBranches AS Branches ON Registration.BranchID = Branches.BranchID "+"WHERE Registration.BranchID = "+BA.NumberToString(_ibranchid)+" "+"AND Registration.WillAttend <> 0 "+"ORDER BY Registration.Division, Registration.FullName ASC	";
  //BA.debugLineNum = 273;BA.debugLine="LogColor(Starter.strCriteria, Colors.Cyan)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83211295",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
+anywheresoftware.b4a.keywords.Common.LogImpl("43538975",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
  //BA.debugLineNum = 274;BA.debugLine="rsEmployees = Starter.DBCon.ExecQuery(Starter.";
 mostCurrent._rsemployees = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 276;BA.debugLine="If rsEmployees.RowCount > 0 Then";
@@ -661,20 +661,20 @@ mostCurrent._clvemployees._add((anywheresoftware.b4a.objects.B4XViewWrapper) any
 };
  }else {
  //BA.debugLineNum = 291;BA.debugLine="Log(rsEmployees.RowCount)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83211313",BA.NumberToString(mostCurrent._rsemployees.getRowCount()),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43538993",BA.NumberToString(mostCurrent._rsemployees.getRowCount()),0);
  };
  }
 };
  }else {
  //BA.debugLineNum = 296;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83211318",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43538998",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 299;BA.debugLine="Log($\"List of Time Records = ${NumberFormat2((Da";
-anywheresoftware.b4a.keywords.Common.LogImpl("83211321",("List of Time Records = "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(anywheresoftware.b4a.keywords.Common.NumberFormat2((anywheresoftware.b4a.keywords.Common.DateTime.getNow()-_starttime)/(double)1000,(int) (0),(int) (2),(int) (2),anywheresoftware.b4a.keywords.Common.False)))+" seconds to populate "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(mostCurrent._clvemployees._getsize()))+" Time Records"),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43539001",("List of Time Records = "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(anywheresoftware.b4a.keywords.Common.NumberFormat2((anywheresoftware.b4a.keywords.Common.DateTime.getNow()-_starttime)/(double)1000,(int) (0),(int) (2),(int) (2),anywheresoftware.b4a.keywords.Common.False)))+" seconds to populate "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(mostCurrent._clvemployees._getsize()))+" Time Records"),0);
  } 
        catch (Exception e40) {
 			processBA.setLastException(e40); //BA.debugLineNum = 302;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83211324",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43539004",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 308;BA.debugLine="End Sub";
 return "";
@@ -839,14 +839,14 @@ _index = (int)(BA.ObjectToNumber(mostCurrent._clvemployees._getvalue(mostCurrent
  //BA.debugLineNum = 216;BA.debugLine="RegID = index";
 _regid = _index;
  //BA.debugLineNum = 217;BA.debugLine="LogColor($\"Registration ID: \"$ & RegID, Colors.Cy";
-anywheresoftware.b4a.keywords.Common.LogImpl("83014659",("Registration ID: ")+BA.NumberToString(_regid),anywheresoftware.b4a.keywords.Common.Colors.Cyan);
+anywheresoftware.b4a.keywords.Common.LogImpl("43342339",("Registration ID: ")+BA.NumberToString(_regid),anywheresoftware.b4a.keywords.Common.Colors.Cyan);
  //BA.debugLineNum = 218;BA.debugLine="Try";
 try { //BA.debugLineNum = 219;BA.debugLine="sRegName = GetEmployeeName(RegID)";
 mostCurrent._sregname = _getemployeename(_regid);
  } 
        catch (Exception e7) {
 			processBA.setLastException(e7); //BA.debugLineNum = 221;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83014663",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43342343",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 224;BA.debugLine="ConfirmRegister(sRegName)";
 _confirmregister(mostCurrent._sregname);
@@ -864,11 +864,11 @@ _regid = _index;
  //BA.debugLineNum = 184;BA.debugLine="Dim btnStatus As Int";
 _btnstatus = 0;
  //BA.debugLineNum = 186;BA.debugLine="LogColor(index, Colors.Red)";
-anywheresoftware.b4a.keywords.Common.LogImpl("82949126",BA.NumberToString(_index),anywheresoftware.b4a.keywords.Common.Colors.Red);
+anywheresoftware.b4a.keywords.Common.LogImpl("43276806",BA.NumberToString(_index),anywheresoftware.b4a.keywords.Common.Colors.Red);
  //BA.debugLineNum = 188;BA.debugLine="btnStatus = GetRegStatus(RegID)";
 _btnstatus = _getregstatus(_regid);
  //BA.debugLineNum = 189;BA.debugLine="LogColor($\"Register Status: \"$ & btnStatus, Color";
-anywheresoftware.b4a.keywords.Common.LogImpl("82949129",("Register Status: ")+BA.NumberToString(_btnstatus),anywheresoftware.b4a.keywords.Common.Colors.Red);
+anywheresoftware.b4a.keywords.Common.LogImpl("43276809",("Register Status: ")+BA.NumberToString(_btnstatus),anywheresoftware.b4a.keywords.Common.Colors.Red);
  //BA.debugLineNum = 191;BA.debugLine="Try";
 try { //BA.debugLineNum = 192;BA.debugLine="Select Case btnStatus";
 switch (_btnstatus) {
@@ -906,7 +906,7 @@ _searchswapemployees(_iswapbranchid);
  } 
        catch (Exception e25) {
 			processBA.setLastException(e25); //BA.debugLineNum = 210;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("82949150",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43276830",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 212;BA.debugLine="End Sub";
 return "";
@@ -1050,7 +1050,7 @@ _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQue
 			processBA.setLastException(e5); //BA.debugLineNum = 1114;BA.debugLine="sRetVal = \"\"";
 _sretval = "";
  //BA.debugLineNum = 1115;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85177350",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45505030",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1117;BA.debugLine="Return sRetVal";
 if (true) return _sretval;
@@ -1070,7 +1070,7 @@ _iretval = (int)(Double.parseDouble(mostCurrent._starter._dbcon /*anywheresoftwa
 			processBA.setLastException(e5); //BA.debugLineNum = 1188;BA.debugLine="iRetVal = 0";
 _iretval = (int) (0);
  //BA.debugLineNum = 1189;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85373958",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45701638",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1191;BA.debugLine="Return iRetVal";
 if (true) return _iretval;
@@ -1108,7 +1108,7 @@ _iretval = (int) (2);
 			processBA.setLastException(e15); //BA.debugLineNum = 1209;BA.debugLine="iRetVal = 0";
 _iretval = (int) (0);
  //BA.debugLineNum = 1210;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85439504",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45767184",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1212;BA.debugLine="rsStatus.Close";
 _rsstatus.Close();
@@ -1130,7 +1130,7 @@ _sretval = mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQue
 			processBA.setLastException(e5); //BA.debugLineNum = 1266;BA.debugLine="sRetVal = \"\"";
 _sretval = "";
  //BA.debugLineNum = 1267;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85570566",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45898246",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1269;BA.debugLine="Return sRetVal";
 if (true) return _sretval;
@@ -1240,7 +1240,7 @@ case 0:
 //C
 this.state = 1;
  //BA.debugLineNum = 1053;BA.debugLine="Log(\"Connected: \" & Success)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85046273","Connected: "+BA.ObjectToString(_success),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45373953","Connected: "+BA.ObjectToString(_success),0);
  //BA.debugLineNum = 1055;BA.debugLine="If Success = False Then";
 if (true) break;
 
@@ -1279,7 +1279,7 @@ parent._logo.Initialize(anywheresoftware.b4a.keywords.Common.File.getDirAssets()
  //BA.debugLineNum = 1069;BA.debugLine="LogoBMP = CreateScaledBitmap(Logo, Logo.Width, L";
 parent._logobmp = _createscaledbitmap(parent._logo,parent._logo.getWidth(),parent._logo.getHeight());
  //BA.debugLineNum = 1070;BA.debugLine="Log(DeviceName)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85046290",parent._devicename,0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45373970",parent._devicename,0);
  //BA.debugLineNum = 1072;BA.debugLine="WoosimCMD.InitializeStatic(\"com.woosim.printer.W";
 parent._woosimcmd.InitializeStatic("com.woosim.printer.WoosimCmd");
  //BA.debugLineNum = 1073;BA.debugLine="WoosimImage.InitializeStatic(\"com.woosim.printer";
@@ -1309,7 +1309,7 @@ this.state = 6;
  //BA.debugLineNum = 1085;BA.debugLine="TMPrinter.WriteLine(PrintBuffer)";
 parent._tmprinter.WriteLine(parent._printbuffer);
  //BA.debugLineNum = 1086;BA.debugLine="Log(PrintBuffer)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85046306",parent._printbuffer,0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45373986",parent._printbuffer,0);
  //BA.debugLineNum = 1087;BA.debugLine="TMPrinter.Flush";
 parent._tmprinter.Flush();
  //BA.debugLineNum = 1088;BA.debugLine="Sleep(600)";
@@ -1453,7 +1453,7 @@ mostCurrent._starter._strcriteria /*String*/  = "SELECT Employees.RegNo, Employe
  //BA.debugLineNum = 801;BA.debugLine="rsData = Starter.DBCon.ExecQuery(Starter.strCrit";
 _rsdata = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 802;BA.debugLine="LogColor(Starter.strCriteria, Colors.Magenta)";
-anywheresoftware.b4a.keywords.Common.LogImpl("84915224",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Magenta);
+anywheresoftware.b4a.keywords.Common.LogImpl("45242904",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Magenta);
  //BA.debugLineNum = 804;BA.debugLine="If rsData.RowCount > 0 Then";
 if (_rsdata.getRowCount()>0) { 
  //BA.debugLineNum = 805;BA.debugLine="rsData.Position = 0";
@@ -1525,7 +1525,7 @@ _startprinter();
 			processBA.setLastException(e57); //BA.debugLineNum = 996;BA.debugLine="ProgressDialogHide";
 anywheresoftware.b4a.keywords.Common.ProgressDialogHide();
  //BA.debugLineNum = 997;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("84915419",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45243099",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 999;BA.debugLine="End Sub";
 return "";
@@ -1651,7 +1651,7 @@ anywheresoftware.b4a.keywords.Common.ProgressDialogHide();
  //BA.debugLineNum = 1149;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
  //BA.debugLineNum = 1150;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85242910",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45570590",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1152;BA.debugLine="Starter.DBCon.EndTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .EndTransaction();
@@ -1722,7 +1722,7 @@ mostCurrent._clvemployees._clear();
 try { //BA.debugLineNum = 413;BA.debugLine="Starter.strCriteria = \"SELECT DISTINCT Employees";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT DISTINCT Employees.BranchID, Branches.BranchName "+"FROM tblBranches AS Branches "+"INNER JOIN tblRegistration AS Employees ON Branches.BranchID = Employees.BranchID "+"WHERE Branches.AreaID = "+BA.NumberToString(_iareaid)+" "+"AND Employees.FullName LIKE '%"+_ssearch+"%' "+"ORDER BY Branches.BranchID ASC";
  //BA.debugLineNum = 420;BA.debugLine="LogColor(Starter.strCriteria, Colors.Yellow)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83538957",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Yellow);
+anywheresoftware.b4a.keywords.Common.LogImpl("43866637",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Yellow);
  //BA.debugLineNum = 421;BA.debugLine="rsBranch = Starter.DBCon.ExecQuery(Starter.strCr";
 mostCurrent._rsbranch = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 423;BA.debugLine="If rsBranch.RowCount > 0 Then";
@@ -1746,7 +1746,7 @@ _addbranch(_sbranchname);
  //BA.debugLineNum = 432;BA.debugLine="Starter.strCriteria = \"SELECT Registration.Reg";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT Registration.RegID, Registration.FirstName, Registration.LastName, Registration.FullName, Branches.BranchName, "+"Registration.Division, Registration.WillAttend, Registration.WasRegistered, Registration.WasAwardee, Registration.Awards "+"FROM tblRegistration AS Registration "+"INNER JOIN tblBranches AS Branches ON Registration.BranchID = Branches.BranchID "+"WHERE Registration.BranchID = "+BA.NumberToString(_ibranchid)+" "+"AND Registration.WillAttend <> 0 "+"AND Registration.FullName LIKE '%"+_ssearch+"%' "+"ORDER BY Registration.Division, Registration.FullName ASC";
  //BA.debugLineNum = 441;BA.debugLine="LogColor(Starter.strCriteria, Colors.Cyan)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83538978",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
+anywheresoftware.b4a.keywords.Common.LogImpl("43866658",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
  //BA.debugLineNum = 442;BA.debugLine="rsEmployees = Starter.DBCon.ExecQuery(Starter.";
 mostCurrent._rsemployees = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 444;BA.debugLine="If rsEmployees.RowCount > 0 Then";
@@ -1783,7 +1783,7 @@ mostCurrent._clvemployees._add((anywheresoftware.b4a.objects.B4XViewWrapper) any
 };
  }else {
  //BA.debugLineNum = 459;BA.debugLine="Log(rsEmployees.RowCount)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83538996",BA.NumberToString(mostCurrent._rsemployees.getRowCount()),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43866676",BA.NumberToString(mostCurrent._rsemployees.getRowCount()),0);
  };
  }
 };
@@ -1792,11 +1792,11 @@ anywheresoftware.b4a.keywords.Common.LogImpl("83538996",BA.NumberToString(mostCu
 mostCurrent._clvemployees._clear();
  };
  //BA.debugLineNum = 467;BA.debugLine="Log($\"List of Time Records = ${NumberFormat2((Da";
-anywheresoftware.b4a.keywords.Common.LogImpl("83539004",("List of Time Records = "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(anywheresoftware.b4a.keywords.Common.NumberFormat2((anywheresoftware.b4a.keywords.Common.DateTime.getNow()-_starttime)/(double)1000,(int) (0),(int) (2),(int) (2),anywheresoftware.b4a.keywords.Common.False)))+" seconds to populate "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(mostCurrent._clvemployees._getsize()))+" Time Records"),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43866684",("List of Time Records = "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(anywheresoftware.b4a.keywords.Common.NumberFormat2((anywheresoftware.b4a.keywords.Common.DateTime.getNow()-_starttime)/(double)1000,(int) (0),(int) (2),(int) (2),anywheresoftware.b4a.keywords.Common.False)))+" seconds to populate "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(mostCurrent._clvemployees._getsize()))+" Time Records"),0);
  } 
        catch (Exception e41) {
 			processBA.setLastException(e41); //BA.debugLineNum = 470;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("83539007",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("43866687",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 472;BA.debugLine="End Sub";
 return "";
@@ -1830,7 +1830,7 @@ _searchlist.Clear();
 try { //BA.debugLineNum = 1231;BA.debugLine="Starter.strCriteria = \"SELECT tblRegistration.Re";
 mostCurrent._starter._strcriteria /*String*/  = "SELECT tblRegistration.RegID, tblRegistration.FullName, tblBranches.BranchName "+"FROM tblRegistration INNER JOIN tblBranches ON tblRegistration.BranchID = tblBranches.BranchID "+"WHERE tblRegistration.WillAttend = 1 "+"AND tblRegistration.WasRegistered = 0 "+"AND tblRegistration.BranchID = "+BA.NumberToString(_ibranchid);
  //BA.debugLineNum = 1237;BA.debugLine="LogColor(Starter.strCriteria, Colors.Cyan)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85505045",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
+anywheresoftware.b4a.keywords.Common.LogImpl("45832725",mostCurrent._starter._strcriteria /*String*/ ,anywheresoftware.b4a.keywords.Common.Colors.Cyan);
  //BA.debugLineNum = 1239;BA.debugLine="rsSwapEmployees = Starter.DBCon.ExecQuery(Starte";
 _rsswapemployees = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .ExecQuery(mostCurrent._starter._strcriteria /*String*/ )));
  //BA.debugLineNum = 1241;BA.debugLine="If rsSwapEmployees.RowCount > 0 Then";
@@ -1868,7 +1868,7 @@ _searchlist.Clear();
  } 
        catch (Exception e31) {
 			processBA.setLastException(e31); //BA.debugLineNum = 1257;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85505065",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45832745",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1259;BA.debugLine="End Sub";
 return "";
@@ -1978,7 +1978,7 @@ _devicename = BA.ObjectToString(_paireddevices.GetKeyAt((int) (0)));
  //BA.debugLineNum = 1021;BA.debugLine="DeviceMac=PairedDevices.GetValueAt(0)";
 _devicemac = BA.ObjectToString(_paireddevices.GetValueAt((int) (0)));
  //BA.debugLineNum = 1022;BA.debugLine="Log(DeviceName & \" -> \" & DeviceMac)";
-anywheresoftware.b4a.keywords.Common.LogImpl("84980757",_devicename+" -> "+_devicemac,0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45308437",_devicename+" -> "+_devicemac,0);
  //BA.debugLineNum = 1024;BA.debugLine="Serial1.ConnectInsecure(BTAdmin, DeviceMac,1)";
 _serial1.ConnectInsecure(processBA,_btadmin,_devicemac,(int) (1));
  //BA.debugLineNum = 1025;BA.debugLine="ProgressDialogHide";
@@ -2008,7 +2008,7 @@ _devicename = BA.ObjectToString(_paireddevices.GetKeyAt(_i));
  //BA.debugLineNum = 1037;BA.debugLine="DeviceMac=PairedDevices.GetValueAt(i)";
 _devicemac = BA.ObjectToString(_paireddevices.GetValueAt(_i));
  //BA.debugLineNum = 1038;BA.debugLine="Log(DeviceName & \" -> \" & DeviceMac)";
-anywheresoftware.b4a.keywords.Common.LogImpl("84980773",_devicename+" -> "+_devicemac,0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45308453",_devicename+" -> "+_devicemac,0);
  //BA.debugLineNum = 1039;BA.debugLine="Serial1.ConnectInsecure(BTAdmin, DeviceMac,1)";
 _serial1.ConnectInsecure(processBA,_btadmin,_devicemac,(int) (1));
  //BA.debugLineNum = 1040;BA.debugLine="ProgressDialogHide";
@@ -2113,7 +2113,7 @@ return "";
 public static String  _sv_itemclick(int _value) throws Exception{
  //BA.debugLineNum = 1274;BA.debugLine="Sub SV_ItemClick(Value As Int)";
  //BA.debugLineNum = 1275;BA.debugLine="Log(Value)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85636097",BA.NumberToString(_value),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45963777",BA.NumberToString(_value),0);
  //BA.debugLineNum = 1276;BA.debugLine="iSwapEmpID = Value";
 _iswapempid = _value;
  //BA.debugLineNum = 1277;BA.debugLine="SV.ClearAll";
@@ -2228,7 +2228,7 @@ anywheresoftware.b4a.keywords.Common.ProgressDialogHide();
  //BA.debugLineNum = 1176;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
  //BA.debugLineNum = 1177;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85308437",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("45636117",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1179;BA.debugLine="Starter.DBCon.EndTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .EndTransaction();
@@ -2264,7 +2264,7 @@ _bretval = anywheresoftware.b4a.keywords.Common.True;
 			processBA.setLastException(e12); //BA.debugLineNum = 1304;BA.debugLine="bRetVal = False";
 _bretval = anywheresoftware.b4a.keywords.Common.False;
  //BA.debugLineNum = 1305;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("85701652",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("46029332",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 1307;BA.debugLine="Starter.DBCon.EndTransaction";
 mostCurrent._starter._dbcon /*anywheresoftware.b4a.sql.SQL*/ .EndTransaction();

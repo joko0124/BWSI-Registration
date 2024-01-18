@@ -352,12 +352,12 @@ public anywheresoftware.b4a.objects.ListViewWrapper _lvbranches = null;
 public bwsi.registration.townhall.main _main = null;
 public bwsi.registration.townhall.actregistration _actregistration = null;
 public bwsi.registration.townhall.registration _registration = null;
-public bwsi.registration.townhall.scale _scale = null;
-public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.addemployee _addemployee = null;
 public bwsi.registration.townhall.globalvar _globalvar = null;
 public bwsi.registration.townhall.dbfunctions _dbfunctions = null;
+public bwsi.registration.townhall.addguest _addguest = null;
 public bwsi.registration.townhall.dbutils _dbutils = null;
+public bwsi.registration.townhall.scale _scale = null;
 public bwsi.registration.townhall.starter _starter = null;
 public bwsi.registration.townhall.httputils2service _httputils2service = null;
 public bwsi.registration.townhall.b4xcollections _b4xcollections = null;
@@ -620,7 +620,7 @@ mostCurrent._lvbranches.AddSingleLine(BA.ObjectToCharSequence(_rsbranches.GetStr
  } 
        catch (Exception e13) {
 			processBA.setLastException(e13); //BA.debugLineNum = 239;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("810354703",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+anywheresoftware.b4a.keywords.Common.LogImpl("420905999",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
  };
  //BA.debugLineNum = 241;BA.debugLine="End Sub";
 return "";

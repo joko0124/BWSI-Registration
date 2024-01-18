@@ -59,7 +59,7 @@
 		<activity
 			android:windowSoftInputMode="stateHidden"
 			android:launchMode="singleTop"
-			android:name=".mainscreen"
+			android:name=".addemployee"
 			android:label="BWSI Townhall Meeting 2024"
 			android:screenOrientation="portrait">
 		</activity>
@@ -73,7 +73,7 @@
 		<activity
 			android:windowSoftInputMode="stateHidden"
 			android:launchMode="singleTop"
-			android:name=".addemployee"
+			android:name=".mainscreen"
 			android:label="BWSI Townhall Meeting 2024"
 			android:screenOrientation="portrait">
 		</activity>

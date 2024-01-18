@@ -1,16 +1,17 @@
 ﻿Build1=Default,bwsi.registration.townhall
 File1=AddEmployeeLayout.bal
 File10=Main-Townhall.png
-File11=MasterDB.db
-File12=myfont.ttf
-File13=myfont_bold.ttf
-File14=NBA Hornets Buzz City.ttf
-File15=OpenSans-Italic-VariableFont_wdth,wght.ttf
-File16=OpenSans-VariableFont_wdth,wght.ttf
-File17=Registration.bal
-File18=Relieve.ttf
-File19=Stub-Header.png
+File11=Main-Townhall-new.png
+File12=MasterDB.db
+File13=myfont.ttf
+File14=myfont_bold.ttf
+File15=NBA Hornets Buzz City.ttf
+File16=OpenSans-Italic-VariableFont_wdth,wght.ttf
+File17=OpenSans-VariableFont_wdth,wght.ttf
+File18=Registration.bal
+File19=Relieve.ttf
 File2=arrow2.png
+File20=Stub-Header-Townhall.png
 File3=BranchItems.bal
 File4=EmployeeList.bal
 File5=GuestLayout.bal
@@ -30,6 +31,7 @@ FileGroup17=Default Group
 FileGroup18=Default Group
 FileGroup19=Default Group
 FileGroup2=Default Group
+FileGroup20=Default Group
 FileGroup3=Default Group
 FileGroup4=Default Group
 FileGroup5=Default Group
@@ -75,7 +77,7 @@ Module6=DBFunctions
 Module7=DBUtils
 Module8=GlobalVar
 Module9=MainScreen
-NumberOfFiles=19
+NumberOfFiles=20
 NumberOfLibraries=22
 NumberOfModules=14
 Version=10
@@ -622,7 +624,7 @@ Private Sub SaveUser(sEmpName As String) As Boolean
 	Starter.DBCon.BeginTransaction
 	Try
 		'Update will attend to On Duty
-		Starter.strCriteria = "UPDATE android_metadata " & _
+		Starter.strCriteria = "UPDATE tblSysParam " & _
 						  "SET AssignedTo = ? "
 		Starter.DBCon.ExecNonQuery2(Starter.strCriteria, Array As String(sEmpName))
 

@@ -42,8 +42,9 @@ views.get("pnlmain").vw.setTop((int)((views.get("toolbar").vw.getTop() + views.g
 views.get("pnlmain").vw.setHeight((int)((100d / 100 * height) - ((views.get("toolbar").vw.getTop() + views.get("toolbar").vw.getHeight()))));
 //BA.debugLineNum = 17;BA.debugLine="lbl1.Top = 2%y"[AddEmployeeLayout/General script]
 views.get("lbl1").vw.setTop((int)((2d / 100 * height)));
-//BA.debugLineNum = 18;BA.debugLine="lbl1.Left = 3%x"[AddEmployeeLayout/General script]
-views.get("lbl1").vw.setLeft((int)((3d / 100 * width)));
+//BA.debugLineNum = 18;BA.debugLine="lbl1.SetLeftAndRight(2%x, pnlMain.Width - 2%x)"[AddEmployeeLayout/General script]
+views.get("lbl1").vw.setLeft((int)((2d / 100 * width)));
+views.get("lbl1").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(2d / 100 * width) - ((2d / 100 * width))));
 //BA.debugLineNum = 19;BA.debugLine="pnlFirstNameAnchor.SetLeftAndRight(5%x, pnlMain.Width - 30%x)"[AddEmployeeLayout/General script]
 views.get("pnlfirstnameanchor").vw.setLeft((int)((5d / 100 * width)));
 views.get("pnlfirstnameanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(30d / 100 * width) - ((5d / 100 * width))));
@@ -90,8 +91,9 @@ views.get("txtsuffixed").vw.setTop((int)((0.5d / 100 * height)));
 views.get("txtsuffixed").vw.setHeight((int)((views.get("pnlsuffixedanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
 //BA.debugLineNum = 41;BA.debugLine="lbl2.Top = pnlLastNameAnchor.Bottom + 5dip"[AddEmployeeLayout/General script]
 views.get("lbl2").vw.setTop((int)((views.get("pnllastnameanchor").vw.getTop() + views.get("pnllastnameanchor").vw.getHeight())+(5d * scale)));
-//BA.debugLineNum = 42;BA.debugLine="lbl2.Left = 3%x"[AddEmployeeLayout/General script]
-views.get("lbl2").vw.setLeft((int)((3d / 100 * width)));
+//BA.debugLineNum = 42;BA.debugLine="lbl2.SetLeftAndRight(2%x, pnlMain.Width - 2%x)"[AddEmployeeLayout/General script]
+views.get("lbl2").vw.setLeft((int)((2d / 100 * width)));
+views.get("lbl2").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(2d / 100 * width) - ((2d / 100 * width))));
 //BA.debugLineNum = 43;BA.debugLine="pnlBranchesAnchor.SetLeftAndRight(5%x, pnlMain.Width - 3%x)"[AddEmployeeLayout/General script]
 views.get("pnlbranchesanchor").vw.setLeft((int)((5d / 100 * width)));
 views.get("pnlbranchesanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(3d / 100 * width) - ((5d / 100 * width))));
@@ -105,59 +107,61 @@ views.get("cbobranches").vw.setTop((int)((0.5d / 100 * height)));
 views.get("cbobranches").vw.setHeight((int)((views.get("pnlbranchesanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
 //BA.debugLineNum = 48;BA.debugLine="lbl3.Top = pnlBranchesAnchor.Bottom + 5dip"[AddEmployeeLayout/General script]
 views.get("lbl3").vw.setTop((int)((views.get("pnlbranchesanchor").vw.getTop() + views.get("pnlbranchesanchor").vw.getHeight())+(5d * scale)));
-//BA.debugLineNum = 49;BA.debugLine="lbl3.Left = 2%x"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 49;BA.debugLine="lbl3.SetLeftAndRight(2%x, pnlMain.Width - 2%x)"[AddEmployeeLayout/General script]
 views.get("lbl3").vw.setLeft((int)((2d / 100 * width)));
-//BA.debugLineNum = 50;BA.debugLine="pnlCareOfAnchor.SetLeftAndRight(5%x, pnlMain.Width - 3%x)"[AddEmployeeLayout/General script]
-views.get("pnlcareofanchor").vw.setLeft((int)((5d / 100 * width)));
-views.get("pnlcareofanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(3d / 100 * width) - ((5d / 100 * width))));
-//BA.debugLineNum = 51;BA.debugLine="pnlCareOfAnchor.Top = lbl3.Bottom"[AddEmployeeLayout/General script]
-views.get("pnlcareofanchor").vw.setTop((int)((views.get("lbl3").vw.getTop() + views.get("lbl3").vw.getHeight())));
-//BA.debugLineNum = 52;BA.debugLine="txtDivision.SetLeftAndRight(1%x, pnlCareOfAnchor.Width - 1%x)"[AddEmployeeLayout/General script]
-views.get("txtdivision").vw.setLeft((int)((1d / 100 * width)));
-views.get("txtdivision").vw.setWidth((int)((views.get("pnlcareofanchor").vw.getWidth())-(1d / 100 * width) - ((1d / 100 * width))));
-//BA.debugLineNum = 53;BA.debugLine="txtDivision.SetTopAndBottom(0.5%y, pnlCareOfAnchor.Height - 0.5%y)"[AddEmployeeLayout/General script]
-views.get("txtdivision").vw.setTop((int)((0.5d / 100 * height)));
-views.get("txtdivision").vw.setHeight((int)((views.get("pnlcareofanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
-//BA.debugLineNum = 55;BA.debugLine="lbl4.Top = pnlCareOfAnchor.Bottom + 5dip"[AddEmployeeLayout/General script]
-views.get("lbl4").vw.setTop((int)((views.get("pnlcareofanchor").vw.getTop() + views.get("pnlcareofanchor").vw.getHeight())+(5d * scale)));
+views.get("lbl3").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(2d / 100 * width) - ((2d / 100 * width))));
+//BA.debugLineNum = 50;BA.debugLine="pnlDivisionAnchor.SetLeftAndRight(5%x, pnlMain.Width - 3%x)"[AddEmployeeLayout/General script]
+views.get("pnldivisionanchor").vw.setLeft((int)((5d / 100 * width)));
+views.get("pnldivisionanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(3d / 100 * width) - ((5d / 100 * width))));
+//BA.debugLineNum = 51;BA.debugLine="pnlDivisionAnchor.Top = lbl3.Bottom"[AddEmployeeLayout/General script]
+views.get("pnldivisionanchor").vw.setTop((int)((views.get("lbl3").vw.getTop() + views.get("lbl3").vw.getHeight())));
+//BA.debugLineNum = 52;BA.debugLine="cboDivisions.SetLeftAndRight(1%x, pnlDivisionAnchor.Width - 1%x)"[AddEmployeeLayout/General script]
+views.get("cbodivisions").vw.setLeft((int)((1d / 100 * width)));
+views.get("cbodivisions").vw.setWidth((int)((views.get("pnldivisionanchor").vw.getWidth())-(1d / 100 * width) - ((1d / 100 * width))));
+//BA.debugLineNum = 53;BA.debugLine="cboDivisions.SetTopAndBottom(0.5%y, pnlDivisionAnchor.Height - 0.5%y)"[AddEmployeeLayout/General script]
+views.get("cbodivisions").vw.setTop((int)((0.5d / 100 * height)));
+views.get("cbodivisions").vw.setHeight((int)((views.get("pnldivisionanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
+//BA.debugLineNum = 55;BA.debugLine="lbl4.Top = pnlDivisionAnchor.Bottom + 5dip"[AddEmployeeLayout/General script]
+views.get("lbl4").vw.setTop((int)((views.get("pnldivisionanchor").vw.getTop() + views.get("pnldivisionanchor").vw.getHeight())+(5d * scale)));
 //BA.debugLineNum = 56;BA.debugLine="lbl4.Left = 2%x"[AddEmployeeLayout/General script]
 views.get("lbl4").vw.setLeft((int)((2d / 100 * width)));
-//BA.debugLineNum = 57;BA.debugLine="pnlRemarksAnchor.SetLeftAndRight(5%x, pnlMain.Width - 3%x)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 57;BA.debugLine="pnlTableNoAnchor.SetLeftAndRight(5%x, pnlMain.Width - 40%x)"[AddEmployeeLayout/General script]
+views.get("pnltablenoanchor").vw.setLeft((int)((5d / 100 * width)));
+views.get("pnltablenoanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(40d / 100 * width) - ((5d / 100 * width))));
+//BA.debugLineNum = 58;BA.debugLine="pnlTableNoAnchor.Top = lbl4.Bottom"[AddEmployeeLayout/General script]
+views.get("pnltablenoanchor").vw.setTop((int)((views.get("lbl4").vw.getTop() + views.get("lbl4").vw.getHeight())));
+//BA.debugLineNum = 59;BA.debugLine="txtTableNo.SetLeftAndRight(1%x, pnlTableNoAnchor.Width - 1%x)"[AddEmployeeLayout/General script]
+views.get("txttableno").vw.setLeft((int)((1d / 100 * width)));
+views.get("txttableno").vw.setWidth((int)((views.get("pnltablenoanchor").vw.getWidth())-(1d / 100 * width) - ((1d / 100 * width))));
+//BA.debugLineNum = 60;BA.debugLine="txtTableNo.SetTopAndBottom(0.5%y, pnlTableNoAnchor.Height - 0.5%y)"[AddEmployeeLayout/General script]
+views.get("txttableno").vw.setTop((int)((0.5d / 100 * height)));
+views.get("txttableno").vw.setHeight((int)((views.get("pnltablenoanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
+//BA.debugLineNum = 62;BA.debugLine="lbl5.Top = pnlTableNoAnchor.Bottom + 5dip"[AddEmployeeLayout/General script]
+views.get("lbl5").vw.setTop((int)((views.get("pnltablenoanchor").vw.getTop() + views.get("pnltablenoanchor").vw.getHeight())+(5d * scale)));
+//BA.debugLineNum = 63;BA.debugLine="lbl5.SetLeftAndRight(2%x, pnlMain.Width - 2%x)"[AddEmployeeLayout/General script]
+views.get("lbl5").vw.setLeft((int)((2d / 100 * width)));
+views.get("lbl5").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(2d / 100 * width) - ((2d / 100 * width))));
+//BA.debugLineNum = 64;BA.debugLine="pnlRemarksAnchor.SetLeftAndRight(5%x, pnlMain.Width - 3%x)"[AddEmployeeLayout/General script]
 views.get("pnlremarksanchor").vw.setLeft((int)((5d / 100 * width)));
 views.get("pnlremarksanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(3d / 100 * width) - ((5d / 100 * width))));
-//BA.debugLineNum = 58;BA.debugLine="pnlRemarksAnchor.Top = lbl4.Bottom"[AddEmployeeLayout/General script]
-views.get("pnlremarksanchor").vw.setTop((int)((views.get("lbl4").vw.getTop() + views.get("lbl4").vw.getHeight())));
-//BA.debugLineNum = 59;BA.debugLine="txtRemarks.SetLeftAndRight(1%x, pnlRemarksAnchor.Width - 1%x)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 65;BA.debugLine="pnlRemarksAnchor.Top = lbl5.Bottom"[AddEmployeeLayout/General script]
+views.get("pnlremarksanchor").vw.setTop((int)((views.get("lbl5").vw.getTop() + views.get("lbl5").vw.getHeight())));
+//BA.debugLineNum = 66;BA.debugLine="txtRemarks.SetLeftAndRight(1%x, pnlRemarksAnchor.Width - 1%x)"[AddEmployeeLayout/General script]
 views.get("txtremarks").vw.setLeft((int)((1d / 100 * width)));
 views.get("txtremarks").vw.setWidth((int)((views.get("pnlremarksanchor").vw.getWidth())-(1d / 100 * width) - ((1d / 100 * width))));
-//BA.debugLineNum = 60;BA.debugLine="txtRemarks.SetTopAndBottom(0.5%y, pnlRemarksAnchor.Height - 0.5%y)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 67;BA.debugLine="txtRemarks.SetTopAndBottom(0.5%y, pnlRemarksAnchor.Height - 0.5%y)"[AddEmployeeLayout/General script]
 views.get("txtremarks").vw.setTop((int)((0.5d / 100 * height)));
 views.get("txtremarks").vw.setHeight((int)((views.get("pnlremarksanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
-//BA.debugLineNum = 62;BA.debugLine="lbl5.Top = pnlRemarksAnchor.Bottom + 5dip"[AddEmployeeLayout/General script]
-views.get("lbl5").vw.setTop((int)((views.get("pnlremarksanchor").vw.getTop() + views.get("pnlremarksanchor").vw.getHeight())+(5d * scale)));
-//BA.debugLineNum = 63;BA.debugLine="lbl5.Left = 2%x"[AddEmployeeLayout/General script]
-views.get("lbl5").vw.setLeft((int)((2d / 100 * width)));
-//BA.debugLineNum = 64;BA.debugLine="pnlAddedByAnchor.SetLeftAndRight(5%x, pnlMain.Width - 3%x)"[AddEmployeeLayout/General script]
-views.get("pnladdedbyanchor").vw.setLeft((int)((5d / 100 * width)));
-views.get("pnladdedbyanchor").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(3d / 100 * width) - ((5d / 100 * width))));
-//BA.debugLineNum = 65;BA.debugLine="pnlAddedByAnchor.Top = lbl5.Bottom"[AddEmployeeLayout/General script]
-views.get("pnladdedbyanchor").vw.setTop((int)((views.get("lbl5").vw.getTop() + views.get("lbl5").vw.getHeight())));
-//BA.debugLineNum = 66;BA.debugLine="txtAddedBy.SetLeftAndRight(1%x, pnlAddedByAnchor.Width - 1%x)"[AddEmployeeLayout/General script]
-views.get("txtaddedby").vw.setLeft((int)((1d / 100 * width)));
-views.get("txtaddedby").vw.setWidth((int)((views.get("pnladdedbyanchor").vw.getWidth())-(1d / 100 * width) - ((1d / 100 * width))));
-//BA.debugLineNum = 67;BA.debugLine="txtAddedBy.SetTopAndBottom(0.5%y, pnlAddedByAnchor.Height - 0.5%y)"[AddEmployeeLayout/General script]
-views.get("txtaddedby").vw.setTop((int)((0.5d / 100 * height)));
-views.get("txtaddedby").vw.setHeight((int)((views.get("pnladdedbyanchor").vw.getHeight())-(0.5d / 100 * height) - ((0.5d / 100 * height))));
-//BA.debugLineNum = 69;BA.debugLine="btnCancel.SetLeftAndRight(2%x,pnlMain.Width - 50%x)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 70;BA.debugLine="btnCancel.SetLeftAndRight(2%x,pnlMain.Width - 50%x)"[AddEmployeeLayout/General script]
 views.get("btncancel").vw.setLeft((int)((2d / 100 * width)));
 views.get("btncancel").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(50d / 100 * width) - ((2d / 100 * width))));
-//BA.debugLineNum = 70;BA.debugLine="btnCancel.SetTopAndBottom (80%y, pnlMain.Height - 3%y)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 71;BA.debugLine="btnCancel.SetTopAndBottom (80%y, pnlMain.Height - 3%y)"[AddEmployeeLayout/General script]
 views.get("btncancel").vw.setTop((int)((80d / 100 * height)));
 views.get("btncancel").vw.setHeight((int)((views.get("pnlmain").vw.getHeight())-(3d / 100 * height) - ((80d / 100 * height))));
-//BA.debugLineNum = 71;BA.debugLine="btnSave.SetLeftAndRight(52%x,pnlMain.Width - 2%x)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 72;BA.debugLine="btnSave.SetLeftAndRight(52%x,pnlMain.Width - 2%x)"[AddEmployeeLayout/General script]
 views.get("btnsave").vw.setLeft((int)((52d / 100 * width)));
 views.get("btnsave").vw.setWidth((int)((views.get("pnlmain").vw.getWidth())-(2d / 100 * width) - ((52d / 100 * width))));
-//BA.debugLineNum = 72;BA.debugLine="btnSave.SetTopAndBottom (80%y, pnlMain.Height - 3%y)"[AddEmployeeLayout/General script]
+//BA.debugLineNum = 73;BA.debugLine="btnSave.SetTopAndBottom (80%y, pnlMain.Height - 3%y)"[AddEmployeeLayout/General script]
 views.get("btnsave").vw.setTop((int)((80d / 100 * height)));
 views.get("btnsave").vw.setHeight((int)((views.get("pnlmain").vw.getHeight())-(3d / 100 * height) - ((80d / 100 * height))));
 

@@ -105,6 +105,53 @@ Sub Globals
 
 	Private lblRecCount As Label
 	Private IMEKeyboard As IME
+	
+	'Printing
+	Dim ESC As String = Chr(27)
+	Dim FS As String = Chr(28)
+	Dim GS As String = Chr(29)
+	
+	'Bold and underline don't work well in reversed text
+	Dim UNREVERSE As String  = GS & "B" & Chr(0)
+	Dim REVERSE As String = GS & "B" & Chr(1)
+	
+	' Character orientation. Print upside down from right margin
+	Dim UNINVERT As String = ESC & "{0"
+	Dim INVERT As String = ESC & "{1"
+	
+	' Character rotation clockwise. Not much use without also reversing the printed character sequence
+	Dim UNROTATE As String = ESC & "V0"
+	Dim ROTATE As String = ESC & "V1"
+	
+	' Horizontal tab
+	Dim HT As String = Chr(9)
+	
+	' Character underline
+	Dim ULINE0 As String = ESC & "-0"
+	Dim ULINE1 As String = ESC & "-1"
+	Dim ULINE2 As String = ESC & "-2"
+	
+	' Character emphasis
+	Dim BOLD As String = ESC & "E1"
+	Dim NOBOLD As String = ESC & "E0"
+	
+	' Character height and width
+	Dim SINGLE As String = GS & "!" & Chr(0x00)
+	Dim HIGH As String = GS & "!" & Chr(0x01)
+	Dim WIDE As String = GS & "!" & Chr(0x10)
+	Dim HIGHWIDE As String = GS & "!" & Chr(0x11)
+	
+	' Default settings
+	Private LEFTJUSTIFY As String = ESC & "a0"
+	Private LINEDEFAULT As String = ESC & "2"
+	Private LINSET0 As String = ESC & "$" & Chr(0x0) & Chr(0x0)
+	Private LMARGIN0 As String = GS & "L" & Chr(0x0) & Chr(0x0)
+	Private WIDTH0 As String = GS & "W" & Chr(0xff) & Chr(0xff)
+	Private CHARSPACING0 As String = ESC & " " & Chr(0)
+	Private CHARFONT0 As String = ESC & "M" & Chr(0)
+	Dim DEFAULTS As String =  CHARSPACING0 & CHARFONT0 & LMARGIN0 & WIDTH0 & LINSET0 & LINEDEFAULT & LEFTJUSTIFY _
+		& UNINVERT & UNROTATE & UNREVERSE & NOBOLD & ULINE0	
+
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
@@ -190,16 +237,17 @@ Private Sub FillEmployess(iAreaID As Int)
 	Dim SenderFilter As Object
 
 	Try
-		Starter.strCriteria = "SELECT Employees.BranchID, Branches.BranchName, " & _
+		Starter.strCriteria = "SELECT Employees.BranchID, Branches.AreaID, Branches.BranchName, " & _
 						  "Employees.RegID, Employees.RegNo, " & _
 						  "Employees.LastName, Employees.FirstName, Employees.MiddleName, Employees.Suffixed, " & _
-						  "Employees.FullName, Employees.Division, " & _
+						  "Employees.FullName, Divisions.DivisionName, " & _
 						  "Employees.WillAttend, Employees.WasRegistered " & _
 						  "FROM tblRegistration AS Employees " & _
 						  "INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID " & _
-						  "WHERE Branches.AreaID = " & iAreaID & " " & _
-						  "AND WillAttend <> 0 " & _
-						  "ORDER BY Branches.BranchID, Employees.Division, Employees.FullName, Employees.RegID"
+						  "INNER JOIN tblDivisions AS Divisions ON Employees.DivisionID = Divisions.DivisionID " & _
+						  "WHERE Branches.AreaID = " & iAreaID  & " " & _
+						  "AND Employees.WillAttend <> 0 " & _
+						  "ORDER BY Branches.BranchID ASC, Divisions.DivisionID ASC, Employees.FullName ASC, Employees.RegID ASC"
 						  
 		LogColor(Starter.strCriteria, Colors.Yellow)
 
@@ -216,7 +264,7 @@ Private Sub FillEmployess(iAreaID As Int)
 				EmpInfo.BranchID = RS.GetInt("BranchID")
 				EmpInfo.BranchName = RS.GetString("BranchName")
 				EmpInfo.EmpName = RS.GetString("FullName")
-				EmpInfo.EmpDivision = RS.GetString("Division")
+				EmpInfo.EmpDivision = RS.GetString("DivisionName")
 				EmpInfo.Avatar = GlobalVar.SF.Upper(GlobalVar.SF.Left(RS.GetString("FirstName"),1)) & GlobalVar.SF.Upper(GlobalVar.SF.Left(RS.GetString("LastName"),1))
 				EmpInfo.WillAttend = RS.GetInt("WillAttend")
 				EmpInfo.RegStatus = RS.GetInt("WasRegistered")
@@ -264,20 +312,28 @@ Sub clvEmployees_VisibleRangeChanged (FirstIndex As Int, LastIndex As Int)
 
 				If EI.WillAttend = 1 Then
 					If EI.RegStatus = 0 Then
+						lblStatus.Text = "UNREGISTERED"
+						lblStatus.TextColor = GlobalVar.NegColor
 						btnRegister.Enabled = True
 						btnSwap.Enabled = False
 						btnSwap.Text = "PRINT STUB"
 					Else
+						lblStatus.Text = "REGISTERED"
+						lblStatus.TextColor = GlobalVar.PriColor
 						btnRegister.Enabled = False
 						btnSwap.Enabled = True
 						btnSwap.Text = "REPRINT STUB"
 					End If
 				Else
 					If EI.RegStatus = 0 Then
+						lblStatus.Text = "UNREGISTERED"
+						lblStatus.TextColor = GlobalVar.NegColor
 						btnRegister.Enabled = True
 						btnSwap.Enabled = True
 						btnSwap.Text = "SWAP DUTY"
 					Else
+						lblStatus.Text = "REGISTERED"
+						lblStatus.TextColor = GlobalVar.PriColor
 						btnRegister.Enabled = False
 						btnSwap.Enabled = True
 						btnSwap.Text = "REPRINT STUB"
@@ -330,6 +386,7 @@ Sub btnSwap_Click
 
 			Case 1
 				sRegName = GetEmployeeName(Value)
+				RegID = Value
 				ConfirmReprint(sRegName)
 		End Select
 	Catch
@@ -413,18 +470,20 @@ Sub txtSearch_TextChanged (Old As String, New As String)
 	If New.Length = 0  Then
 		FillEmployess(GlobalVar.AreaID)
 	Else
-		Starter.strCriteria = "SELECT Employees.BranchID, Branches.BranchName, " & _
+		Starter.strCriteria = "SELECT Employees.BranchID, Branches.AreaID, Branches.BranchName, " & _
 						  "Employees.RegID, Employees.RegNo, " & _
 						  "Employees.LastName, Employees.FirstName, Employees.MiddleName, Employees.Suffixed, " & _
-						  "Employees.FullName, Employees.Division, " & _
+						  "Employees.FullName, Divisions.DivisionName, " & _
 						  "Employees.WillAttend, Employees.WasRegistered " & _
 						  "FROM tblRegistration AS Employees " & _
 						  "INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID " & _
+						  "INNER JOIN tblDivisions AS Divisions ON Employees.DivisionID = Divisions.DivisionID " & _
 						  "WHERE Branches.AreaID = " & GlobalVar.AreaID & " " & _
-						  "AND WillAttend <> 0 " & _
+						  "AND Employees.WillAttend <> 0 " & _
 						  "AND (Employees.FullName LIKE '%" & New & "%' " & _
 						  "OR Branches.BranchName LIKE '%" & New & "%') " & _
-						  "ORDER BY Branches.BranchID, Employees.Division, Employees.FullName, Employees.RegID ASC LIMIT 100"
+						  "ORDER BY Branches.BranchID ASC, Divisions.DivisionID ASC, Employees.FullName ASC, Employees.RegID ASC"
+
 	End If
 
 	LogColor(Starter.strCriteria, Colors.Yellow)
@@ -442,7 +501,7 @@ Sub txtSearch_TextChanged (Old As String, New As String)
 			EmpInfo.BranchID = RS.GetInt("BranchID")
 			EmpInfo.BranchName = RS.GetString("BranchName")
 			EmpInfo.EmpName = RS.GetString("FullName")
-			EmpInfo.EmpDivision = RS.GetString("Division")
+			EmpInfo.EmpDivision = RS.GetString("DivisionName")
 			EmpInfo.Avatar = GlobalVar.SF.Upper(GlobalVar.SF.Left(RS.GetString("FirstName"),1)) & GlobalVar.SF.Upper(GlobalVar.SF.Left(RS.GetString("LastName"),1))
 			EmpInfo.WillAttend = RS.GetInt("WillAttend")
 			EmpInfo.RegStatus = RS.GetInt("WasRegistered")
@@ -687,6 +746,7 @@ Private Sub SuccessMsg_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
 	If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtSearch.Text))> 0 Then txtSearch.Text = ""
+	FillEmployess(GlobalVar.AreaID)
 
 End Sub
 
@@ -737,7 +797,7 @@ End Sub
 
 'Item Click
 Private Sub AddPeople_OnItemClick (View As View, Selection As String, Position As Int,Id As Long)
-	ToastMessageShow(Selection&" Selected! (Position : "&Position&")",False)
+
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss2
 	
@@ -766,17 +826,18 @@ Private Sub PrintStub(iRegID As Int)
 	Dim RegFullName As String
 	Dim RegBranchName As String
 	Dim RegDivision As String
+	Dim RegTableNo As Int
 	Dim AttendStatus As Int
-	Dim WasAwardee As Int
 	
 	ProgressDialogShow2($"Stub Printing.  Please Wait..."$, False)
 	
 	Try
 		Starter.strCriteria = "SELECT Employees.RegNo, Employees.FullName, " & _
-						  "Branches.BranchName, Employees.Division, " & _
+						  "Branches.BranchName, Divisions.DivisionName, Employees.TableNo, " & _
 						  "Employees.WillAttend AS AttendStatus " & _
 						  "FROM tblRegistration AS Employees " & _
 						  "INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID " & _
+						  "INNER JOIN tblDivisions AS Divisions ON Employees.DivisionID = Divisions.DivisionID " & _
 						  "WHERE Employees.RegID = " & iRegID & " " & _
 						  "AND Employees.WasRegistered = 1"
 		
@@ -788,81 +849,77 @@ Private Sub PrintStub(iRegID As Int)
 			StubNo = rsData.GetString("RegNo")
 			RegFullName = rsData.GetString("FullName")
 			RegBranchName = rsData.GetString("BranchName")
-			RegDivision = rsData.GetString("Division")
+			RegDivision = rsData.GetString("DivisionName")
+			RegTableNo = rsData.GetInt("TableNo")
 			AttendStatus = rsData.GetInt("AttendStatus")
 		Else
 			Return
 		End If
 
 		If AttendStatus = 1 Then 'Attendees
-			PrintBuffer =  Chr(27) & "@" _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(8) & $"LAUSGROUP EVENT CENTRE"$ & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & $"January 23, 2024"$ & CRLF & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"STUB NO.: "$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(33) & $"Sit back, Listen and Learn!"$ & Chr(10)  & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"PM SNACK STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"LUNCH STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"AM SNACK STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"GIVE AWAY STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(10) & Chr(27) & Chr(73)
+			PrintBuffer =  ESC & "@" _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & Chr(97) & Chr(48) _
+						& ESC & "!" & Chr(33) & $"STUB NO.: "$ & BOLD & StubNo & CRLF & Chr(10) _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+						& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+						& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+						& ESC & "!" & Chr(16) & $"Sit back, Listen & Learn!"$ & Chr(10)  & Chr(10) _
+						& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+						& ESC & Chr(97) & Chr(48) _
+						& ESC & "!" & Chr(33) & $"DINNER STUB"$ & Chr(10) _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+						& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+						& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+						& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+						& ESC & Chr(97) & Chr(48) _
+						& ESC & "!" & Chr(33) & $"LUNCH STUB"$ & Chr(10) _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+						& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+						& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+						& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+						& ESC & Chr(97) & Chr(48) _
+						& ESC & "!" & Chr(33) & $"RAFFLE STUB"$ & Chr(10) _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
+						& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+						& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+						& Chr(10) & ESC & Chr(73)
 
 		Else If AttendStatus = 2 Then 'On Duty
-			PrintBuffer =  Chr(27) & "@" _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(8) & $"LAUSGROUP EVENT CENTRE"$ & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & $"January 23, 2024"$ & CRLF & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"STUB NO.: "$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(33) & $"See you on the next Townhall!"$ & Chr(10)  & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"GIVE AWAY STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegFullName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & Chr(27) & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
-						& Chr(10) & Chr(27) & Chr(97) & Chr(10)
+			PrintBuffer =  ESC & "@" _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & Chr(97) & Chr(48) _
+						& ESC & "!" & Chr(33) & $"STUB NO.: "$ & Chr(10) _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
+						& ESC & "!" & Chr(16) & $"See you on the next Townhall!"$ & Chr(10)  & Chr(10) _
+						& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+						& ESC & Chr(97) & Chr(48) _
+						& ESC & "!" & Chr(33) & $"GIVE AWAY STUB"$ & Chr(10) _
+						& ESC & Chr(97) & Chr(49) _
+						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
+						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
+						& Chr(10) & ESC & Chr(73)
 		End If
 		StartPrinter
 	Catch
@@ -938,7 +995,7 @@ Sub Printer_Connected (Success As Boolean)
 		ProgressDialogHide
 		TMPrinter.Initialize2(Serial1.OutputStream, "windows-1252")
 		oStream.Initialize(Serial1.InputStream, Serial1.OutputStream, "LogoPrint")
-		Logo.Initialize(File.DirAssets, "Stub-Header.png")
+		Logo.Initialize(File.DirAssets, "Stub-Header-Townhall.png")
 		LogoBMP = CreateScaledBitmap(Logo, Logo.Width, Logo.Height)
 		Log(DeviceName)
 
@@ -946,7 +1003,7 @@ Sub Printer_Connected (Success As Boolean)
 		WoosimImage.InitializeStatic("com.woosim.printer.WoosimImage")
 		
 		initPrinter = WoosimCMD.RunMethod("initPrinter",Null)
-		PrintLogo = WoosimImage.RunMethod("printBitmap", Array (0, 0, 420, 205, LogoBMP))
+		PrintLogo = WoosimImage.RunMethod("printBitmap", Array (0, 0, 420, 220, LogoBMP))
 		
 		oStream.Write(initPrinter)
 		oStream.Write(WoosimCMD.RunMethod("setPageMode",Null))
