@@ -54,6 +54,10 @@ Sub Process_Globals
 	Private WoosimImage As JavaObject
 	
 	Private Logo As Bitmap
+	
+	Private vibration As B4Avibrate
+	Private vibratePattern() As Long
+
 End Sub
 
 Sub Globals
@@ -71,7 +75,7 @@ Sub Globals
 
 	Private txtSearch As EditText
 	
-	Private RegID As Int
+	Private NewRegID, SwapRegID As Int
 	Private sRegName As String
 	Private MyList As List
 
@@ -91,6 +95,8 @@ Sub Globals
 	Dim iSwapBranchID As Int
 	Dim iSwapEmpID As Int
 	Dim sSwapEmp As String
+	Dim sSwapTableNo As String
+	
 	Private SV As SearchView
 
 	Private AvatarBG As Panel
@@ -152,6 +158,7 @@ Sub Globals
 	Dim DEFAULTS As String =  CHARSPACING0 & CHARFONT0 & LMARGIN0 & WIDTH0 & LINSET0 & LINEDEFAULT & LEFTJUSTIFY _
 		& UNINVERT & UNROTATE & UNREVERSE & NOBOLD & ULINE0	
 
+	Private lblUnregCount As Label
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
@@ -185,8 +192,7 @@ Sub Activity_Create(FirstTime As Boolean)
 	Serial1.Initialize("Printer")
 '	AddBranches(GlobalVar.AreaID)
 
-	FillEmployess(GlobalVar.AreaID)
-	RegID = 0
+	FillEmployees(GlobalVar.AreaID)
 	CDTxtBox.Initialize2(Colors.Transparent, Colors.Transparent,0,0)
 	txtSearch.Background = CDTxtBox
 
@@ -209,6 +215,8 @@ Sub Activity_Resume
 	GlobalVar.AreaName = DBFunctions.GetAreaName(GlobalVar.AreaID)
 	GlobalVar.AreaDesc = DBFunctions.GetAreaDesc(GlobalVar.AreaID)
 	blnNewReg = True
+
+	vibratePattern = Array As Long(500, 500, 300, 500)
 End Sub
 
 Sub Activity_Pause (UserClosed As Boolean)
@@ -233,7 +241,7 @@ Sub ToolBar_MenuItemClick (Item As ACMenuItem)
 End Sub
 
 #Region Employee Listing
-Private Sub FillEmployess(iAreaID As Int)
+Private Sub FillEmployees(iAreaID As Int)
 	Dim SenderFilter As Object
 
 	Try
@@ -280,6 +288,7 @@ Private Sub FillEmployess(iAreaID As Int)
 			Else
 				lblRecCount.Text = RS.RowCount & $" Employees Found"$
 			End If
+			CountUnregistered(iAreaID)
 		Else
 			Log(LastException)
 		End If
@@ -289,6 +298,31 @@ Private Sub FillEmployess(iAreaID As Int)
 		Log(LastException)
 	End Try
 
+End Sub
+
+Private Sub CountUnregistered(iAreaID As Int)
+	Dim iRetVal As Int
+	
+	iRetVal = 0
+	Try
+		Starter.strCriteria = "SELECT Count(Employees.RegID) FROM tblRegistration AS Employees " & _
+						  "INNER JOIN tblBranches AS Branches ON Employees.BranchID = Branches.BranchID " & _
+						  "WHERE Employees.WasRegistered = 0 " & _
+						  "AND Employees.WillAttend <> 0 " & _
+						  "AND Branches.AreaID = " & iAreaID
+		LogColor(Starter.strCriteria, Colors.Blue)
+		
+		iRetVal = Starter.DBCon.ExecQuerySingleResult(Starter.strCriteria)
+		
+	Catch
+		iRetVal = 0
+		Log(LastException)
+	End Try
+	If iRetVal = 0 Then
+		lblUnregCount.Text = $"TOTAL UNREGISTERED: 0"$
+	Else
+		lblUnregCount.Text = $"TOTAL UNREGISTERED: "$ & iRetVal
+	End If
 End Sub
 
 Sub clvEmployees_VisibleRangeChanged (FirstIndex As Int, LastIndex As Int)
@@ -353,6 +387,7 @@ End Sub
 Sub clvEmployees_ItemClick (Index As Int, Value As Object)
 End Sub
 #End Region
+
 Sub btnSwap_Click
 	Dim Value As Object
 	Dim Index As Int = clvEmployees.GetItemFromView(Sender)
@@ -372,7 +407,7 @@ Sub btnSwap_Click
 	
 	Try
 		Select Case btnStatus
-			Case 0
+			Case 0 'Swap
 				If pnlSearchMain.Visible = True Then Return
 				pnlSearchMain.Visible = True
 				lblSearchTitle.Text = $"Search Employee to Swap Duty"$
@@ -381,16 +416,17 @@ Sub btnSwap_Click
 				SV.ClearAll
 				SV.lv.Clear
 				btnCancel.Enabled = True
-				
+				SwapRegID = Value
 				SearchSwapEmployees(iSwapBranchID)
 
-			Case 1
+			Case 1 'Reprint
 				sRegName = GetEmployeeName(Value)
-				RegID = Value
+				NewRegID = Value
 				ConfirmReprint(sRegName)
 		End Select
 	Catch
 		Log(LastException)
+		
 	End Try
 End Sub
 
@@ -404,14 +440,15 @@ Sub btnRegister_Click
 	Log(Value)
 
 '	Dim Index As Int =clvEmployees.GetValue(clvEmployees.GetItemFromView(Sender))
-	RegID = Value
+	NewRegID = Value
 	LogColor($"Registration ID: "$ & Value, Colors.Cyan)
 	Try
 		sRegName = GetEmployeeName(Value)
 	Catch
 		Log(LastException)
 	End Try
-
+	vibration.vibratePattern(vibratePattern,0)
+	
 	ConfirmRegister(sRegName)
 End Sub
 
@@ -468,7 +505,7 @@ Sub txtSearch_TextChanged (Old As String, New As String)
 	Dim SenderFilter As Object
 
 	If New.Length = 0  Then
-		FillEmployess(GlobalVar.AreaID)
+		FillEmployees(GlobalVar.AreaID)
 	Else
 		Starter.strCriteria = "SELECT Employees.BranchID, Branches.AreaID, Branches.BranchName, " & _
 						  "Employees.RegID, Employees.RegNo, " & _
@@ -557,15 +594,17 @@ Private Sub RegisterEmp_OnNegativeClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
 	ToastMessageShow($"Canceled!"$, True)
+	vibration.vibrateCancel
 End Sub
 
 Private Sub RegisterEmp_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
 	blnNewReg = True
+	vibration.vibrateCancel
 	
-	If Not(RegisterEmp(RegID)) Then Return
-	PrintStub(RegID)
+	If Not(RegisterEmp(NewRegID)) Then Return
+	PrintStub(NewRegID)
 	ToastMessageShow($"Registered!"$, True)
 End Sub
 
@@ -608,8 +647,8 @@ Private Sub StubReprint_OnPositiveClicked (View As View, Dialog As Object)
 
 	blnNewReg = False
 	
-	If Not(UpdateReprintStub(RegID)) Then Return
-	PrintStub(RegID)
+	If Not(UpdateReprintStub(NewRegID)) Then Return
+	PrintStub(NewRegID)
 	ToastMessageShow($"Reprinted!"$, True)
 End Sub
 
@@ -644,14 +683,16 @@ Private Sub SwapEmp_OnNegativeClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
 	ToastMessageShow($"Canceled!"$, True)
+	vibration.vibrateCancel
 End Sub
 
 Private Sub SwapEmp_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
-	If UpdateSwappedEmp(iSwapEmpID, RegID) = False Then Return
-	If RegisterEmp(RegID) = False Then Return
-	PrintStub(RegID)
+	vibration.vibrateCancel
+	If UpdateSwappedEmp(iSwapEmpID, SwapRegID) = False Then Return
+	If RegisterEmp(SwapRegID) = False Then Return
+	PrintStub(SwapRegID)
 End Sub
 
 
@@ -746,7 +787,7 @@ Private Sub SuccessMsg_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
 	If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtSearch.Text))> 0 Then txtSearch.Text = ""
-	FillEmployess(GlobalVar.AreaID)
+	FillEmployees(GlobalVar.AreaID)
 
 End Sub
 
@@ -782,6 +823,7 @@ Private Sub ShowAddPerson
 			.SetStyle(Alert.STYLE_ACTIONSHEET) _
 			.SetTitle("Select an Option") _
 			.SetTitleColor(Colors.Black) _
+			.SetCancelColor(GlobalVar.NegColor) _
 			.SetCancelText("Cancel") _
 			.SetNegativeTypeface(GlobalVar.FontBold) _ 'Usable for Cancel Typeface
 			.SetOthers(items) _
@@ -897,28 +939,27 @@ Private Sub PrintStub(iRegID As Int)
 						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
 						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
 						& HIGH  & REVERSE & $"                  "$ & Chr(10) _
-						& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+						& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) & Chr(10) _
 						& Chr(10) & ESC & Chr(73)
 
 		Else If AttendStatus = 2 Then 'On Duty
 			PrintBuffer =  ESC & "@" _
 						& ESC & Chr(97) & Chr(49) _
 						& ESC & Chr(97) & Chr(48) _
-						& ESC & "!" & Chr(33) & $"STUB NO.: "$ & Chr(10) _
+						& ESC & "!" & Chr(33) & $"STUB NO.: "$ & BOLD & StubNo & CRLF & Chr(10) _
 						& ESC & Chr(97) & Chr(49) _
-						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
 						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
 						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
 						& ESC & "!" & Chr(16) & $"See you on the next Townhall!"$ & Chr(10)  & Chr(10) _
 						& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
 						& ESC & Chr(97) & Chr(48) _
-						& ESC & "!" & Chr(33) & $"GIVE AWAY STUB"$ & Chr(10) _
+						& ESC & "!" & Chr(33) & $"RAFFLE STUB"$ & Chr(10) _
 						& ESC & Chr(97) & Chr(49) _
 						& ESC & "!" & Chr(112) & StubNo & Chr(10) _
 						& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
 						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
-						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) _
+						& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) & Chr(10) & Chr(10) _
 						& Chr(10) & ESC & Chr(73)
 		End If
 		StartPrinter
@@ -1207,6 +1248,16 @@ Private Sub GetSwapEmployeeName(iEmpID As Int) As String
 	Return sRetVal
 End Sub
 
+Private Sub GetSwapTableNo(iEmpID As Int) As String
+	Dim sRetVal As String
+	Try
+		sRetVal = Starter.DBCon.ExecQuerySingleResult("SELECT TableNo FROM tblRegistration WHERE RegID = " & iEmpID)
+	Catch
+		sRetVal = ""
+		Log(LastException)
+	End Try
+	Return sRetVal
+End Sub
 
 
 Sub SV_ItemClick(Value As Int)
@@ -1214,8 +1265,12 @@ Sub SV_ItemClick(Value As Int)
 	iSwapEmpID = Value
 	SV.ClearAll
 	SearchClosed
+	
 	sSwapEmp = GetSwapEmployeeName(iSwapEmpID)
+	sSwapTableNo = GetSwapTableNo(iSwapEmpID)
+	
 	If sSwapEmp = "" Then Return
+	vibration.vibratePattern(vibratePattern, 0)
 	ConfirmSwapEmp(sSwapEmp)
 End Sub
 
@@ -1228,9 +1283,9 @@ Private Sub UpdateSwappedEmp(iSwapEmp As Int, iRegID As Int) As Boolean
 	Try
 		'Update will attend to On Duty
 		Starter.strCriteria = "UPDATE tblRegistration " & _
-						  "SET WasSwapped = ?, SwappedTo = ?, WillAttend = ?" & _
+						  "SET TableNo = ?, WasSwapped = ?, SwappedTo = ?, WillAttend = ?" & _
 						  "WHERE RegID = " & iRegID
-		Starter.DBCon.ExecNonQuery2(Starter.strCriteria, Array As String($"1"$, sSwapEmp, $"1"$))
+		Starter.DBCon.ExecNonQuery2(Starter.strCriteria, Array As String(sSwapTableNo,$"1"$, sSwapEmp, $"1"$))
 
 		Starter.strCriteria = "UPDATE tblRegistration " & _
 						  "SET WillAttend = ?" & _

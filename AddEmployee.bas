@@ -56,6 +56,8 @@ Sub Process_Globals
 	Private Logo As Bitmap
 	
 	Private InpTyp As SLInpTypeConst
+	Private vibration As B4Avibrate
+	Private vibratePattern() As Long
 
 End Sub
 
@@ -72,7 +74,6 @@ Sub Globals
 	Private btnSave As ACButton
 	
 	Private cdCancel, cdSave As ColorDrawable
-	Private RegistrationNum As String
 	
 	Private txtFirstName As EditText
 	Private txtMI As EditText
@@ -138,7 +139,7 @@ Sub Activity_Create(FirstTime As Boolean)
 	Activity.LoadLayout("AddEmployeeLayout")
 
 	GlobalVar.CSTitle.Initialize.Size(17).Bold.Append($"ADD NEW EMPLOYEE"$).PopAll
-	GlobalVar.CSSubTitle.Initialize.Size(14).Append($"Add Unregister Employee"$).PopAll
+	GlobalVar.CSSubTitle.Initialize.Size(14).Append($"Add Employee who didn't registered on Pre-registration"$).PopAll
 	
 	ToolBar.InitMenuListener
 	ToolBar.Title = GlobalVar.CSTitle
@@ -157,7 +158,7 @@ Sub Activity_Create(FirstTime As Boolean)
 	InpTyp.SetInputType(txtMI,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
 	InpTyp.SetInputType(txtLastName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
 	InpTyp.SetInputType(txtSuffixed,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
-	InpTyp.SetInputType(txtRemarks,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
+	InpTyp.SetInputType(txtRemarks,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_SENTENCES))
 	InpTyp.SetInputType(txtTableNo,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_CLASS_NUMBER))
 
 	ActionBarButton.Initialize
@@ -186,6 +187,15 @@ Sub Activity_Create(FirstTime As Boolean)
 
 	FillBranches(GlobalVar.AreaID)
 	FillDivisions
+
+	txtFirstName.Text = ""
+	txtMI.Text = ""
+	txtLastName.Text = ""
+	txtSuffixed.Text = ""
+	txtRemarks.Text = ""
+	txtTableNo.Text = ""
+	vibratePattern = Array As Long(500, 500, 300, 500)
+
 End Sub
 
 Sub Activity_KeyPress (KeyCode As Int) As Boolean 'Return True to consume the event
@@ -244,18 +254,22 @@ End Sub
 Private Sub RegisterEmp_OnNegativeClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
+	vibration.vibrateCancel
 	ToastMessageShow($"Canceled!"$, True)
 End Sub
 
 Private Sub RegisterEmp_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
+	vibration.vibrateCancel
 	
 	If Not(SaveEmployeeRegistration) Then
 		ShowEntryError($"ERROR"$, $"Unable to Add New Employee data due to "$ & LastException)
 	End If
+	
 	GlobalVar.NewRegID = DBFunctions.GetIDByCode("RegID", "tblRegistration", "RegNo", GlobalVar.NewRegNo)
-	PrintStub(RegistrationNum)
+	
+	PrintStub(GlobalVar.NewRegID)
 
 End Sub
 
@@ -421,7 +435,6 @@ End Sub
 
 Sub btnSave_Click
 	If Not(ValidEntries) Then Return
-'	NewGuestID = GetGuestID(RegistrationNum)
 
 	If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtMI.Text)) <= 0 Then
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtSuffixed.Text)) <= 0 Then
@@ -436,6 +449,8 @@ Sub btnSave_Click
 			EmpFullName = txtFirstName.Text & " " & txtMI.Text & " " & txtLastName.Text & " " & txtSuffixed.Text
 		End If
 	End If
+	
+	vibration.vibratePattern(vibratePattern, 0)
 	ConfirmRegister(EmpFullName)
 	
 End Sub
@@ -448,6 +463,7 @@ Private Sub ValidEntries() As Boolean
 	
 	Try
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtFirstName.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$, $"Employee First Name cannot be blank!"$)
 			txtFirstName.RequestFocus
 			Return False
@@ -455,29 +471,35 @@ Private Sub ValidEntries() As Boolean
 		
 
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtLastName.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$, $"Employee Last Name cannot be blank!"$)
 			txtLastName.RequestFocus
 			Return False
 		End If
 
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(cboBranches.SelectedItem)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$, $"Employee Name cannot be blank!"$)
 			cboBranches.RequestFocus
 			Return False
 		End If
 
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(cboDivisions.SelectedItem)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$,$"Employee Division cannot be blank!"$)
 			cboDivisions.RequestFocus
 			Return False
 		End If
 
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtRemarks.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$, $"Remarks cannot be blank!"$)
 			txtRemarks.RequestFocus
 			Return False
 		End If
+
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtTableNo.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$, $"Added By cannot be blank!"$)
 			txtTableNo.RequestFocus
 			Return False
@@ -514,6 +536,7 @@ End Sub
 Private Sub EntryError_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
+	vibration.vibrateCancel
 End Sub
 
 Private Sub EntryErrorBinder_OnBindView (View As View, ViewType As Int)
@@ -575,7 +598,6 @@ Private Sub SaveEmployeeRegistration() As Boolean
 		Starter.strCriteria="INSERT INTO tblRegistration VALUES (" & Null & ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 		Starter.DBCon.ExecNonQuery2(Starter.strCriteria , Array As Object(GlobalVar.NewRegNo, iBranchID, DivisionID, TableNo, sLastName, sFirstName, sMI, sSuffixed, EmpName, $"1"$, $"0"$, Null, $"1"$, Remarks, $"1"$, TimeReg, RegSeq, $"1"$, NoPrint, TimeReg, AddedBy))
 		Starter.DBCon.TransactionSuccessful
-		RegistrationNum = GlobalVar.NewRegNo
 		bRetVal = True
 	Catch
 		bRetVal = False
@@ -663,7 +685,7 @@ Private Sub PrintStub(iRegID As Int)
 					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegBranchName & Chr(10) _
 					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegDivision & Chr(10) _
 					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
-					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) & Chr(10) _
 					& Chr(10) & ESC & Chr(73)
 		StartPrinter
 	Catch

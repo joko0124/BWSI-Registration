@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="bwsi.registration.townhall"
 	android:versionCode="2"
-	android:versionName="2.00"
+	android:versionName="2.02"
 	android:installLocation="internalOnly">
 	
 	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="31"/>
@@ -74,6 +74,13 @@
 			android:windowSoftInputMode="stateHidden"
 			android:launchMode="singleTop"
 			android:name=".mainscreen"
+			android:label="BWSI Townhall Meeting 2024"
+			android:screenOrientation="portrait">
+		</activity>
+		<activity
+			android:windowSoftInputMode="stateHidden"
+			android:launchMode="singleTop"
+			android:name=".guestlist"
 			android:label="BWSI Townhall Meeting 2024"
 			android:screenOrientation="portrait">
 		</activity>

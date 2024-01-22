@@ -47,9 +47,13 @@ views.get("pnlstatus").vw.setWidth((int)((views.get("pnlmain").vw.getWidth()) - 
 views.get("pnlstatus").vw.setTop((int)((views.get("clvemployees").vw.getTop() + views.get("clvemployees").vw.getHeight())));
 views.get("pnlstatus").vw.setHeight((int)((views.get("pnlmain").vw.getHeight()) - ((views.get("clvemployees").vw.getTop() + views.get("clvemployees").vw.getHeight()))));
 views.get("lblreccount").vw.setLeft((int)((3d / 100 * width)));
-views.get("lblreccount").vw.setWidth((int)((views.get("pnlstatus").vw.getWidth())-(3d / 100 * width) - ((3d / 100 * width))));
+views.get("lblreccount").vw.setWidth((int)((views.get("pnlstatus").vw.getWidth())-(55d / 100 * width) - ((3d / 100 * width))));
 views.get("lblreccount").vw.setTop((int)((1d / 100 * height)));
 views.get("lblreccount").vw.setHeight((int)((views.get("pnlstatus").vw.getHeight())-(1d / 100 * height) - ((1d / 100 * height))));
+views.get("lblunregcount").vw.setLeft((int)((47d / 100 * width)));
+views.get("lblunregcount").vw.setWidth((int)((views.get("pnlstatus").vw.getWidth())-(3d / 100 * width) - ((47d / 100 * width))));
+views.get("lblunregcount").vw.setTop((int)((1d / 100 * height)));
+views.get("lblunregcount").vw.setHeight((int)((views.get("pnlstatus").vw.getHeight())-(1d / 100 * height) - ((1d / 100 * height))));
 views.get("pnlsearchmain").vw.setLeft((int)((0d / 100 * width)));
 views.get("pnlsearchmain").vw.setWidth((int)((100d / 100 * width) - ((0d / 100 * width))));
 views.get("pnlsearchmain").vw.setTop((int)((0d / 100 * height)));

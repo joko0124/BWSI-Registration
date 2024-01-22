@@ -33,8 +33,9 @@ public bwsi.registration.townhall.addemployee _addemployee = null;
 public bwsi.registration.townhall.globalvar _globalvar = null;
 public bwsi.registration.townhall.dbfunctions _dbfunctions = null;
 public bwsi.registration.townhall.addguest _addguest = null;
-public bwsi.registration.townhall.dbutils _dbutils = null;
 public bwsi.registration.townhall.mainscreen _mainscreen = null;
+public bwsi.registration.townhall.guestlist _guestlist = null;
+public bwsi.registration.townhall.dbutils _dbutils = null;
 public bwsi.registration.townhall.scale _scale = null;
 public bwsi.registration.townhall.starter _starter = null;
 public bwsi.registration.townhall.httputils2service _httputils2service = null;
@@ -163,7 +164,7 @@ byte[] _afterindex = null;
 if (_index>=_mlength) { 
  //BA.debugLineNum = 38;BA.debugLine="If Index > mLength Then Log(\"Index too large\")";
 if (_index>_mlength) { 
-__c.LogImpl("930408706","Index too large",0);};
+__c.LogImpl("932702466","Index too large",0);};
  //BA.debugLineNum = 39;BA.debugLine="Append(Data)";
 _append(_data);
  }else {
@@ -205,7 +206,7 @@ public String  _set(int _index,byte[] _data) throws Exception{
 if (_index>=_mlength) { 
  //BA.debugLineNum = 51;BA.debugLine="If Index > mLength Then Log(\"Index too large\")";
 if (_index>_mlength) { 
-__c.LogImpl("930474242","Index too large",0);};
+__c.LogImpl("932768002","Index too large",0);};
  //BA.debugLineNum = 52;BA.debugLine="Append(Data)";
 _append(_data);
  }else {

@@ -42,7 +42,7 @@ Sub Globals
 	Private PieChart1 As PieChart
 	Private btnStart As ACButton
 	
-	Dim CD As ColorDrawable
+	Dim cdReg, cdEmp, cdGuest As ColorDrawable
 
 	Private lblArea As Label
 	Private lblBranches As Label
@@ -50,14 +50,16 @@ Sub Globals
 	Private lblTotal As Label
 	Private lblUnregistered As Label
 	Private lvBranches As ListView
+	Private btnAddGuest As ACButton
+	Private btnAddEmployee As ACButton
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
 	Scale.SetRate(0.5)
-	Activity.LoadLayout("MainScreen")
+	Activity.LoadLayout("MainScreenNew")
 
-	GlobalVar.CSTitle.Initialize.Size(17).Bold.Append(Application.LabelName).PopAll
-	GlobalVar.CSSubTitle.Initialize.Size(14).Append(Application.VersionName).PopAll
+	GlobalVar.CSTitle.Initialize.Size(18).Bold.Append($"2024 TOWNHALL MEETING"$).PopAll
+	GlobalVar.CSSubTitle.Initialize.Size(15).Append($"Registration App "$ & Application.VersionName).PopAll
 	
 	ToolBar.InitMenuListener
 	ToolBar.Title = GlobalVar.CSTitle
@@ -121,49 +123,54 @@ Sub Activity_Resume
 	lblRegistered.Text = GlobalVar.TotReg
 	lblUnregistered.Text = GlobalVar.TotUnreg
 	
-	PieChart1.UsePercentValues = True
-	
-	PieChart1.DrawHoleEnabled = True
-	PieChart1.HoleColorTransparent = True
-
-	PieChart1.TransparentCircleColor = Colors.White
-	PieChart1.TransparentCircleAlpha = 110
-
-	PieChart1.HoleRadius = 60.0
-	PieChart1.TransparentCircleRadius = 50.0
-
-	PieChart1.DrawCenterText = True
-
-	PieChart1.DrawSliceText = True
-	PieChart1.HoleColor = Colors.White
-	PieChart1.TransparentCircleColor = Colors.Transparent
-	
-	'    RIGHT_OF_CHART, RIGHT_OF_CHART_CENTER, RIGHT_OF_CHART_INSIDE,
-	'    LEFT_OF_CHART, LEFT_OF_CHART_CENTER, LEFT_OF_CHART_INSIDE,
-	'    BELOW_CHART_LEFT, BELOW_CHART_RIGHT, BELOW_CHART_CENTER,
-	'    PIECHART_CENTER
-	PieChart1.TheLegendPosition = "RIGHT_OF_CHART_CENTER"
+'	PieChart1.UsePercentValues = True
 '	
-	PieChart1.TheLegendColor = 0xFF2A91C3
-	PieChart1.TheLegendTextSize = 18.0
-'	PieChart1.LegendTitle = "MONTHS"
-
-	PieChart1.ChartDescription = ""
-'	PieChart1.ChartDescriptionColor = Colors.ARGB(255,0,255,255)
-'	PieChart1.ChartDescriptionTextSize = 14
-
-	PieChart1.ValueTextColor = Colors.LightGray
-	PieChart1.ValueTextSize = 7.0
-
-	PieChart1.PieColors = Array As Int(0xFF0b4f6c, 0xFFDC143C)
-	PieChart1.LegendText = Array As String("Registered", "Unregistered")
-	PieChart1.ChartData = Array As Float(GlobalVar.TotReg, GlobalVar.TotUnreg)    'values - it will be converted to %
-
-	PieChart1.PieData = 2
+'	PieChart1.DrawHoleEnabled = True
+'	PieChart1.HoleColorTransparent = True
+'
+'	PieChart1.TransparentCircleColor = Colors.White
+'	PieChart1.TransparentCircleAlpha = 110
+'
+'	PieChart1.HoleRadius = 60.0
+'	PieChart1.TransparentCircleRadius = 50.0
+'
+'	PieChart1.DrawCenterText = True
+'
+'	PieChart1.DrawSliceText = True
+'	PieChart1.HoleColor = Colors.White
+'	PieChart1.TransparentCircleColor = Colors.Transparent
+'	
+'	'    RIGHT_OF_CHART, RIGHT_OF_CHART_CENTER, RIGHT_OF_CHART_INSIDE,
+'	'    LEFT_OF_CHART, LEFT_OF_CHART_CENTER, LEFT_OF_CHART_INSIDE,
+'	'    BELOW_CHART_LEFT, BELOW_CHART_RIGHT, BELOW_CHART_CENTER,
+'	'    PIECHART_CENTER
+'	PieChart1.TheLegendPosition = "RIGHT_OF_CHART_CENTER"
+''	
+'	PieChart1.TheLegendColor = 0xFF2A91C3
+'	PieChart1.TheLegendTextSize = 18.0
+''	PieChart1.LegendTitle = "MONTHS"
+'
+'	PieChart1.ChartDescription = ""
+''	PieChart1.ChartDescriptionColor = Colors.ARGB(255,0,255,255)
+''	PieChart1.ChartDescriptionTextSize = 14
+'
+'	PieChart1.ValueTextColor = Colors.LightGray
+'	PieChart1.ValueTextSize = 7.0
+'
+'	PieChart1.PieColors = Array As Int(0xFF0b4f6c, 0xFFDC143C)
+'	PieChart1.LegendText = Array As String("Registered", "Unregistered")
+'	PieChart1.ChartData = Array As Float(GlobalVar.TotReg, GlobalVar.TotUnreg)    'values - it will be converted to %
+'
+'	PieChart1.PieData = 2
+'	
+	cdEmp.Initialize2(0xFF1E4369, 25, 0,0xFF188731)
+	btnAddEmployee.Background = cdEmp
 	
-	CD.Initialize2(0xFF1E4369, 25, 0,0xFF268FC2)
-	btnStart.Background = CD
-	
+	cdGuest.Initialize2(0xFF1E4369, 25, 0,0xFFFFC107)
+	btnAddGuest.Background = cdGuest
+
+	cdReg.Initialize2(0xFF1E4369, 25, 0,0xFF268FC2)
+	btnStart.Background = cdReg
 End Sub
 
 Sub Activity_Pause (UserClosed As Boolean)
@@ -244,4 +251,12 @@ Private Sub GenerateBranchList(iAreaID As Int)
 	Catch
 		Log(LastException)
 	End Try
+End Sub
+
+Sub btnAddGuest_Click
+	StartActivity(AddGuest)
+End Sub
+
+Sub btnAddEmployee_Click
+	StartActivity(AddEmployee)
 End Sub

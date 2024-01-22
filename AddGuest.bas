@@ -22,9 +22,9 @@ public boolean _onCreateOptionsMenu(android.view.Menu menu) {
 #End If
 
 Sub Activity_CreateMenu(Menu As ACMenu)
-'	Dim Item As ACMenuItem
-'	Menu.Clear
-'	Menu.Add2(1, 1, "People",xmlIcon.GetDrawable("ic_group_add_white_36dp")).ShowAsAction = Item.SHOW_AS_ACTION_IF_ROOM
+	Dim Item As ACMenuItem
+	Menu.Clear
+	Menu.Add2(1, 1, "List",xmlIcon.GetDrawable("ic_view_list_white_36dp")).ShowAsAction = Item.SHOW_AS_ACTION_IF_ROOM
 '	Menu.Add2(2, 2, "Settings",xmlIcon.GetDrawable("ic_settings_white_24dp")).ShowAsAction = Item.SHOW_AS_ACTION_ALWAYS
 End Sub
 
@@ -56,37 +56,88 @@ Sub Process_Globals
 	Private Logo As Bitmap
 	
 	Private InpTyp As SLInpTypeConst
+	Private vibration As B4Avibrate
+	Private vibratePattern() As Long
 
 End Sub
 
 Sub Globals
 	'These global variables will be redeclared each time the activity is created.
 	'These variables can only be accessed from this module.
+
 	Dim ActionBarButton As ACActionBar
 	Private ToolBar As ACToolBarDark
 	Private xmlIcon As XmlLayoutBuilder
 	
-	Private CDTxtBox As ColorDrawable
+	Private cdTxtBox As ColorDrawable
 	Private btnCancel As ACButton
 	Private btnSave As ACButton
-	Private txtApprovedBy As EditText
-	Private txtCareOf As EditText
-	Private txtGuestName As EditText
-	Private txtRemarks As EditText
 	
 	Private cdCancel, cdSave As ColorDrawable
-	Private RegistrationNum As String
-	Private NewGuestID As Int
 	
+	Private txtGuestName As EditText
+	Private txtPosition As EditText
+	Private txtCareOf As EditText
+	Private txtTableNo As EditText
+	Private txtRemarks As EditText
+	Private txtApprovedBy As EditText
+	
+	Private IMEKeyboard As IME
+
+	'Printing
+	Dim ESC As String = Chr(27)
+	Dim FS As String = Chr(28)
+	Dim GS As String = Chr(29)
+	
+	'Bold and underline don't work well in reversed text
+	Dim UNREVERSE As String  = GS & "B" & Chr(0)
+	Dim REVERSE As String = GS & "B" & Chr(1)
+	
+	' Character orientation. Print upside down from right margin
+	Dim UNINVERT As String = ESC & "{0"
+	Dim INVERT As String = ESC & "{1"
+	
+	' Character rotation clockwise. Not much use without also reversing the printed character sequence
+	Dim UNROTATE As String = ESC & "V0"
+	Dim ROTATE As String = ESC & "V1"
+	
+	' Horizontal tab
+	Dim HT As String = Chr(9)
+	
+	' Character underline
+	Dim ULINE0 As String = ESC & "-0"
+	Dim ULINE1 As String = ESC & "-1"
+	Dim ULINE2 As String = ESC & "-2"
+	
+	' Character emphasis
+	Dim BOLD As String = ESC & "E1"
+	Dim NOBOLD As String = ESC & "E0"
+	
+	' Character height and width
+	Dim SINGLE As String = GS & "!" & Chr(0x00)
+	Dim HIGH As String = GS & "!" & Chr(0x01)
+	Dim WIDE As String = GS & "!" & Chr(0x10)
+	Dim HIGHWIDE As String = GS & "!" & Chr(0x11)
+	
+	' Default settings
+	Private LEFTJUSTIFY As String = ESC & "a0"
+	Private LINEDEFAULT As String = ESC & "2"
+	Private LINSET0 As String = ESC & "$" & Chr(0x0) & Chr(0x0)
+	Private LMARGIN0 As String = GS & "L" & Chr(0x0) & Chr(0x0)
+	Private WIDTH0 As String = GS & "W" & Chr(0xff) & Chr(0xff)
+	Private CHARSPACING0 As String = ESC & " " & Chr(0)
+	Private CHARFONT0 As String = ESC & "M" & Chr(0)
+	Dim DEFAULTS As String =  CHARSPACING0 & CHARFONT0 & LMARGIN0 & WIDTH0 & LINSET0 & LINEDEFAULT & LEFTJUSTIFY _
+		& UNINVERT & UNROTATE & UNREVERSE & NOBOLD & ULINE0
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
 	'Do not forget to load the layout file created with the visual designer. For example:
 	Scale.SetRate(0.5)
-	Activity.LoadLayout("GuestLayout")
+	Activity.LoadLayout("AddGuestLayout")
 
 	GlobalVar.CSTitle.Initialize.Size(17).Bold.Append($"ADD GUEST"$).PopAll
-	GlobalVar.CSSubTitle.Initialize.Size(14).Append($"Add Party Guest"$).PopAll
+	GlobalVar.CSSubTitle.Initialize.Size(14).Append($"Add 2024 Townhall Meeting's Guest"$).PopAll
 	
 	ToolBar.InitMenuListener
 	ToolBar.Title = GlobalVar.CSTitle
@@ -99,23 +150,44 @@ Sub Activity_Create(FirstTime As Boolean)
 	jo.RunMethod("setContentInsetStartWithNavigation", Array(1dip))
 	jo.RunMethod("setTitleMarginStart", Array(0dip))
 	
-	InpTyp.SetInputType(txtGuestName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
+	InpTyp.Initialize
+	
+	InpTyp.SetInputType(txtGuestName,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
+	InpTyp.SetInputType(txtPosition,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_CHARACTERS))
 	InpTyp.SetInputType(txtCareOf,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
-	InpTyp.SetInputType(txtRemarks,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
+	InpTyp.SetInputType(txtTableNo,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_CLASS_NUMBER))
+	InpTyp.SetInputType(txtRemarks,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_SENTENCES))
 	InpTyp.SetInputType(txtApprovedBy,Array As Int(InpTyp.TYPE_CLASS_TEXT, InpTyp.TYPE_TEXT_FLAG_AUTO_CORRECT, InpTyp.TYPE_TEXT_FLAG_CAP_WORDS))
 
 	ActionBarButton.Initialize
 	ActionBarButton.ShowUpIndicator = True
 	BTAdmin.Initialize("Admin")
 	Serial1.Initialize("Printer")
-
-	CDTxtBox.Initialize2(Colors.Transparent, Colors.Transparent,0,0)
+	
+	cdTxtBox.Initialize2(Colors.Transparent, Colors.Transparent,0,0)
+	txtGuestName.Background = cdTxtBox
+	txtPosition.Background = cdTxtBox
+	txtCareOf.Background = cdTxtBox
+	txtTableNo.Background = cdTxtBox
+	txtRemarks.Background = cdTxtBox
+	txtApprovedBy.Background = cdTxtBox
+	
+	IMEKeyboard.Initialize("IME")
+	txtGuestName.RequestFocus
+	IMEKeyboard.ShowKeyboard(txtGuestName)
+	
 	cdSave.Initialize2(0xFF1E4369, 20, 0,0xFF268FC2)
 	btnSave.Background = cdSave
 	cdCancel.Initialize2(0xFFDC143C, 20, 0,0xFFDC3545)
 	btnCancel.Background = cdCancel
-	
-	
+
+	txtGuestName.Text = ""
+	txtPosition.Text = ""
+	txtCareOf.Text = ""
+	txtTableNo.Text = ""
+	txtRemarks.Text = ""
+	txtApprovedBy.Text = ""
+	vibratePattern = Array As Long(500, 500, 300, 500)
 
 End Sub
 
@@ -142,11 +214,13 @@ End Sub
 Sub ToolBar_MenuItemClick (Item As ACMenuItem)
 	Select Case Item.Id
 		Case 1
+			Activity.Finish
+			StartActivity(GuestList)
 	End Select
 End Sub
 
 #Region MessageBox
-Private Sub ConfirmRegister (sEmpName As String)
+Private Sub ConfirmRegister (sGuestName As String)
 	Dim Alert As AX_CustomAlertDialog
 
 	Alert.Initialize.Create _
@@ -154,7 +228,7 @@ Private Sub ConfirmRegister (sEmpName As String)
 			.SetStyle(Alert.STYLE_DIALOGUE) _
 			.SetCancelable(False) _
 			.SetTitle($"CONFIRM REGISTRATION"$) _
-			.SetMessage($"Do you want to Register"$ & CRLF & sEmpName & $"?"$) _
+			.SetMessage($"Do you want to Add and Register "$ & CRLF & sGuestName & $"?"$) _
 			.SetPositiveText("YES") _
 			.SetPositiveColor(GlobalVar.PosColor) _
 			.SetPositiveTypeface(GlobalVar.FontBold) _
@@ -175,12 +249,21 @@ End Sub
 Private Sub RegisterEmp_OnNegativeClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
+	vibration.vibrateCancel
 	ToastMessageShow($"Canceled!"$, True)
 End Sub
 
 Private Sub RegisterEmp_OnPositiveClicked (View As View, Dialog As Object)
 	Dim Alert As AX_CustomAlertDialog
 	Alert.Initialize.Dismiss(Dialog)
+	vibration.vibrateCancel
+	
+	If Not(SaveGuestRegistration) Then
+		ShowEntryError($"ERROR"$, $"Unable to Add Guest data due to "$ & LastException)
+	End If
+	GlobalVar.NewRegID = DBFunctions.GetIDByCode("GuestID", "tblGuests", "StubNo", GlobalVar.NewRegNo)
+	PrintStub(GlobalVar.NewRegID)
+
 End Sub
 
 Private Sub RegFontSizeBinder_OnBindView (View As View, ViewType As Int)
@@ -345,12 +428,9 @@ End Sub
 
 Sub btnSave_Click
 	If Not(ValidEntries) Then Return
-	If Not(SaveGuestData) Then
-		ShowEntryError($"ERROR"$, $"Unable to Save Guest data due to "$ & LastException)
-	End If
-'	NewGuestID = GetGuestID(RegistrationNum)
-	ProgressDialogShow2($"Saving Guest Data..."$, False)
-	PrintStub(RegistrationNum)
+	vibration.vibratePattern(vibratePattern, 0)
+	ConfirmRegister(txtGuestName.Text)
+	
 End Sub
 
 Sub btnCancel_Click
@@ -361,25 +441,41 @@ Private Sub ValidEntries() As Boolean
 	
 	Try
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtGuestName.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
 			ShowEntryError($"ERROR"$, $"Guest Name cannot be blank!"$)
 			txtGuestName.RequestFocus
 			Return False
 		End If
-		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtRemarks.Text)) <= 0 Then
-			ShowEntryError($"ERROR"$, $"Remarks cannot be blank!"$)
-			txtRemarks.RequestFocus
+		
+
+		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtPosition.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
+			ShowEntryError($"ERROR"$, $"Guest Position/Occupation cannot be blank!"$)
+			txtPosition.RequestFocus
 			Return False
 		End If
+
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtCareOf.Text)) <= 0 Then
-			ShowEntryError($"ERROR"$,$"Care of Employee cannot be blank!"$)
+			vibration.vibrateOnce(1500)
+			ShowEntryError($"ERROR"$, $"Accompanied Employee Name cannot be blank!"$)
 			txtCareOf.RequestFocus
 			Return False
 		End If
+
+		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtTableNo.Text)) <= 0 Then
+			vibration.vibrateOnce(1500)
+			ShowEntryError($"ERROR"$,$"Table Number cannot be blank!"$)
+			txtTableNo.RequestFocus
+			Return False
+		End If
+
 		If GlobalVar.SF.Len(GlobalVar.SF.Trim(txtApprovedBy.Text)) <= 0 Then
-			ShowEntryError($"ERROR"$, $"Approved By cannot be blank!"$)
+			vibration.vibrateOnce(1500)
+			ShowEntryError($"ERROR"$, $"Approver cannot be blank!"$)
 			txtApprovedBy.RequestFocus
 			Return False
 		End If
+		
 		Return True
 	Catch
 		Return False
@@ -433,35 +529,42 @@ Private Sub EntryErrorBinder_OnBindView (View As View, ViewType As Int)
 	End If
 End Sub
 
-Private Sub SaveGuestData() As Boolean
+Private Sub SaveGuestRegistration() As Boolean
 	Dim bRetVal As Boolean
 	Dim lngDateTime As Long
 	Dim RegSeq, NoPrint As Int
-	Dim NewRegNo As String
-	Dim GuestName, Remarks, CareOf, Approver As String
+	
+				
+	Dim sGuestName, sPosition, sCareof, sApprover As String
+	Dim sRemarks, DivisionID, sTableNo, AddedBy As String
 	Dim TimeReg As String
 
-
-	GuestName = txtGuestName.Text
-	Remarks = txtRemarks.Text
-	CareOf = txtCareOf.Text
-	Approver = txtApprovedBy.Text
+	ProgressDialogShow2($"Saving Employee Data..."$, False)
+	
+	sGuestName = txtGuestName.Text
+	sPosition = txtPosition.Text
+	sCareof = txtCareOf.Text
+	sTableNo = txtTableNo.Text
+	sRemarks = txtRemarks.Text
+	sApprover = txtApprovedBy.Text
+	
+	AddedBy = GlobalVar.AssignedEmp
 
 	lngDateTime = DateTime.Now
 	DateTime.TimeFormat = "HH:mm:ss"
 	TimeReg = DateTime.Time(lngDateTime)
+	
 	RegSeq = DBFunctions.GetSeqNo
 	
 	NoPrint = 1
 	
-	NewRegNo = DBFunctions.GetNewStubNo
+	GlobalVar.NewRegNo = DBFunctions.GetNewStubNo
 
 	Starter.DBCon.BeginTransaction
 	Try
-		Starter.strCriteria="INSERT INTO tblGuests VALUES (" & Null & ", ?, ?, ?, ?, ?, ?, ?, ?)"
-		Starter.DBCon.ExecNonQuery2(Starter.strCriteria , Array As Object(NewRegNo, GuestName, Remarks, CareOf, Approver, TimeReg, $"1"$, NoPrint))
+		Starter.strCriteria="INSERT INTO tblGuests VALUES (" & Null & ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+		Starter.DBCon.ExecNonQuery2(Starter.strCriteria , Array As Object(GlobalVar.NewRegNo, sTableNo, sGuestName, sPosition, sCareof, sApprover, sRemarks, GlobalVar.AssignedEmp, TimeReg, RegSeq, $"1"$, $"1"$))
 		Starter.DBCon.TransactionSuccessful
-		RegistrationNum = NewRegNo
 		bRetVal = True
 	Catch
 		bRetVal = False
@@ -472,65 +575,61 @@ Private Sub SaveGuestData() As Boolean
 	Return bRetVal
 End Sub
 
-Private Sub GetGuestID(sRegNo As String) As Int
-	Dim iRetVal As Int
-	Try
-		iRetVal = Starter.DBCon.ExecQuerySingleResult("SELECT GuestID FROM tblGuests WHERE StubNo = " & sRegNo)
-	Catch
-		ToastMessageShow($"Unable to fetch Guest ID due to "$ & LastException.Message, False)
-		Log(LastException)
-	End Try
-	Return iRetVal
-
-End Sub
-
 #Region Printing
-Private Sub PrintStub(sRegNo As String)
+Private Sub PrintStub(iGuestID As Int)
 	Dim rsData As Cursor
 	Dim StubNo As String
-	Dim RegGuestName As String
-	Dim RegRemarks As String
+	Dim RegFullName As String
+	Dim RegPosition As String
+	Dim RegTableNo As Int
 	
 	ProgressDialogShow2($"Stub Printing.  Please Wait..."$, False)
 	
 	Try
-		Starter.strCriteria = "SELECT tblGuests.GuestID,tblGuests.StubNo, " & _
-						  "tblGuests.GuestName, tblGuests.Remarks_Occupation, " & _
-						  "tblGuests.CareOf, tblGuests.ApprovedBy, tblGuests.TimeReg, " & _
-						  "tblGuests.WasStubPrinted, tblGuests.NoOfPrint " & _
+		Starter.strCriteria = "SELECT StubNo, TableNo, GuestName, Remarks_Occupation " & _
 						  "FROM tblGuests " & _
-						  "WHERE tblGuests.StubNo = '" & sRegNo & "'"
-						  
+						  "WHERE GuestID = " & iGuestID
+		
 		rsData = Starter.DBCon.ExecQuery(Starter.strCriteria)
 		LogColor(Starter.strCriteria, Colors.Magenta)
 		
 		If rsData.RowCount > 0 Then
 			rsData.Position = 0
 			StubNo = rsData.GetString("StubNo")
-			RegGuestName = rsData.GetString("GuestName")
-			RegRemarks = rsData.GetString("Remarks_Occupation")
+			RegFullName = rsData.GetString("GuestName")
+			RegPosition = rsData.GetString("Remarks_Occupation")
+			RegTableNo = rsData.GetInt("TableNo")
 		Else
 			Return
 		End If
-		
-			PrintBuffer = Chr(27) & "@" _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(8) & $"LAUSGROUP EVENT CENTRE"$ & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & $"December 19, 2023"$ & CRLF & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"STUB NO.: "$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegGuestName & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegRemarks & Chr(10) & Chr(10) _
-						& Chr(27) & "!" & Chr(0) & $"Have a Blessed Holiday Season!"$ & CRLF & Chr(10) _
-						& Chr(27) & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(48) _
-						& Chr(27) & "!" & Chr(33) & $"DINNER STUB"$ & Chr(10) _
-						& Chr(27) & Chr(97) & Chr(49) _
-						& Chr(27) & "!" & Chr(112) & StubNo & Chr(10) _
-						& Chr(27) & "!" & Chr(8) & RegGuestName & Chr(10) & Chr(10) _
-						& Chr(10) & Chr(27) & Chr(97) & Chr(10)
+
+		PrintBuffer =  ESC & "@" _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"STUB NO.: "$ & BOLD & StubNo & CRLF & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegPosition & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& ESC & "!" & Chr(16) & $"Welcome to BWSI Townhall!"$ & Chr(10)  & Chr(10) _
+					& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"DINNER STUB"$ & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegPosition & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& ESC & "!" & Chr(1) & "------------------------------------------" & Chr(10) _
+					& ESC & Chr(97) & Chr(48) _
+					& ESC & "!" & Chr(33) & $"LUNCH STUB"$ & Chr(10) _
+					& ESC & Chr(97) & Chr(49) _
+					& ESC & "!" & Chr(8) & RegFullName & Chr(10) _
+					& ESC & "!" & Chr(1) & ESC & "t" & Chr(14) & RegPosition & Chr(10) _
+					& HIGH  & REVERSE & $"                  "$ & Chr(10) _
+					& HIGHWIDE  & UNREVERSE & $"TABLE NO.: "$ & RegTableNo & Chr(10) & Chr(10) _
+					& Chr(10) & ESC & Chr(73)
 		StartPrinter
 	Catch
 		ProgressDialogHide
@@ -541,8 +640,7 @@ End Sub
 Sub StartPrinter
 	
 	PairedDevices.Initialize
-'	If Serial1.IsInitialized = False Then Serial1.Initialize("")
-'	If TMPrinter.IsInitialized = False Then TMPrinter.Initialize2(Serial1.OutputStream, "windows-1252")
+	
 	Try
 		PairedDevices = Serial1.GetPairedDevices
 	Catch
@@ -606,7 +704,7 @@ Sub Printer_Connected (Success As Boolean)
 		ProgressDialogHide
 		TMPrinter.Initialize2(Serial1.OutputStream, "windows-1252")
 		oStream.Initialize(Serial1.InputStream, Serial1.OutputStream, "LogoPrint")
-		Logo.Initialize(File.DirAssets, "Stub-Header.png")
+		Logo.Initialize(File.DirAssets, "Stub-Header-Townhall.png")
 		LogoBMP = CreateScaledBitmap(Logo, Logo.Width, Logo.Height)
 		Log(DeviceName)
 
@@ -614,7 +712,7 @@ Sub Printer_Connected (Success As Boolean)
 		WoosimImage.InitializeStatic("com.woosim.printer.WoosimImage")
 		
 		initPrinter = WoosimCMD.RunMethod("initPrinter",Null)
-		PrintLogo = WoosimImage.RunMethod("printBitmap", Array (0, 0, 420, 205, LogoBMP))
+		PrintLogo = WoosimImage.RunMethod("printBitmap", Array (0, 0, 420, 220, LogoBMP))
 		
 		oStream.Write(initPrinter)
 		oStream.Write(WoosimCMD.RunMethod("setPageMode",Null))
@@ -627,8 +725,7 @@ Sub Printer_Connected (Success As Boolean)
 		Log(PrintBuffer)
 		TMPrinter.Flush
 		Sleep(600)
-			ShowSuccessMsg($"SUCCESS"$, $"Stub was successfully printed."$ & CRLF & $"Tap OK to Continue..."$)
-'		DispInfoMsg($"Stub was successfully printed."$ & $"Tap OK to Continue..."$, Application.LabelName)
+		ShowSuccessMsg($"SUCCESS"$, $"Stub was successfully printed."$ & CRLF & $"Tap OK to Continue..."$)
 		TMPrinter.Close
 		Serial1.Disconnect
 	End If
@@ -641,3 +738,8 @@ Sub CreateScaledBitmap(Original As Bitmap, NewWidth As Int, NewHeight As Int) As
 	Return b
 End Sub
 #End Region
+
+
+Sub txtGuestName_EnterPressed
+	txtPosition.RequestFocus
+End Sub
